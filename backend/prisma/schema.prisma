@@ -37,7 +37,7 @@ enum ContactStatus {
 // ============ AUTH ============
 
 model Admin {
-  id              Int       @id @default(autoincrement())
+  id              String    @id @default(uuid()) @db.Char(36)
   name            String    @db.VarChar(100)
   email           String    @unique @db.VarChar(255)
   passwordHash    String    @map("password_hash") @db.VarChar(255)
@@ -56,8 +56,8 @@ model Admin {
 }
 
 model RefreshToken {
-  id        Int       @id @default(autoincrement())
-  adminId   Int       @map("admin_id")
+  id        String    @id @default(uuid()) @db.Char(36)
+  adminId   String    @map("admin_id") @db.Char(36)
   tokenHash String    @unique @map("token_hash") @db.VarChar(255)
   expiresAt DateTime  @map("expires_at") @db.DateTime(0)
   revokedAt DateTime? @map("revoked_at") @db.DateTime(0)
@@ -71,8 +71,8 @@ model RefreshToken {
 }
 
 model ResetPasswordToken {
-  id        Int       @id @default(autoincrement())
-  adminId   Int       @map("admin_id")
+  id        String    @id @default(uuid()) @db.Char(36)
+  adminId   String    @map("admin_id") @db.Char(36)
   tokenHash String    @unique @map("token_hash") @db.VarChar(255)
   expiresAt DateTime  @map("expires_at") @db.DateTime(0)
   usedAt    DateTime? @map("used_at") @db.DateTime(0)
@@ -88,7 +88,7 @@ model ResetPasswordToken {
 // ============ LOOKUPS ============
 
 model Region {
-  id          Int      @id @default(autoincrement())
+  id          String   @id @default(uuid()) @db.Char(36)
   name        String   @db.VarChar(150)
   slug        String   @unique @db.VarChar(180)
   description String?  @db.Text
@@ -104,7 +104,7 @@ model Region {
 }
 
 model Season {
-  id          Int      @id @default(autoincrement())
+  id          String   @id @default(uuid()) @db.Char(36)
   name        String   @db.VarChar(100)
   slug        String   @unique @db.VarChar(120)
   description String?  @db.Text
@@ -123,12 +123,12 @@ model Season {
 // ============ TREK ============
 
 model Trek {
-  id                Int             @id @default(autoincrement())
+  id                String          @id @default(uuid()) @db.Char(36)
   name              String          @db.VarChar(200)
   slug              String          @unique @db.VarChar(220)
   summary           String?         @db.VarChar(500)
   description       String?         @db.Text
-  regionId          Int             @map("region_id")
+  regionId          String          @map("region_id") @db.Char(36)
   difficulty        DifficultyLevel
   status            ContentStatus   @default(DRAFT)
   durationDays      Int             @map("duration_days")
@@ -145,7 +145,7 @@ model Trek {
   maxAge            Int?            @map("max_age")
   isFeatured        Boolean         @default(false) @map("is_featured")
   publishedAt       DateTime?       @map("published_at") @db.DateTime(0)
-  createdBy         Int?            @map("created_by")
+  createdBy         String?         @map("created_by") @db.Char(36)
   createdAt         DateTime        @default(now()) @map("created_at") @db.DateTime(0)
   updatedAt         DateTime        @default(now()) @updatedAt @map("updated_at") @db.DateTime(0)
 
@@ -166,8 +166,8 @@ model Trek {
 }
 
 model TrekSeason {
-  trekId   Int @map("trek_id")
-  seasonId Int @map("season_id")
+  trekId   String @map("trek_id") @db.Char(36)
+  seasonId String @map("season_id") @db.Char(36)
 
   trek   Trek   @relation(fields: [trekId], references: [id], onDelete: Cascade)
   season Season @relation(fields: [seasonId], references: [id], onDelete: Cascade)
@@ -178,8 +178,8 @@ model TrekSeason {
 }
 
 model TrekMonth {
-  trekId Int @map("trek_id")
-  month  Int @db.UnsignedTinyInt // 1-12
+  trekId String @map("trek_id") @db.Char(36)
+  month  Int    @db.UnsignedTinyInt // 1-12
 
   trek Trek @relation(fields: [trekId], references: [id], onDelete: Cascade)
 
@@ -189,8 +189,8 @@ model TrekMonth {
 }
 
 model TrekItinerary {
-  id             Int      @id @default(autoincrement())
-  trekId         Int      @map("trek_id")
+  id             String   @id @default(uuid()) @db.Char(36)
+  trekId         String   @map("trek_id") @db.Char(36)
   dayNumber      Int      @map("day_number")
   title          String   @db.VarChar(255)
   description    String?  @db.Text
@@ -206,8 +206,8 @@ model TrekItinerary {
 }
 
 model TrekImage {
-  id        Int      @id @default(autoincrement())
-  trekId    Int      @map("trek_id")
+  id        String   @id @default(uuid()) @db.Char(36)
+  trekId    String   @map("trek_id") @db.Char(36)
   imageUrl  String   @map("image_url") @db.VarChar(1000)
   altText   String?  @map("alt_text") @db.VarChar(255)
   caption   String?  @db.VarChar(255)
@@ -223,12 +223,12 @@ model TrekImage {
 // ============ EXPEDITION ============
 
 model Expedition {
-  id                Int             @id @default(autoincrement())
+  id                String          @id @default(uuid()) @db.Char(36)
   name              String          @db.VarChar(200)
   slug              String          @unique @db.VarChar(220)
   summary           String?         @db.VarChar(500)
   description       String?         @db.Text
-  regionId          Int             @map("region_id")
+  regionId          String          @map("region_id") @db.Char(36)
   difficulty        DifficultyLevel
   status            ContentStatus   @default(DRAFT)
   durationDays      Int             @map("duration_days")
@@ -245,7 +245,7 @@ model Expedition {
   maxAge            Int?            @map("max_age")
   isFeatured        Boolean         @default(false) @map("is_featured")
   publishedAt       DateTime?       @map("published_at") @db.DateTime(0)
-  createdBy         Int?            @map("created_by")
+  createdBy         String?         @map("created_by") @db.Char(36)
   createdAt         DateTime        @default(now()) @map("created_at") @db.DateTime(0)
   updatedAt         DateTime        @default(now()) @updatedAt @map("updated_at") @db.DateTime(0)
 
@@ -265,8 +265,8 @@ model Expedition {
 }
 
 model ExpeditionSeason {
-  expeditionId Int @map("expedition_id")
-  seasonId     Int @map("season_id")
+  expeditionId String @map("expedition_id") @db.Char(36)
+  seasonId     String @map("season_id") @db.Char(36)
 
   expedition Expedition @relation(fields: [expeditionId], references: [id], onDelete: Cascade)
   season     Season     @relation(fields: [seasonId], references: [id], onDelete: Cascade)
@@ -277,8 +277,8 @@ model ExpeditionSeason {
 }
 
 model ExpeditionItinerary {
-  id             Int      @id @default(autoincrement())
-  expeditionId   Int      @map("expedition_id")
+  id             String   @id @default(uuid()) @db.Char(36)
+  expeditionId   String   @map("expedition_id") @db.Char(36)
   dayNumber      Int      @map("day_number")
   title          String   @db.VarChar(255)
   description    String?  @db.Text
@@ -294,8 +294,8 @@ model ExpeditionItinerary {
 }
 
 model ExpeditionImage {
-  id           Int      @id @default(autoincrement())
-  expeditionId Int      @map("expedition_id")
+  id           String   @id @default(uuid()) @db.Char(36)
+  expeditionId String   @map("expedition_id") @db.Char(36)
   imageUrl     String   @map("image_url") @db.VarChar(1000)
   altText      String?  @map("alt_text") @db.VarChar(255)
   caption      String?  @db.VarChar(255)
@@ -311,7 +311,7 @@ model ExpeditionImage {
 // ============ GALLERY / CONTACT / SETTINGS ============
 
 model Gallery {
-  id        Int      @id @default(autoincrement())
+  id        String   @id @default(uuid()) @db.Char(36)
   imageUrl  String   @map("image_url") @db.VarChar(1000)
   altText   String?  @map("alt_text") @db.VarChar(255)
   sortOrder Int      @default(0) @map("sort_order")
@@ -324,14 +324,14 @@ model Gallery {
 }
 
 model Contact {
-  id           Int           @id @default(autoincrement())
+  id           String        @id @default(uuid()) @db.Char(36)
   name         String        @db.VarChar(150)
   email        String        @db.VarChar(255)
   phone        String?       @db.VarChar(30)
   subject      String?       @db.VarChar(255)
   message      String        @db.Text
-  trekId       Int?          @map("trek_id")
-  expeditionId Int?          @map("expedition_id")
+  trekId       String?       @map("trek_id") @db.Char(36)
+  expeditionId String?       @map("expedition_id") @db.Char(36)
   status       ContactStatus @default(UNREAD)
   adminNotes   String?       @map("admin_notes") @db.Text
   createdAt    DateTime      @default(now()) @map("created_at") @db.DateTime(0)
@@ -348,7 +348,7 @@ model Contact {
 }
 
 model SiteSettings {
-  id           Int      @id @default(autoincrement())
+  id           String   @id @default(uuid()) @db.Char(36)
   logoUrl      String?  @map("logo_url") @db.VarChar(1000)
   heroImageUrl String?  @map("hero_image_url") @db.VarChar(1000)
   contactEmail String?  @map("contact_email") @db.VarChar(255)
