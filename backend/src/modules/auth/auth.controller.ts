@@ -17,7 +17,7 @@ export class AuthController {
       success: true,
       message: 'Admin login successfully',
       data: {
-        user: result.user,
+        admin: result.user,
         accessToken: result.accessToken,
       },
     });
