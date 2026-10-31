@@ -11,3 +11,7 @@ export const sanitizedUserResponse = (admin: Admin) => {
     updatedAt: admin.updatedAt,
   };
 };
+
+export interface IUpdatePasswordResponse {
+  passwordHash: string;
+}
