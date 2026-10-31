@@ -1,0 +1,364 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+// ============ ENUMS ============
+
+enum DifficultyLevel {
+  EASY
+  MODERATE
+  DIFFICULT
+  VERY_DIFFICULT
+  EXTREME
+
+  @@map("difficulty_level")
+}
+
+enum ContentStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+
+  @@map("content_status")
+}
+
+enum ContactStatus {
+  READ
+  UNREAD
+
+  @@map("contact_status")
+}
+
+// ============ AUTH ============
+
+model Admin {
+  id              Int       @id @default(autoincrement())
+  name            String    @db.VarChar(100)
+  email           String    @unique @db.VarChar(255)
+  passwordHash    String    @map("password_hash") @db.VarChar(255)
+  profileImageUrl String?   @map("profile_image_url") @db.VarChar(1000)
+  isActive        Boolean   @default(true) @map("is_active")
+  lastLoginAt     DateTime? @map("last_login_at") @db.DateTime(0)
+  createdAt       DateTime  @default(now()) @map("created_at") @db.DateTime(0)
+  updatedAt       DateTime  @default(now()) @updatedAt @map("updated_at") @db.DateTime(0)
+
+  refreshTokens       RefreshToken[]
+  resetPasswordTokens ResetPasswordToken[]
+  createdTreks        Trek[]               @relation("TrekCreator")
+  createdExpeditions  Expedition[]         @relation("ExpeditionCreator")
+
+  @@map("admin")
+}
+
+model RefreshToken {
+  id        Int       @id @default(autoincrement())
+  adminId   Int       @map("admin_id")
+  tokenHash String    @unique @map("token_hash") @db.VarChar(255)
+  expiresAt DateTime  @map("expires_at") @db.DateTime(0)
+  revokedAt DateTime? @map("revoked_at") @db.DateTime(0)
+  createdAt DateTime  @default(now()) @map("created_at") @db.DateTime(0)
+
+  admin Admin @relation(fields: [adminId], references: [id], onDelete: Cascade)
+
+  @@index([adminId])
+  @@index([expiresAt]) // for cleanup job
+  @@map("refresh_token")
+}
+
+model ResetPasswordToken {
+  id        Int       @id @default(autoincrement())
+  adminId   Int       @map("admin_id")
+  tokenHash String    @unique @map("token_hash") @db.VarChar(255)
+  expiresAt DateTime  @map("expires_at") @db.DateTime(0)
+  usedAt    DateTime? @map("used_at") @db.DateTime(0)
+  createdAt DateTime  @default(now()) @map("created_at") @db.DateTime(0)
+
+  admin Admin @relation(fields: [adminId], references: [id], onDelete: Cascade)
+
+  @@index([adminId])
+  @@index([expiresAt])
+  @@map("reset_password_token")
+}
+
+// ============ LOOKUPS ============
+
+model Region {
+  id          Int      @id @default(autoincrement())
+  name        String   @db.VarChar(150)
+  slug        String   @unique @db.VarChar(180)
+  description String?  @db.Text
+  imageUrl    String?  @map("image_url") @db.VarChar(1000)
+  isActive    Boolean  @default(true) @map("is_active")
+  createdAt   DateTime @default(now()) @map("created_at") @db.DateTime(0)
+  updatedAt   DateTime @default(now()) @updatedAt @map("updated_at") @db.DateTime(0)
+
+  treks       Trek[]
+  expeditions Expedition[]
+
+  @@map("region")
+}
+
+model Season {
+  id          Int      @id @default(autoincrement())
+  name        String   @db.VarChar(100)
+  slug        String   @unique @db.VarChar(120)
+  description String?  @db.Text
+  startMonth  Int?     @map("start_month") @db.UnsignedTinyInt
+  endMonth    Int?     @map("end_month") @db.UnsignedTinyInt
+  isActive    Boolean  @default(true) @map("is_active")
+  createdAt   DateTime @default(now()) @map("created_at") @db.DateTime(0)
+  updatedAt   DateTime @default(now()) @updatedAt @map("updated_at") @db.DateTime(0)
+
+  treks       TrekSeason[]
+  expeditions ExpeditionSeason[]
+
+  @@map("season")
+}
+
+// ============ TREK ============
+
+model Trek {
+  id                Int             @id @default(autoincrement())
+  name              String          @db.VarChar(200)
+  slug              String          @unique @db.VarChar(220)
+  summary           String?         @db.VarChar(500)
+  description       String?         @db.Text
+  regionId          Int             @map("region_id")
+  difficulty        DifficultyLevel
+  status            ContentStatus   @default(DRAFT)
+  durationDays      Int             @map("duration_days")
+  distanceKm        Decimal?        @map("distance_km") @db.Decimal(8, 2)
+  maxAltitudeMeters Int?            @map("max_altitude_meters")
+  startingPoint     String?         @map("starting_point") @db.VarChar(255)
+  endingPoint       String?         @map("ending_point") @db.VarChar(255)
+  coverImageUrl     String?         @map("cover_image_url") @db.VarChar(1000)
+  price             Decimal?        @db.Decimal(10, 2)
+  discountPrice     Decimal?        @map("discount_price") @db.Decimal(10, 2)
+  currency          String          @default("INR") @db.Char(3)
+  maxGroupSize      Int?            @map("max_group_size")
+  minAge            Int?            @map("min_age")
+  maxAge            Int?            @map("max_age")
+  isFeatured        Boolean         @default(false) @map("is_featured")
+  publishedAt       DateTime?       @map("published_at") @db.DateTime(0)
+  createdBy         Int?            @map("created_by")
+  createdAt         DateTime        @default(now()) @map("created_at") @db.DateTime(0)
+  updatedAt         DateTime        @default(now()) @updatedAt @map("updated_at") @db.DateTime(0)
+
+  region      Region          @relation(fields: [regionId], references: [id], onDelete: Restrict)
+  creator     Admin?          @relation("TrekCreator", fields: [createdBy], references: [id], onDelete: SetNull)
+  seasons     TrekSeason[]
+  months      TrekMonth[]
+  itineraries TrekItinerary[]
+  images      TrekImage[]
+  contacts    Contact[]
+
+  @@index([regionId, status]) // region listing page (also covers the FK)
+  @@index([status, isFeatured]) // homepage featured
+  @@index([status, publishedAt]) // latest published
+  @@index([difficulty]) // filter
+  @@index([createdBy])
+  @@map("trek")
+}
+
+model TrekSeason {
+  trekId   Int @map("trek_id")
+  seasonId Int @map("season_id")
+
+  trek   Trek   @relation(fields: [trekId], references: [id], onDelete: Cascade)
+  season Season @relation(fields: [seasonId], references: [id], onDelete: Cascade)
+
+  @@id([trekId, seasonId])
+  @@index([seasonId])
+  @@map("trek_season")
+}
+
+model TrekMonth {
+  trekId Int @map("trek_id")
+  month  Int @db.UnsignedTinyInt // 1-12
+
+  trek Trek @relation(fields: [trekId], references: [id], onDelete: Cascade)
+
+  @@id([trekId, month])
+  @@index([month])
+  @@map("trek_month")
+}
+
+model TrekItinerary {
+  id             Int      @id @default(autoincrement())
+  trekId         Int      @map("trek_id")
+  dayNumber      Int      @map("day_number")
+  title          String   @db.VarChar(255)
+  description    String?  @db.Text
+  distanceKm     Decimal? @map("distance_km") @db.Decimal(8, 2)
+  altitudeMeters Int?     @map("altitude_meters")
+  createdAt      DateTime @default(now()) @map("created_at") @db.DateTime(0)
+  updatedAt      DateTime @default(now()) @updatedAt @map("updated_at") @db.DateTime(0)
+
+  trek Trek @relation(fields: [trekId], references: [id], onDelete: Cascade)
+
+  @@unique([trekId, dayNumber])
+  @@map("trek_itinerary")
+}
+
+model TrekImage {
+  id        Int      @id @default(autoincrement())
+  trekId    Int      @map("trek_id")
+  imageUrl  String   @map("image_url") @db.VarChar(1000)
+  altText   String?  @map("alt_text") @db.VarChar(255)
+  caption   String?  @db.VarChar(255)
+  sortOrder Int      @default(0) @map("sort_order")
+  createdAt DateTime @default(now()) @map("created_at") @db.DateTime(0)
+
+  trek Trek @relation(fields: [trekId], references: [id], onDelete: Cascade)
+
+  @@index([trekId, sortOrder])
+  @@map("trek_image")
+}
+
+// ============ EXPEDITION ============
+
+model Expedition {
+  id                Int             @id @default(autoincrement())
+  name              String          @db.VarChar(200)
+  slug              String          @unique @db.VarChar(220)
+  summary           String?         @db.VarChar(500)
+  description       String?         @db.Text
+  regionId          Int             @map("region_id")
+  difficulty        DifficultyLevel
+  status            ContentStatus   @default(DRAFT)
+  durationDays      Int             @map("duration_days")
+  distanceKm        Decimal?        @map("distance_km") @db.Decimal(8, 2)
+  maxAltitudeMeters Int?            @map("max_altitude_meters")
+  startingPoint     String?         @map("starting_point") @db.VarChar(255)
+  endingPoint       String?         @map("ending_point") @db.VarChar(255)
+  coverImageUrl     String?         @map("cover_image_url") @db.VarChar(1000)
+  price             Decimal?        @db.Decimal(10, 2)
+  discountPrice     Decimal?        @map("discount_price") @db.Decimal(10, 2)
+  currency          String          @default("INR") @db.Char(3)
+  maxGroupSize      Int?            @map("max_group_size")
+  minAge            Int?            @map("min_age")
+  maxAge            Int?            @map("max_age")
+  isFeatured        Boolean         @default(false) @map("is_featured")
+  publishedAt       DateTime?       @map("published_at") @db.DateTime(0)
+  createdBy         Int?            @map("created_by")
+  createdAt         DateTime        @default(now()) @map("created_at") @db.DateTime(0)
+  updatedAt         DateTime        @default(now()) @updatedAt @map("updated_at") @db.DateTime(0)
+
+  region      Region                @relation(fields: [regionId], references: [id], onDelete: Restrict)
+  creator     Admin?                @relation("ExpeditionCreator", fields: [createdBy], references: [id], onDelete: SetNull)
+  seasons     ExpeditionSeason[]
+  itineraries ExpeditionItinerary[]
+  images      ExpeditionImage[]
+  contacts    Contact[]
+
+  @@index([regionId, status])
+  @@index([status, isFeatured])
+  @@index([status, publishedAt])
+  @@index([difficulty])
+  @@index([createdBy])
+  @@map("expedition")
+}
+
+model ExpeditionSeason {
+  expeditionId Int @map("expedition_id")
+  seasonId     Int @map("season_id")
+
+  expedition Expedition @relation(fields: [expeditionId], references: [id], onDelete: Cascade)
+  season     Season     @relation(fields: [seasonId], references: [id], onDelete: Cascade)
+
+  @@id([expeditionId, seasonId])
+  @@index([seasonId])
+  @@map("expedition_season")
+}
+
+model ExpeditionItinerary {
+  id             Int      @id @default(autoincrement())
+  expeditionId   Int      @map("expedition_id")
+  dayNumber      Int      @map("day_number")
+  title          String   @db.VarChar(255)
+  description    String?  @db.Text
+  distanceKm     Decimal? @map("distance_km") @db.Decimal(8, 2)
+  altitudeMeters Int?     @map("altitude_meters")
+  createdAt      DateTime @default(now()) @map("created_at") @db.DateTime(0)
+  updatedAt      DateTime @default(now()) @updatedAt @map("updated_at") @db.DateTime(0)
+
+  expedition Expedition @relation(fields: [expeditionId], references: [id], onDelete: Cascade)
+
+  @@unique([expeditionId, dayNumber])
+  @@map("expedition_itinerary")
+}
+
+model ExpeditionImage {
+  id           Int      @id @default(autoincrement())
+  expeditionId Int      @map("expedition_id")
+  imageUrl     String   @map("image_url") @db.VarChar(1000)
+  altText      String?  @map("alt_text") @db.VarChar(255)
+  caption      String?  @db.VarChar(255)
+  sortOrder    Int      @default(0) @map("sort_order")
+  createdAt    DateTime @default(now()) @map("created_at") @db.DateTime(0)
+
+  expedition Expedition @relation(fields: [expeditionId], references: [id], onDelete: Cascade)
+
+  @@index([expeditionId, sortOrder])
+  @@map("expedition_image")
+}
+
+// ============ GALLERY / CONTACT / SETTINGS ============
+
+model Gallery {
+  id        Int      @id @default(autoincrement())
+  imageUrl  String   @map("image_url") @db.VarChar(1000)
+  altText   String?  @map("alt_text") @db.VarChar(255)
+  sortOrder Int      @default(0) @map("sort_order")
+  isActive  Boolean  @default(true) @map("is_active")
+  createdAt DateTime @default(now()) @map("created_at") @db.DateTime(0)
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at") @db.DateTime(0)
+
+  @@index([isActive, sortOrder])
+  @@map("gallery")
+}
+
+model Contact {
+  id           Int           @id @default(autoincrement())
+  name         String        @db.VarChar(150)
+  email        String        @db.VarChar(255)
+  phone        String?       @db.VarChar(30)
+  subject      String?       @db.VarChar(255)
+  message      String        @db.Text
+  trekId       Int?          @map("trek_id")
+  expeditionId Int?          @map("expedition_id")
+  status       ContactStatus @default(UNREAD)
+  adminNotes   String?       @map("admin_notes") @db.Text
+  createdAt    DateTime      @default(now()) @map("created_at") @db.DateTime(0)
+  updatedAt    DateTime      @default(now()) @updatedAt @map("updated_at") @db.DateTime(0)
+
+  trek       Trek?       @relation(fields: [trekId], references: [id], onDelete: SetNull)
+  expedition Expedition? @relation(fields: [expeditionId], references: [id], onDelete: SetNull)
+
+  @@index([status, createdAt]) // admin inbox
+  @@index([email])
+  @@index([trekId])
+  @@index([expeditionId])
+  @@map("contact")
+}
+
+model SiteSettings {
+  id           Int      @id @default(autoincrement())
+  logoUrl      String?  @map("logo_url") @db.VarChar(1000)
+  heroImageUrl String?  @map("hero_image_url") @db.VarChar(1000)
+  contactEmail String?  @map("contact_email") @db.VarChar(255)
+  contactPhone String?  @map("contact_phone") @db.VarChar(30)
+  address      String?  @db.Text
+  facebookUrl  String?  @map("facebook_url") @db.VarChar(500)
+  instagramUrl String?  @map("instagram_url") @db.VarChar(500)
+  youtubeUrl   String?  @map("youtube_url") @db.VarChar(500)
+  footerText   String?  @map("footer_text") @db.Text
+  updatedAt    DateTime @default(now()) @updatedAt @map("updated_at") @db.DateTime(0)
+
+  @@map("site_settings")
+}
