@@ -138,6 +138,5 @@ export class AuthController {
       message: 'Profile Updated successfully',
       data: result,
     });
-   
   });
 }

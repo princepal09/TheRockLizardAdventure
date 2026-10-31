@@ -8,7 +8,7 @@ export interface CurrentUserPayload {
 declare global {
   namespace Express {
     interface Request {
-     user?:CurrentUserPayload
+      user?: CurrentUserPayload;
     }
   }
 }

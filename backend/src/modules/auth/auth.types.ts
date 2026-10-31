@@ -1,4 +1,3 @@
-
 type tokenType = 'access' | 'refresh';
 
 export interface IPayload {

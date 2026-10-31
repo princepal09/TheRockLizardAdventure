@@ -5,7 +5,7 @@ export const sanitizedUserResponse = (admin: Admin) => {
     id: admin.id,
     name: admin.name,
     email: admin.email,
-    profileImage:admin.profileImageUrl,
+    profileImage: admin.profileImageUrl,
     isActive: admin.isActive,
     createdAt: admin.createdAt,
     updatedAt: admin.updatedAt,

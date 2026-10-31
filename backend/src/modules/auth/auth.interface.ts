@@ -12,7 +12,7 @@ export interface IAuthRepository {
   deleteRefreshTokensByAdminId(adminId: string): Promise<void>;
   updateAdminProfile(
     adminId: string,
-    data: { name?: string; profileImageUrl: string, profileImagePublicId?:string},
+    data: { name?: string; profileImageUrl: string; profileImagePublicId?: string },
   ): Promise<Admin | null>;
   updatePassword(adminId: string, currentPasswordHash: string): Promise<void>;
   findAdminByIdForUpdatePassword(adminId: string): Promise<IUpdatePasswordResponse | null>;
