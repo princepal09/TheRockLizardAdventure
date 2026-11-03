@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ArrowRight, Eye, EyeOff, LockKeyhole, Mail } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, type FormEvent } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
@@ -27,6 +27,8 @@ export default function LoginForm() {
     register,
     handleSubmit,
     setError,
+    reset,
+    setValue,
     formState: { errors, isSubmitting },
   } = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
@@ -47,12 +49,24 @@ export default function LoginForm() {
     }
   };
 
+  function submitForm(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    if (isSubmitting) return;
+
+    // Browser autofill can update inputs without notifying React Hook Form.
+    const fields = new FormData(event.currentTarget);
+    setValue("email", String(fields.get("email") ?? ""));
+    setValue("password", String(fields.get("password") ?? ""));
+    void handleSubmit(submitHandler)(event);
+  }
+
   return (
     <form
       className="min-w-0 space-y-4"
       aria-busy={loginMutation.isPending}
+      method="post"
       noValidate
-      onSubmit={handleSubmit(submitHandler)}
+      onSubmit={submitForm}
     >
       <div className="space-y-1.5">
         <label
