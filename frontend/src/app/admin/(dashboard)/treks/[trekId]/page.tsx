@@ -1,3 +1,4 @@
+import ModuleSkeleton from "@/components/ui/ModuleSkeleton";
 import { Suspense } from "react";
 
 import TripEditor from "../../_components/trips/TripEditor";
@@ -13,7 +14,7 @@ async function TrekContent({ params }: TrekPageProps) {
 
 export default function TrekPage({ params }: TrekPageProps) {
   return (
-    <Suspense fallback={<p role="status">Loading trek…</p>}>
+    <Suspense fallback={<ModuleSkeleton label="Loading trek" variant="form" />}>
       <TrekContent params={params} />
     </Suspense>
   );

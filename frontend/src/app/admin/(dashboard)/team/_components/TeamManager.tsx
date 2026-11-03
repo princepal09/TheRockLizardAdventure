@@ -1,5 +1,6 @@
 "use client";
 
+import ModuleSkeleton from "@/components/ui/ModuleSkeleton";
 import { Plus, UserRound } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useRef, useState, type FormEvent } from "react";
@@ -150,13 +151,13 @@ export default function TeamManager() {
                   <Button type="button" variant="outline" onClick={closeEditor}>Cancel</Button>
                 </div>
               </div>
-            ) : <p role="status" className={`${panelClass} p-5`}>Loading team member…</p>}
+            ) : <ModuleSkeleton label="Loading team member" variant="form" />}
           </div>
         )}
 
         <div className={panelClass}>
           {members.isPending ? (
-            <p role="status" className="p-5">Loading team members…</p>
+            <ModuleSkeleton label="Loading team members" />
           ) : members.isError ? (
             <div className="space-y-3 p-5">
               <p role="alert" className="text-sm text-red-800">{getErrorMessage(members.error)}</p>

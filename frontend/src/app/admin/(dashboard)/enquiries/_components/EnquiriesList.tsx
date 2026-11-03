@@ -1,5 +1,6 @@
 "use client";
 
+import ModuleSkeleton from "@/components/ui/ModuleSkeleton";
 import { ChevronRight, Inbox } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
@@ -40,7 +41,7 @@ export default function EnquiriesList() {
 
       <div className="rounded-xl border border-slate-200 bg-white shadow-sm">
         {enquiries.isPending ? (
-          <p role="status" className="p-6 text-sm text-slate-600">Loading enquiries…</p>
+          <ModuleSkeleton label="Loading enquiries" />
         ) : enquiries.isError ? (
           <div className="space-y-3 p-6">
             <p role="alert" className="text-sm text-red-800">{getErrorMessage(enquiries.error)}</p>

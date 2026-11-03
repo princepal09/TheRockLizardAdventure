@@ -1,5 +1,6 @@
 "use client";
 
+import ModuleSkeleton from "@/components/ui/ModuleSkeleton";
 import Image from "next/image";
 import type { FormEvent } from "react";
 
@@ -100,7 +101,7 @@ export default function GalleryManager() {
           <p role="alert" className="text-sm text-red-800">{getErrorMessage(gallery.error)}</p>
           <Button type="button" variant="outline" disabled={gallery.isFetching} onClick={() => void gallery.refetch()}>Retry</Button>
         </div>
-      ) : <p role="status" className="text-sm text-slate-600">Loading gallery…</p>}
+      ) : <ModuleSkeleton label="Loading gallery" variant="cards" />}
     </section>
   );
 }

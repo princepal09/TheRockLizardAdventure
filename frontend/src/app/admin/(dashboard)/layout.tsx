@@ -2,6 +2,7 @@
 
 import { useEffect, type ReactNode } from "react";
 import { useRouter } from "next/navigation";
+import LogoLoading from "@/components/ui/LogoLoading";
 import { Button } from "@/components/ui/button";
 import { useAuthStore } from "@/stores/auth.store";
 import { useAuthInit } from "@/stores/useAuthInit";
@@ -37,11 +38,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
   }
 
   if (session.isPending || shouldRedirect) {
-    return (
-      <p role="status" className="p-8">
-        Checking your session…
-      </p>
-    );
+    return <LogoLoading label="Checking your session" />;
   }
 
   return (

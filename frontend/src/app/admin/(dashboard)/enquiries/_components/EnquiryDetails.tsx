@@ -1,5 +1,6 @@
 "use client";
 
+import ModuleSkeleton from "@/components/ui/ModuleSkeleton";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -72,7 +73,7 @@ export default function EnquiryDetails({ id }: { id: string }) {
         {enquiry?.subject || "Enquiry details"}
       </h1>
       {query.isPending ? (
-        <p role="status" className="text-sm text-slate-600">Loading enquiry…</p>
+        <ModuleSkeleton label="Loading enquiry" variant="form" />
       ) : query.isError ? (
         <div className="space-y-3">
           <p role="alert" className="text-sm text-red-800">{getErrorMessage(query.error)}</p>

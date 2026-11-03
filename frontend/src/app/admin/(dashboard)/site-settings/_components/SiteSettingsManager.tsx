@@ -1,5 +1,6 @@
 "use client";
 
+import ModuleSkeleton from "@/components/ui/ModuleSkeleton";
 import Image from "next/image";
 import { useState, type FormEvent } from "react";
 
@@ -228,7 +229,7 @@ export default function SiteSettingsManager() {
           <Button type="button" variant="outline" disabled={settings.isFetching} onClick={() => void settings.refetch()}>Retry</Button>
         </div>
       ) : (
-        <p role="status" className="text-sm text-slate-600">Loading site settings…</p>
+        <ModuleSkeleton label="Loading site settings" variant="form" />
       )}
     </section>
   );

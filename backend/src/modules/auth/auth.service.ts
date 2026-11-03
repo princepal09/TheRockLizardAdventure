@@ -16,7 +16,10 @@ import {
   generatePasswordResetToken,
   hashPasswordResetToken,
 } from '../../utils/auth/password.reset.helper.js';
-import { sendPasswordEmail } from '../../emails/services/send-password.email.js';
+import {
+  sendPasswordEmail,
+  sendPasswordUpdatedEmail,
+} from '../../emails/services/send-password.email.js';
 import {
   deleteFromCloudinary,
   uploadToCloudinary,
@@ -88,7 +91,10 @@ export class AuthService {
   async getLoggedInUser(adminId: string) {
     const admin = await this.authRepo.findAdminById(adminId);
     if (!admin) {
-      throw new AppError('User not found', 404);
+      throw new AppError('User no longer exists', 401);
+    }
+    if (!admin.isActive) {
+      throw new AppError('Admin account is not active', 401);
     }
     return sanitizedUserResponse(admin);
   }
@@ -100,6 +106,7 @@ export class AuthService {
       throw new AppError('Invalid refresh token', 401);
     }
 
+    const admin = await this.getLoggedInUser(decoded.id);
     const tokens = await this.authRepo.findRefreshTokensByAdminId(decoded.id);
 
     const matchedToken = await Promise.any(
@@ -120,8 +127,8 @@ export class AuthService {
 
     // Generate new tokens
     const payload = {
-      id: decoded.id,
-      email: decoded.email,
+      id: admin.id,
+      email: admin.email,
     };
 
     const newAccessToken = signAccessToken({
@@ -182,9 +189,8 @@ export class AuthService {
       throw new AppError('Failed to hash the new Password', 500);
     }
 
-    await this.authRepo.updatePassword(adminId, newHashPassword);
-
-    await this.authRepo.deleteRefreshTokensByAdminId(adminId);
+    const recipient = await this.authRepo.updatePassword(adminId, newHashPassword);
+    await sendPasswordUpdatedEmail(recipient, 'changed');
   }
 
   async forgotPassword(body: ForgotPasswordDTO) {
@@ -224,11 +230,12 @@ export class AuthService {
 
     const newPasswordHash = await hashPassword(newPassword);
 
-    await this.authRepo.resetPasswordTransaction(
+    const recipient = await this.authRepo.resetPasswordTransaction(
       resetToken.adminId,
       newPasswordHash,
       resetToken.id,
     );
+    await sendPasswordUpdatedEmail(recipient, 'reset');
   }
 
   async updateProfile(adminId: string, data: UpdateProfileDTO, file?: Express.Multer.File) {

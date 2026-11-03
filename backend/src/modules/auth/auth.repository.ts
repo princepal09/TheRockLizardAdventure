@@ -1,5 +1,5 @@
 import { Admin, RefreshToken } from '../../../generated/prisma/client.js';
-import { IAuthRepository } from './auth.interface.js';
+import type { IAuthRepository, PasswordNotificationRecipient } from './auth.interface.js';
 import { prisma } from '../../lib/prisma.js';
 import { IUpdatePasswordResponse } from './auth.response.js';
 
@@ -94,15 +94,17 @@ export class AuthRepository implements IAuthRepository {
     return admin;
   }
 
-  async updatePassword(amdinId: string, currentPasswordHash: string): Promise<void> {
-    await prisma.admin.update({
-      where: {
-        id: amdinId,
-      },
-      data: {
-        passwordHash: currentPasswordHash,
-      },
-    });
+  async updatePassword(adminId: string, passwordHash: string): Promise<PasswordNotificationRecipient> {
+    const [recipient] = await prisma.$transaction([
+      prisma.admin.update({
+        where: { id: adminId },
+        data: { passwordHash },
+        select: { email: true, name: true },
+      }),
+      prisma.refreshToken.deleteMany({ where: { adminId } }),
+    ]);
+
+    return recipient;
   }
 
   async findAdminByIdForUpdatePassword(adminId: string): Promise<IUpdatePasswordResponse | null> {
@@ -160,28 +162,17 @@ export class AuthRepository implements IAuthRepository {
     adminId: string,
     passwordHash: string,
     resetTokenId: string,
-  ): Promise<void> {
-    await prisma.$transaction(async (tx: any) => {
-      await tx.admin.update({
-        where: {
-          id: adminId,
-        },
-        data: {
-          passwordHash,
-        },
-      });
+  ): Promise<PasswordNotificationRecipient> {
+    const [recipient] = await prisma.$transaction([
+      prisma.admin.update({
+        where: { id: adminId },
+        data: { passwordHash },
+        select: { email: true, name: true },
+      }),
+      prisma.resetPasswordToken.delete({ where: { id: resetTokenId } }),
+      prisma.refreshToken.deleteMany({ where: { adminId } }),
+    ]);
 
-      await tx.resetPasswordToken.delete({
-        where: {
-          id: resetTokenId,
-        },
-      });
-
-      await tx.refreshToken.deleteMany({
-        where: {
-          adminId,
-        },
-      });
-    });
+    return recipient;
   }
 }

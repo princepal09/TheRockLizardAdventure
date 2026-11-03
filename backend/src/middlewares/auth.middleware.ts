@@ -22,14 +22,7 @@ export const verifyUser = (authService: AuthService) => {
         throw new AppError('Invalid or expired access token', 401);
       }
 
-      const user = await authService.getLoggedInUser(decoded.id);
-
-      if (!user) {
-        throw new AppError('User no longer exists', 401);
-      }
-
-      // Attach user to request object
-      req.user = user;
+      req.user = await authService.getLoggedInUser(decoded.id);
 
       return next();
     } catch (error) {

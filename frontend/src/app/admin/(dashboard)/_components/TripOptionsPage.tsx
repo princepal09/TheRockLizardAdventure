@@ -1,5 +1,6 @@
 "use client";
 
+import ModuleSkeleton from "@/components/ui/ModuleSkeleton";
 import { ImageUp, Plus } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useRef, useState, type ComponentProps, type FormEvent } from "react";
@@ -169,12 +170,12 @@ export default function TripOptionsPage({ kind }: { kind: TripOptionKind }) {
                 <p role="alert" className="text-sm text-red-800">{getErrorMessage(detail.error)}</p>
                 <Button type="button" variant="outline" onClick={() => void detail.refetch()} disabled={detail.isFetching}>Retry</Button>
               </div>
-            ) : <p role="status" className={`${panelClass} p-5`}>Loading details…</p>}
+            ) : <ModuleSkeleton label="Loading details" variant="form" />}
           </div>
         )}
         <div className={panelClass}>
           {list.isPending ? (
-            <p role="status" className="p-5">Loading {kind}…</p>
+            <ModuleSkeleton label={`Loading ${kind}`} />
           ) : list.isError ? (
             <div className="space-y-3 p-5">
               <p role="alert" className="text-sm text-red-800">{getErrorMessage(list.error)}</p>

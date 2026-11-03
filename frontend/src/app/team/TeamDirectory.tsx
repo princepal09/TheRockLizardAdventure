@@ -1,5 +1,6 @@
 "use client";
 
+import ModuleSkeleton from "@/components/ui/ModuleSkeleton";
 import { UserRound } from "lucide-react";
 import Image from "next/image";
 
@@ -17,7 +18,7 @@ export default function TeamDirectory() {
         <p className="max-w-xl text-slate-600">Get to know the people behind our treks and expeditions.</p>
       </header>
       {team.isPending ? (
-        <p role="status" className="text-sm text-slate-600">Loading team members…</p>
+        <ModuleSkeleton label="Loading team members" variant="cards" />
       ) : team.isError ? (
         <div className="space-y-3">
           <p role="alert" className="text-sm text-red-800">We couldn&apos;t load the team. Please try again.</p>

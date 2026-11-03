@@ -39,7 +39,6 @@ export default function LoginForm() {
     try {
       await loginMutation.mutateAsync(data);
       router.replace("/admin/dashboard");
-      toast.success("Sign in Successfully");
     } catch (err) {
       toast.error(getErrorMessage(err));
       setError("root.server", { message: getErrorMessage(err) });
@@ -51,6 +50,7 @@ export default function LoginForm() {
   return (
     <form
       className="min-w-0 space-y-4"
+      aria-busy={loginMutation.isPending}
       noValidate
       onSubmit={handleSubmit(submitHandler)}
     >

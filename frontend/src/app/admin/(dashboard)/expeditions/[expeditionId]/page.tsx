@@ -1,3 +1,4 @@
+import ModuleSkeleton from "@/components/ui/ModuleSkeleton";
 import { Suspense } from "react";
 
 import TripEditor from "../../_components/trips/TripEditor";
@@ -13,7 +14,7 @@ async function ExpeditionContent({ params }: ExpeditionPageProps) {
 
 export default function ExpeditionPage({ params }: ExpeditionPageProps) {
   return (
-    <Suspense fallback={<p role="status">Loading expedition…</p>}>
+    <Suspense fallback={<ModuleSkeleton label="Loading expedition" variant="form" />}>
       <ExpeditionContent params={params} />
     </Suspense>
   );

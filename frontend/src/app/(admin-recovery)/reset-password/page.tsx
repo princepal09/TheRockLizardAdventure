@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
+import ModuleSkeleton from "@/components/ui/ModuleSkeleton";
 
 import PasswordRecoveryForm from "@/app/admin/(auth)/_components/PasswordRecoveryForm";
 import PasswordRecoveryLayout from "@/app/admin/(auth)/_components/PasswordRecoveryLayout";
@@ -28,9 +29,7 @@ export default function ResetPasswordPage({
       <PasswordRecoveryLayout>
         <Suspense
           fallback={
-            <p role="status" className="p-6 sm:p-8">
-              Loading reset form…
-            </p>
+            <ModuleSkeleton label="Loading reset form" variant="form" />
           }
         >
           <ResetPasswordForm searchParams={searchParams} />

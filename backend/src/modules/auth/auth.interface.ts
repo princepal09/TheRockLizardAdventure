@@ -1,6 +1,8 @@
 import { Admin, RefreshToken } from '../../../generated/prisma/client.js';
 import { IUpdatePasswordResponse } from './auth.response.js';
 
+export type PasswordNotificationRecipient = Pick<Admin, 'email' | 'name'>;
+
 export interface IAuthRepository {
   findAdminByEmail(email: string): Promise<Admin | null>;
   findAdminById(adminId: string): Promise<Admin | null>;
@@ -15,7 +17,7 @@ export interface IAuthRepository {
     adminId: string,
     data: { name?: string; profileImageUrl: string; profileImagePublicId?: string },
   ): Promise<Admin | null>;
-  updatePassword(adminId: string, currentPasswordHash: string): Promise<void>;
+  updatePassword(adminId: string, passwordHash: string): Promise<PasswordNotificationRecipient>;
   findAdminByIdForUpdatePassword(adminId: string): Promise<IUpdatePasswordResponse | null>;
   createPasswordResetToken(adminId: string, tokenHash: string, expiresAt: Date): Promise<any>;
   findPasswordResetToken(tokenHash: string): Promise<any>;
@@ -25,5 +27,5 @@ export interface IAuthRepository {
     adminId: string,
     passwordHash: string,
     resetTokenId: string,
-  ): Promise<void>;
+  ): Promise<PasswordNotificationRecipient>;
 }

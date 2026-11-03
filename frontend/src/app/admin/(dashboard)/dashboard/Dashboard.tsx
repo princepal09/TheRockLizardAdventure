@@ -2,10 +2,14 @@
 
 import { ArrowRight, Inbox, Mountain, Plus, Route } from "lucide-react";
 import Link from "next/link";
+import { useEffect } from "react";
+import { toast } from "sonner";
 
+import ModuleSkeleton from "@/components/ui/ModuleSkeleton";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { useDashboardSummary } from "@/hooks/dashboard/useDashboardSummary";
 import { useAuthInit } from "@/stores/useAuthInit";
+import { useAuthStore } from "@/stores/auth.store";
 import { getErrorMessage } from "@/utils/error";
 import EnquiryStatusBadge from "../enquiries/_components/EnquiryStatusBadge";
 
@@ -24,6 +28,12 @@ export default function Dashboard() {
   const { data: admin } = useAuthInit();
   const summary = useDashboardSummary();
   const data = summary.data;
+
+  useEffect(() => {
+    if (!useAuthStore.getState().signInNoticePending) return;
+    useAuthStore.setState({ signInNoticePending: false });
+    toast.success("Signed in successfully");
+  }, []);
 
   return (
     <section aria-labelledby="dashboard-heading" className="mx-auto w-full max-w-6xl space-y-6">
@@ -109,9 +119,7 @@ export default function Dashboard() {
           </Button>
         </div>
       ) : (
-        <p role="status" className="rounded-xl border border-slate-200 bg-white p-5 text-sm text-slate-600">
-          Loading dashboard summary…
-        </p>
+        <ModuleSkeleton label="Loading dashboard summary" variant="overview" />
       )}
     </section>
   );

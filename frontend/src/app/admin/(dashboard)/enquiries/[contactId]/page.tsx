@@ -1,3 +1,4 @@
+import ModuleSkeleton from "@/components/ui/ModuleSkeleton";
 import { Suspense } from "react";
 
 import EnquiryDetails from "../_components/EnquiryDetails";
@@ -13,7 +14,7 @@ async function EnquiryContent({ params }: EnquiryPageProps) {
 
 export default function EnquiryPage({ params }: EnquiryPageProps) {
   return (
-    <Suspense fallback={<p role="status">Loading enquiry…</p>}>
+    <Suspense fallback={<ModuleSkeleton label="Loading enquiry" variant="form" />}>
       <EnquiryContent params={params} />
     </Suspense>
   );

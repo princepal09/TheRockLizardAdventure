@@ -1,5 +1,6 @@
 "use client";
 
+import ModuleSkeleton from "@/components/ui/ModuleSkeleton";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import type { FormEvent } from "react";
@@ -429,7 +430,7 @@ export default function TripEditor({
           )}
         </>
       ) : (
-        <p role="status">Loading {label} editor…</p>
+        <ModuleSkeleton label={`Loading ${label} editor`} variant="form" />
       )}
     </section>
   );

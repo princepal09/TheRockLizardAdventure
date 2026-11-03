@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 
+import ModuleSkeleton from "@/components/ui/ModuleSkeleton";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { useTrips } from "@/hooks/trips/useTrips";
 import type { TripKind } from "@/types/trip";
@@ -34,9 +35,7 @@ export default function TripsList({ kind }: { kind: TripKind }) {
       </header>
       <div className="rounded-xl border border-slate-200 bg-white shadow-sm">
         {trips.isPending ? (
-          <p role="status" className="p-5">
-            Loading {kind}…
-          </p>
+          <ModuleSkeleton label={`Loading ${kind}`} />
         ) : trips.isError ? (
           <div className="space-y-3 p-5">
             <p role="alert" className="text-red-800">
