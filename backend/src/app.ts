@@ -14,6 +14,7 @@ import contactRoutes from './modules/contact/contact.route.js';
 import siteSettingsRoutes from './modules/site-settings/site-settings.route.js';
 import galleryRoutes from './modules/gallery/gallery.route.js';
 import teamRoutes from './modules/team/team.route.js';
+import dashboardRoutes from './modules/dashboard/dashboard.route.js';
 import { globalErrorHandler } from './middlewares/error.middleware.js';
 
 import { requestLogger } from './middlewares/request-logger.middleware.js';
@@ -50,6 +51,7 @@ app.use('/api/v1/enquiries', contactRoutes);
 app.use('/api/v1/site-settings', siteSettingsRoutes);
 app.use('/api/v1/gallery', galleryRoutes);
 app.use('/api/v1/team', teamRoutes);
+app.use('/api/v1/dashboard', dashboardRoutes);
 
 app.use((req, _res, next) => {
   next(new AppError(`Cannot find ${req.originalUrl} on this server`, 404));

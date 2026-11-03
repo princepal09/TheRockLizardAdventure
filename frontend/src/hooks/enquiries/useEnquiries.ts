@@ -4,7 +4,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 
 import { getEnquiries, getEnquiry, updateEnquiry } from "@/lib/api/enquiries";
-import { enquiryKeys } from "@/lib/api/query-keys";
+import { dashboardKeys, enquiryKeys } from "@/lib/api/query-keys";
 import { enquiryStatusSchema } from "@/lib/validation/admin";
 import { useAuthStore } from "@/stores/auth.store";
 import type { UpdateEnquiryInput } from "@/types/enquiry";
@@ -46,6 +46,7 @@ export function useUpdateEnquiry(id: string) {
       queryClient.setQueryData<typeof enquiry[]>(listKey, (items) =>
         items?.map((item) => item.id === id ? enquiry : item),
       );
+      void queryClient.invalidateQueries({ queryKey: dashboardKeys.summary(sessionVersion) });
       toast.success("Enquiry updated successfully");
     },
   });

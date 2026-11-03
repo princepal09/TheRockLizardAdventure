@@ -18,6 +18,7 @@ import {
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import SignOutConfirmation from "./SignOutConfirmation";
 
 type NavigationItem = { label: string; icon: LucideIcon; href?: string };
 
@@ -113,7 +114,13 @@ export default function DashboardSidebar() {
   );
 }
 
-export function MobileDashboardNavigation() {
+export function MobileDashboardNavigation({
+  onSignOut,
+  signingOut,
+}: {
+  onSignOut: () => Promise<unknown>;
+  signingOut: boolean;
+}) {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -136,7 +143,7 @@ export function MobileDashboardNavigation() {
         </Dialog.Trigger>
         <Dialog.Portal>
           <Dialog.Backdrop className="fixed inset-0 z-40 bg-primary/65 md:hidden" />
-          <Dialog.Popup className="fixed inset-y-0 left-0 z-50 w-72 max-w-[85vw] overflow-y-auto border-r border-white/10 bg-primary text-primary-foreground shadow-xl md:hidden">
+          <Dialog.Popup className="fixed inset-y-0 left-0 z-50 flex w-72 max-w-[85vw] flex-col overflow-y-auto border-r border-white/10 bg-primary text-primary-foreground shadow-xl md:hidden">
             <Dialog.Title className="border-b border-white/10 px-5 py-5 pr-16 text-sm font-semibold">
               Basecamp navigation
             </Dialog.Title>
@@ -147,6 +154,13 @@ export function MobileDashboardNavigation() {
               <X aria-hidden="true" className="size-5" />
             </Dialog.Close>
             <SidebarContents onNavigate={() => setOpen(false)} />
+            <div className="mt-auto border-t border-white/10 p-3">
+              <SignOutConfirmation
+                disabled={signingOut}
+                onConfirm={onSignOut}
+                className="min-h-11 w-full justify-start gap-2 px-3"
+              />
+            </div>
           </Dialog.Popup>
         </Dialog.Portal>
       </Dialog.Root>

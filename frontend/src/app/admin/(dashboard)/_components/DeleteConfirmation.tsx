@@ -2,13 +2,13 @@
 
 import { AlertDialog } from "@base-ui/react/alert-dialog";
 import { Trash2, type LucideIcon } from "lucide-react";
-import { useRef, useState } from "react";
+import { useRef, useState, type ReactNode } from "react";
 
 import { Button } from "@/components/ui/button";
 import { getErrorMessage } from "@/utils/error";
 
 type ConfirmationProps = {
-  label: string;
+  label: ReactNode;
   title: string;
   description: string;
   disabled?: boolean;
@@ -17,12 +17,13 @@ type ConfirmationProps = {
 
 export function DangerConfirmation({
   label, title, description, disabled, onConfirm,
-  confirmLabel, pendingLabel, icon: Icon, filledTrigger,
+  confirmLabel, pendingLabel, icon: Icon, filledTrigger, triggerClassName,
 }: ConfirmationProps & {
   confirmLabel: string;
   pendingLabel: string;
   icon: LucideIcon;
   filledTrigger?: boolean;
+  triggerClassName?: string;
 }) {
   const cancelRef = useRef<HTMLButtonElement>(null);
   const [open, setOpen] = useState(false);
@@ -54,15 +55,21 @@ export function DangerConfirmation({
     }}>
       <AlertDialog.Trigger
         disabled={disabled}
-        render={<Button type="button" variant="destructive" className={filledTrigger ? "bg-red-700 text-white hover:bg-red-800" : undefined} />}
+        render={
+          <Button
+            type="button"
+            variant="destructive"
+            className={`${filledTrigger ? "bg-red-700 text-white hover:bg-red-800" : ""} ${triggerClassName ?? ""}`}
+          />
+        }
       >
         {label}
       </AlertDialog.Trigger>
       <AlertDialog.Portal>
-        <AlertDialog.Backdrop className="fixed inset-0 z-50 bg-primary/65" />
+        <AlertDialog.Backdrop className="fixed inset-0 z-60 bg-primary/65" />
         <AlertDialog.Popup
           initialFocus={cancelRef}
-          className="fixed top-1/2 left-1/2 z-50 max-h-[calc(100dvh-2rem)] w-[calc(100%-2rem)] max-w-md -translate-x-1/2 -translate-y-1/2 overflow-y-auto rounded-2xl border border-slate-200 bg-white p-5 text-primary shadow-2xl sm:p-6"
+          className="fixed top-1/2 left-1/2 z-60 max-h-[calc(100dvh-2rem)] w-[calc(100%-2rem)] max-w-md -translate-x-1/2 -translate-y-1/2 overflow-y-auto rounded-2xl border border-slate-200 bg-white p-5 text-primary shadow-2xl sm:p-6"
         >
           <span className="grid size-11 place-items-center rounded-xl bg-red-100 text-red-700">
             <Icon aria-hidden="true" className="size-5" />

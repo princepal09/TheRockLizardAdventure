@@ -43,3 +43,8 @@ export const teamKeys = {
   list: (version: number) => [...teamKeys.admin, version, "list"] as const,
   detail: (version: number, id?: string) => [...teamKeys.admin, version, "detail", id] as const,
 };
+
+export const dashboardKeys = {
+  all: ["dashboard"] as const,
+  summary: (version: number) => [...dashboardKeys.all, version, "summary"] as const,
+};

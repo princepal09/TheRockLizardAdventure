@@ -6,6 +6,7 @@ import { toast } from "sonner";
 import { logout, logoutAll } from "@/lib/api/auth";
 import {
   authKeys,
+  dashboardKeys,
   enquiryKeys,
   galleryKeys,
   siteSettingsKeys,
@@ -36,6 +37,7 @@ export function useEndAdminSession<Input>(
 
       useAuthStore.getState().clearAuth();
       queryClient.setQueryData(authKeys.currentAdmin(), null);
+      queryClient.removeQueries({ queryKey: dashboardKeys.all });
       queryClient.removeQueries({ queryKey: enquiryKeys.all });
       queryClient.removeQueries({ queryKey: tripKeys.all });
       queryClient.removeQueries({ queryKey: tripOptionKeys.all });

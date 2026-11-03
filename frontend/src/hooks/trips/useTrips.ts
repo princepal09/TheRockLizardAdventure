@@ -3,7 +3,7 @@
 import { skipToken, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 
-import { tripKeys } from "@/lib/api/query-keys";
+import { dashboardKeys, tripKeys } from "@/lib/api/query-keys";
 import { getTrip, getTripEditorOptions, getTrips } from "@/lib/api/trips";
 import { useAuthStore } from "@/stores/auth.store";
 import type { TripKind } from "@/types/trip";
@@ -46,6 +46,7 @@ export function useTripMutation<Input, Result>(
       if (useAuthStore.getState().sessionVersion !== version) return;
       await Promise.all([
         queryClient.invalidateQueries({ queryKey: tripKeys.list(version, kind) }),
+        queryClient.invalidateQueries({ queryKey: dashboardKeys.summary(version) }),
         id &&
           queryClient.invalidateQueries({
             queryKey: tripKeys.detail(version, kind, id),
