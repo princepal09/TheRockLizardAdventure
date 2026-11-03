@@ -36,3 +36,10 @@ export const siteSettingsKeys = {
   all: ["site-settings"] as const,
   detail: (version: number) => [...siteSettingsKeys.all, version] as const,
 };
+
+export const teamKeys = {
+  public: ["team", "public"] as const,
+  admin: ["team", "admin"] as const,
+  list: (version: number) => [...teamKeys.admin, version, "list"] as const,
+  detail: (version: number, id?: string) => [...teamKeys.admin, version, "detail", id] as const,
+};

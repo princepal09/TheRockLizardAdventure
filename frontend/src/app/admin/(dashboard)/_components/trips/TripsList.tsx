@@ -26,7 +26,7 @@ export default function TripsList({ kind }: { kind: TripKind }) {
         </div>
         <Link
           href={`/admin/${kind}/new`}
-          className={`${buttonVariants({ variant: "secondary", size: "lg" })} gap-2 bg-secondary text-secondary-foreground shadow-md transition-all hover:bg-secondary/90 hover:shadow-lg hover:scale-[1.02] active:scale-[0.98]`}
+          className={`${buttonVariants({ variant: "secondary", size: "lg" })} gap-2 shadow-md transition-all hover:bg-secondary/90 hover:shadow-lg hover:scale-[1.02] active:scale-[0.98]`}
         >
           <Plus className="size-5 stroke-[2.5]" />
           <span>New {label}</span>

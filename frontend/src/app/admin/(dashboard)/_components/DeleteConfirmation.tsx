@@ -1,25 +1,35 @@
 "use client";
 
 import { AlertDialog } from "@base-ui/react/alert-dialog";
-import { Trash2 } from "lucide-react";
+import { Trash2, type LucideIcon } from "lucide-react";
 import { useRef, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { getErrorMessage } from "@/utils/error";
 
-export default function DeleteConfirmation({ label, title, description, disabled, onConfirm }: {
+type ConfirmationProps = {
   label: string;
   title: string;
   description: string;
   disabled?: boolean;
   onConfirm: () => Promise<unknown>;
+};
+
+export function DangerConfirmation({
+  label, title, description, disabled, onConfirm,
+  confirmLabel, pendingLabel, icon: Icon, filledTrigger,
+}: ConfirmationProps & {
+  confirmLabel: string;
+  pendingLabel: string;
+  icon: LucideIcon;
+  filledTrigger?: boolean;
 }) {
   const cancelRef = useRef<HTMLButtonElement>(null);
   const [open, setOpen] = useState(false);
   const [pending, setPending] = useState(false);
   const [error, setError] = useState("");
 
-  async function confirmDelete() {
+  async function confirmAction() {
     if (pending) return;
     setError("");
     setPending(true);
@@ -44,7 +54,7 @@ export default function DeleteConfirmation({ label, title, description, disabled
     }}>
       <AlertDialog.Trigger
         disabled={disabled}
-        render={<Button type="button" variant="destructive" />}
+        render={<Button type="button" variant="destructive" className={filledTrigger ? "bg-red-700 text-white hover:bg-red-800" : undefined} />}
       >
         {label}
       </AlertDialog.Trigger>
@@ -55,7 +65,7 @@ export default function DeleteConfirmation({ label, title, description, disabled
           className="fixed top-1/2 left-1/2 z-50 max-h-[calc(100dvh-2rem)] w-[calc(100%-2rem)] max-w-md -translate-x-1/2 -translate-y-1/2 overflow-y-auto rounded-2xl border border-slate-200 bg-white p-5 text-primary shadow-2xl sm:p-6"
         >
           <span className="grid size-11 place-items-center rounded-xl bg-red-100 text-red-700">
-            <Trash2 aria-hidden="true" className="size-5" />
+            <Icon aria-hidden="true" className="size-5" />
           </span>
           <AlertDialog.Title className="mt-4 text-lg font-semibold break-words">
             {title}
@@ -79,14 +89,18 @@ export default function DeleteConfirmation({ label, title, description, disabled
             <Button
               type="button"
               disabled={pending}
-              onClick={() => void confirmDelete()}
+              onClick={() => void confirmAction()}
               className="min-h-11 bg-red-700 px-4 text-white hover:bg-red-800"
             >
-              {pending ? "Deleting…" : "Delete"}
+              {pending ? pendingLabel : confirmLabel}
             </Button>
           </div>
         </AlertDialog.Popup>
       </AlertDialog.Portal>
     </AlertDialog.Root>
   );
+}
+
+export default function DeleteConfirmation(props: ConfirmationProps) {
+  return <DangerConfirmation {...props} confirmLabel="Delete" pendingLabel="Deleting…" icon={Trash2} />;
 }

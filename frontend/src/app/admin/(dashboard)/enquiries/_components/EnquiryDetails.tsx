@@ -49,7 +49,7 @@ function EnquiryEditor({ enquiry }: { enquiry: Enquiry }) {
       <Button
         type="submit"
         disabled={update.isPending || !hasChanges}
-        className="min-h-11 bg-secondary px-4 text-secondary-foreground hover:bg-secondary/90"
+        className="min-h-11 bg-secondary px-4 text-white hover:bg-secondary/90"
       >
         {update.isPending ? "Saving…" : "Save changes"}
       </Button>

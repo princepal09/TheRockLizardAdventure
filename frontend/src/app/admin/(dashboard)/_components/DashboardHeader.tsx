@@ -44,19 +44,27 @@ export default function DashboardHeader() {
         </div>
 
         <div className="flex min-w-0 shrink-0 items-center gap-2 sm:gap-4">
-          <div className="hidden min-w-0 items-center gap-2 sm:flex">
-            <span className="grid size-8 shrink-0 place-items-center rounded-full bg-tertiary text-tertiary-foreground">
-              <UserRound aria-hidden="true" className="size-4" />
+          <Link
+            href="/admin/profile"
+            aria-label="Open your profile"
+            className="flex size-11 items-center justify-center gap-2 rounded-lg hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-tertiary sm:h-9 sm:w-auto sm:px-1.5"
+          >
+            <span className="grid size-8 shrink-0 place-items-center overflow-hidden rounded-full bg-tertiary text-tertiary-foreground">
+              {admin?.profileImage ? (
+                <Image src={admin.profileImage} alt="" width={32} height={32} unoptimized className="size-8 object-cover" />
+              ) : (
+                <UserRound aria-hidden="true" className="size-4" />
+              )}
             </span>
-            <span className="max-w-40 truncate text-sm font-medium">
+            <span className="hidden max-w-40 truncate text-sm font-medium sm:block">
               {admin?.name || "Admin"}
             </span>
-          </div>
+          </Link>
           <Button
             aria-label="Log out"
             disabled={logout.isPending}
             onClick={() => logout.mutate()}
-            className="size-11 gap-2 bg-secondary text-secondary-foreground hover:bg-secondary/90 focus-visible:ring-tertiary/60 sm:h-9 sm:w-auto sm:px-3"
+            className="size-11 gap-2 bg-secondary text-white hover:bg-secondary/90 focus-visible:ring-tertiary/60 sm:h-9 sm:w-auto sm:px-3"
           >
             <LogOut aria-hidden="true" className="size-4" />
             <span className="hidden sm:inline">

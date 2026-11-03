@@ -10,6 +10,8 @@ import {
   Mountain,
   Route,
   Settings,
+  UserRound,
+  UsersRound,
   X,
   type LucideIcon,
 } from "lucide-react";
@@ -40,8 +42,13 @@ const groups: { label: string; items: NavigationItem[] }[] = [
       { label: "Regions", icon: MapPin, href: "/admin/regions" },
       { label: "Seasons", icon: CalendarDays, href: "/admin/seasons" },
       { label: "Gallery", icon: Images, href: "/admin/gallery" },
+      { label: "Team", icon: UsersRound, href: "/admin/team" },
       { label: "Site Settings", icon: Settings, href: "/admin/site-settings" },
     ],
+  },
+  {
+    label: "Account",
+    items: [{ label: "Profile", icon: UserRound, href: "/admin/profile" }],
   },
 ];
 

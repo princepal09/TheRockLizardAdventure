@@ -80,6 +80,13 @@ api.interceptors.response.use(undefined, async (error: unknown) => {
   }
 
   const request: AuthRequest | undefined = error.config;
+  if (
+    request?.url === "/auth/change-password" &&
+    error.response.data?.message === "Current password is incorrect"
+  ) {
+    throw error;
+  }
+
   const { accessToken, sessionVersion } = useAuthStore.getState();
   if (
     !request ||
