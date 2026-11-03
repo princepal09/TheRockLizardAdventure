@@ -12,14 +12,15 @@ import DashboardSidebar from "./_components/DashboardSidebar";
 export default function DashboardLayout({ children }: { children: ReactNode }) {
   const router = useRouter();
   const accessToken = useAuthStore((state) => state.accessToken);
+  const endedByAdmin = useAuthStore((state) => state.endedByAdmin);
   const session = useAuthInit();
   const shouldRedirect = session.isSuccess && (!session.data || !accessToken);
 
   useEffect(() => {
     if (shouldRedirect) {
-      router.replace("/admin/login");
+      router.replace(endedByAdmin ? "/admin/login" : "/");
     }
-  }, [router, shouldRedirect]);
+  }, [endedByAdmin, router, shouldRedirect]);
 
   if (session.isError) {
     return (
