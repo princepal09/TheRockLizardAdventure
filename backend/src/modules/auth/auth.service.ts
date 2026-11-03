@@ -155,14 +155,8 @@ export class AuthService {
     };
   }
 
-  async logout(refreshToken: string): Promise<void> {
-    const decoded = verifyRefreshToken(refreshToken);
-    const tokens = await this.authRepo.findRefreshTokensByAdminId(decoded.id);
-
-    const matchedToken = tokens.find((token) => compareRefreshToken(refreshToken, token.tokenHash));
-    if (matchedToken) {
-      await this.authRepo.deleteRefreshToken(matchedToken.id);
-    }
+  async logout(adminId: string, refreshToken: string): Promise<void> {
+    await this.authRepo.deleteRefreshTokenByHash(adminId, hashRefreshToken(refreshToken));
   }
 
   async logoutAll(adminId: string): Promise<void> {

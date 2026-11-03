@@ -68,6 +68,10 @@ export class AuthRepository implements IAuthRepository {
     });
   }
 
+  async deleteRefreshTokenByHash(adminId: string, tokenHash: string): Promise<void> {
+    await prisma.refreshToken.deleteMany({ where: { adminId, tokenHash } });
+  }
+
   async deleteRefreshTokensByAdminId(adminId: string): Promise<void> {
     await prisma.refreshToken.deleteMany({
       where: {

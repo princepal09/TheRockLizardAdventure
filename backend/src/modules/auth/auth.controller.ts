@@ -75,10 +75,15 @@ export class AuthController {
   });
 
   logoutController = catchAsync(async (req: Request, res: Response) => {
+    const adminId = req.user?.id;
+    if (!adminId) {
+      throw new AppError('Not authorized', 401);
+    }
+
     const refreshToken = req.cookies?.refreshToken;
 
-    if (!refreshToken) {
-      await this.authService.logout(refreshToken);
+    if (typeof refreshToken === 'string' && refreshToken) {
+      await this.authService.logout(adminId, refreshToken);
     }
 
     clearCookies(res);
