@@ -209,14 +209,14 @@ model TrekItinerary {
 }
 
 model TrekImage {
-  id        String   @id @default(uuid()) @db.Char(36)
-  trekId    String   @map("trek_id") @db.Char(36)
-  imageUrl  String   @map("image_url") @db.VarChar(1000)
-  imagePublicId String? @map("image_public_id") @db.VarChar(1000)
-  altText   String?  @map("alt_text") @db.VarChar(255)
-  caption   String?  @db.VarChar(255)
-  sortOrder Int      @default(0) @map("sort_order")
-  createdAt DateTime @default(now()) @map("created_at") @db.DateTime(0)
+  id            String   @id @default(uuid()) @db.Char(36)
+  trekId        String   @map("trek_id") @db.Char(36)
+  imageUrl      String   @map("image_url") @db.VarChar(1000)
+  imagePublicId String?  @map("image_public_id") @db.VarChar(1000)
+  altText       String?  @map("alt_text") @db.VarChar(255)
+  caption       String?  @db.VarChar(255)
+  sortOrder     Int      @default(0) @map("sort_order")
+  createdAt     DateTime @default(now()) @map("created_at") @db.DateTime(0)
 
   trek Trek @relation(fields: [trekId], references: [id], onDelete: Cascade)
 
@@ -227,33 +227,33 @@ model TrekImage {
 // ============ EXPEDITION ============
 
 model Expedition {
-  id                String          @id @default(uuid()) @db.Char(36)
-  name              String          @db.VarChar(200)
-  slug              String          @unique @db.VarChar(220)
-  summary           String?         @db.VarChar(500)
-  description       String?         @db.Text
-  regionId          String          @map("region_id") @db.Char(36)
-  difficulty        DifficultyLevel
-  status            ContentStatus   @default(DRAFT)
-  durationDays      Int             @map("duration_days")
-  distanceKm        Decimal?        @map("distance_km") @db.Decimal(8, 2)
-  maxAltitudeMeters Int?            @map("max_altitude_meters")
-  startingPoint     String?         @map("starting_point") @db.VarChar(255)
-  endingPoint       String?         @map("ending_point") @db.VarChar(255)
-  coverImageUrl     String?         @map("cover_image_url") @db.VarChar(1000)
+  id                 String          @id @default(uuid()) @db.Char(36)
+  name               String          @db.VarChar(200)
+  slug               String          @unique @db.VarChar(220)
+  summary            String?         @db.VarChar(500)
+  description        String?         @db.Text
+  regionId           String          @map("region_id") @db.Char(36)
+  difficulty         DifficultyLevel
+  status             ContentStatus   @default(DRAFT)
+  durationDays       Int             @map("duration_days")
+  distanceKm         Decimal?        @map("distance_km") @db.Decimal(8, 2)
+  maxAltitudeMeters  Int?            @map("max_altitude_meters")
+  startingPoint      String?         @map("starting_point") @db.VarChar(255)
+  endingPoint        String?         @map("ending_point") @db.VarChar(255)
+  coverImageUrl      String?         @map("cover_image_url") @db.VarChar(1000)
   coverImagePublicId String?         @map("cover_image_public_id") @db.VarChar(1000)
 
-  price             Decimal?        @db.Decimal(10, 2)
-  discountPrice     Decimal?        @map("discount_price") @db.Decimal(10, 2)
-  currency          String          @default("INR") @db.Char(3)
-  maxGroupSize      Int?            @map("max_group_size")
-  minAge            Int?            @map("min_age")
-  maxAge            Int?            @map("max_age")
-  isFeatured        Boolean         @default(false) @map("is_featured")
-  publishedAt       DateTime?       @map("published_at") @db.DateTime(0)
-  createdBy         String?         @map("created_by") @db.Char(36)
-  createdAt         DateTime        @default(now()) @map("created_at") @db.DateTime(0)
-  updatedAt         DateTime        @default(now()) @updatedAt @map("updated_at") @db.DateTime(0)
+  price         Decimal?  @db.Decimal(10, 2)
+  discountPrice Decimal?  @map("discount_price") @db.Decimal(10, 2)
+  currency      String    @default("INR") @db.Char(3)
+  maxGroupSize  Int?      @map("max_group_size")
+  minAge        Int?      @map("min_age")
+  maxAge        Int?      @map("max_age")
+  isFeatured    Boolean   @default(false) @map("is_featured")
+  publishedAt   DateTime? @map("published_at") @db.DateTime(0)
+  createdBy     String?   @map("created_by") @db.Char(36)
+  createdAt     DateTime  @default(now()) @map("created_at") @db.DateTime(0)
+  updatedAt     DateTime  @default(now()) @updatedAt @map("updated_at") @db.DateTime(0)
 
   region      Region                @relation(fields: [regionId], references: [id], onDelete: Restrict)
   creator     Admin?                @relation("ExpeditionCreator", fields: [createdBy], references: [id], onDelete: SetNull)
@@ -300,14 +300,14 @@ model ExpeditionItinerary {
 }
 
 model ExpeditionImage {
-  id           String   @id @default(uuid()) @db.Char(36)
-  expeditionId String   @map("expedition_id") @db.Char(36)
-  imageUrl     String   @map("image_url") @db.VarChar(1000)
-  imagePublicId String @map("image_public_id") @db.VarChar(1000)
-  altText      String?  @map("alt_text") @db.VarChar(255)
-  caption      String?  @db.VarChar(255)
-  sortOrder    Int      @default(0) @map("sort_order")
-  createdAt    DateTime @default(now()) @map("created_at") @db.DateTime(0)
+  id            String   @id @default(uuid()) @db.Char(36)
+  expeditionId  String   @map("expedition_id") @db.Char(36)
+  imageUrl      String   @map("image_url") @db.VarChar(1000)
+  imagePublicId String   @map("image_public_id") @db.VarChar(1000)
+  altText       String?  @map("alt_text") @db.VarChar(255)
+  caption       String?  @db.VarChar(255)
+  sortOrder     Int      @default(0) @map("sort_order")
+  createdAt     DateTime @default(now()) @map("created_at") @db.DateTime(0)
 
   expedition Expedition @relation(fields: [expeditionId], references: [id], onDelete: Cascade)
 
@@ -318,14 +318,14 @@ model ExpeditionImage {
 // ============ GALLERY / CONTACT / SETTINGS ============
 
 model Gallery {
-  id        String   @id @default(uuid()) @db.Char(36)
-  imageUrl  String   @map("image_url") @db.VarChar(1000)
-  imagePublicId String @map("image_public_id") @db.VarChar(1000)
-  altText   String?  @map("alt_text") @db.VarChar(255)
-  sortOrder Int      @default(0) @map("sort_order")
-  isActive  Boolean  @default(true) @map("is_active")
-  createdAt DateTime @default(now()) @map("created_at") @db.DateTime(0)
-  updatedAt DateTime @default(now()) @updatedAt @map("updated_at") @db.DateTime(0)
+  id            String   @id @default(uuid()) @db.Char(36)
+  imageUrl      String   @map("image_url") @db.VarChar(1000)
+  imagePublicId String   @map("image_public_id") @db.VarChar(1000)
+  altText       String?  @map("alt_text") @db.VarChar(255)
+  sortOrder     Int      @default(0) @map("sort_order")
+  isActive      Boolean  @default(true) @map("is_active")
+  createdAt     DateTime @default(now()) @map("created_at") @db.DateTime(0)
+  updatedAt     DateTime @default(now()) @updatedAt @map("updated_at") @db.DateTime(0)
 
   @@index([isActive, sortOrder])
   @@map("gallery")
@@ -356,17 +356,19 @@ model Contact {
 }
 
 model SiteSettings {
-  id           String   @id @default(uuid()) @db.Char(36)
-  logoUrl      String?  @map("logo_url") @db.VarChar(1000)
-  heroImageUrl String?  @map("hero_image_url") @db.VarChar(1000)
-  contactEmail String?  @map("contact_email") @db.VarChar(255)
-  contactPhone String?  @map("contact_phone") @db.VarChar(30)
-  address      String?  @db.Text
-  facebookUrl  String?  @map("facebook_url") @db.VarChar(500)
-  instagramUrl String?  @map("instagram_url") @db.VarChar(500)
-  youtubeUrl   String?  @map("youtube_url") @db.VarChar(500)
-  footerText   String?  @map("footer_text") @db.Text
-  updatedAt    DateTime @default(now()) @updatedAt @map("updated_at") @db.DateTime(0)
+  id                String   @id @default(uuid()) @db.Char(36)
+  logoUrl           String?  @map("logo_url") @db.VarChar(1000)
+  logoPublicId      String?  @map("logo_public_id") @db.VarChar(1000)
+  heroImageUrl      String?  @map("hero_image_url") @db.VarChar(1000)
+  heroImagePublicId String?  @map("hero_image_public_id") @db.VarChar(1000)
+  contactEmail      String?  @map("contact_email") @db.VarChar(255)
+  contactPhone      String?  @map("contact_phone") @db.VarChar(30)
+  whatsappPhone     String?  @map("whatsapp_phone") @db.VarChar(30)
+  address           String?  @db.Text
+  facebookUrl       String?  @map("facebook_url") @db.VarChar(500)
+  instagramUrl      String?  @map("instagram_url") @db.VarChar(500)
+  youtubeUrl        String?  @map("youtube_url") @db.VarChar(500)
+  updatedAt         DateTime @default(now()) @updatedAt @map("updated_at") @db.DateTime(0)
 
   @@map("site_settings")
 }
