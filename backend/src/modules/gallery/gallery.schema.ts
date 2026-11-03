@@ -13,3 +13,14 @@ export const updateGalleryImageSchema = z
 
 export type UpdateGalleryImageDTO = z.infer<typeof updateGalleryImageSchema>;
 export type CreateGalleryImageDTO = { imageUrl: string; imagePublicId: string };
+
+export const updateSiteGalleryImageSchema = z
+  .object({
+    altText: z.string().max(255).nullable().optional(),
+    sortOrder: z.int32().nonnegative().optional(),
+    isActive: z.boolean().optional(),
+  })
+  .strict()
+  .refine((data) => Object.keys(data).length > 0, 'Provide at least one field to update');
+
+export type UpdateSiteGalleryImageDTO = z.infer<typeof updateSiteGalleryImageSchema>;
