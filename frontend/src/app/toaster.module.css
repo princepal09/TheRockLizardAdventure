@@ -1,0 +1,21 @@
+.toaster[data-sonner-toaster][data-sonner-theme] {
+  --normal-bg: #fff;
+  --normal-border: #e0e3e5;
+  --normal-text: #191c1e;
+
+  --success-bg: #ecfdf5;
+  --success-border: #a7f3d0;
+  --success-text: #064e3b;
+
+  --error-bg: #fef2f2;
+  --error-border: #fecaca;
+  --error-text: #991b1b;
+
+  --warning-bg: #fff0e4;
+  --warning-border: #fed7aa;
+  --warning-text: #9d4300;
+
+  --info-bg: #f0f9ff;
+  --info-border: #bae6fd;
+  --info-text: #075985;
+}

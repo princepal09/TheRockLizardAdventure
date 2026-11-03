@@ -4,7 +4,10 @@ import {
   Newsreader,
   Plus_Jakarta_Sans,
 } from "next/font/google";
+import { Toaster } from "sonner";
 import "./globals.css";
+import styles from "./toaster.module.css";
+import AppProvider from "./providers/AppProvider";
 
 const jakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
@@ -38,7 +41,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="en"
       className={`${jakarta.variable} ${newsreader.variable} ${jetbrains.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <AppProvider>{children}</AppProvider>
+        <Toaster position="top-right" theme="light" richColors className={styles.toaster} />
+      </body>
     </html>
   );
 }

@@ -3,14 +3,15 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ArrowRight, Eye, EyeOff, LockKeyhole, Mail } from "lucide-react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
+import { useLogin } from "@/hooks/auth/useLogin";
 import { Button } from "@/components/ui/button";
-import { getApiError } from "@/lib/api/error";
 import { loginSchema, type LoginFormValues } from "@/types/auth";
+import { getErrorMessage } from "@/utils/error";
 
 const inputClassName =
   "h-[50px] w-full rounded-lg placeholder:text-sm  border border-[#e0e3e5]/60 bg-white px-4 pl-[45px] text-base text-[#191c1e] placeholder:text-[#45464d]/75 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-tertiary";
@@ -32,27 +33,20 @@ export default function LoginForm() {
     defaultValues: { email: "", password: "" },
   });
 
-  // useEffect(() => {
-  //   if (state.status === "authenticated") router.replace("/admin/dashboard");
-  // }, [router, state.status]);
+  const loginMutation = useLogin();
 
-  // async function submitHandler(data: LoginFormValues) {
-  //   if (state.status === "loading" || state.status === "authenticated") return;
-
-  //   try {
-  //     await signIn(data);
-  //     toast.success("Signed in successfully.");
-  //   } catch (error) {
-  //     const { message } = getApiError(error, "Could not sign in. Try again.");
-  //     setError("root.server", { message });
-  //     toast.error(message);
-  //   }
-  // }
-
-  const submitHandler = async(data:LoginFormValues) => {
-    console.log(data)
-
-  }
+  const submitHandler = async (data: LoginFormValues) => {
+    try {
+      await loginMutation.mutateAsync(data);
+      router.replace("/admin/dashboard");
+      toast.success("Sign in Successfully");
+    } catch (err) {
+      toast.error(getErrorMessage(err));
+      setError("root.server", { message: getErrorMessage(err) });
+    } finally {
+      loginMutation.reset();
+    }
+  };
 
   return (
     <form
@@ -148,6 +142,7 @@ export default function LoginForm() {
 
       <Button
         type="submit"
+        disabled={isSubmitting}
         className="h-[50px] w-full cursor-pointer gap-2 rounded-lg bg-[#fd761a] text-[13px] font-bold text-[#ffffff] shadow-[0_6px_12px_#fd761a40] hover:bg-[#b54708]"
       >
         {isSubmitting ? "Signing in…" : "Sign In"}
