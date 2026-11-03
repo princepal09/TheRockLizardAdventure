@@ -15,7 +15,7 @@ export default function AdminLoginPage() {
 
   return (
     <div className="relative isolate flex min-w-0 flex-1 items-center justify-center overflow-hidden bg-[#131b2e] px-3 py-6 font-sans text-[#191c1e] sm:px-6 sm:py-10">
-      <Image src="/admin-login/mountains.png" alt="" fill sizes="100vw" priority className="object-cover" />
+      <Image src="/admin-login/image3.png" alt="" fill sizes="100vw" priority className="object-cover" />
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-linear-to-r from-[#131b2e]/95 via-[#131b2e]/85 to-[#131b2e]/70 mix-blend-multiply" />
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-linear-to-t from-[#131b2e] via-transparent to-[#131b2e]/50" />
 
