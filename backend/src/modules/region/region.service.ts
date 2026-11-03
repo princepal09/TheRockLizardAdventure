@@ -5,6 +5,7 @@ import {
   uploadToCloudinary,
 } from '../../utils/cloudinary/cloudinary.helper.js';
 import { AppError } from '../../utils/common/error/AppError.js';
+import { createWithSlug } from '../../utils/common/create-with-slug.js';
 import type { IRegionRepository } from './region.interface.js';
 import type { CreateRegionDTO, UpdateRegionDTO } from './region.schema.js';
 
@@ -13,10 +14,13 @@ export class RegionService {
 
   async createRegion(data: CreateRegionDTO, file?: Express.Multer.File) {
     const image = file ? await uploadToCloudinary(file, 'rocklizard/regions') : undefined;
+    const fields = image
+      ? { ...data, imageUrl: image.secure_url, imagePublicId: image.public_id }
+      : data;
 
     try {
-      return await this.regionRepo.createRegion(
-        image ? { ...data, imageUrl: image.secure_url, imagePublicId: image.public_id } : data,
+      return await createWithSlug(data.name, 'region', 150, (slug) =>
+        this.regionRepo.createRegion({ ...fields, slug }),
       );
     } catch (error) {
       await this.cleanupImage(image?.public_id);

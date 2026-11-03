@@ -2,14 +2,11 @@ import { ContentStatus, type Expedition } from '../../../generated/prisma/client
 import { prisma } from '../../lib/prisma.js';
 import type { CreateGalleryImageDTO, UpdateGalleryImageDTO } from '../gallery/gallery.schema.js';
 import type { CreateItineraryDTO, UpdateItineraryDTO } from '../itinerary/itinerary.schema.js';
-import type { IExpeditionRepository } from './expedition.interface.js';
-import type { CreateExpeditionDTO, UpdateExpeditionDTO } from './expedition.schema.js';
+import type { CreateExpeditionRecord, IExpeditionRepository } from './expedition.interface.js';
+import type { UpdateExpeditionDTO } from './expedition.schema.js';
 
 export class ExpeditionRepository implements IExpeditionRepository {
-  async createExpedition(
-    data: CreateExpeditionDTO & { coverImagePublicId?: string | null },
-    adminId: string,
-  ) {
+  async createExpedition(data: CreateExpeditionRecord, adminId: string) {
     const { seasonIds, ...fields } = data;
     return prisma.expedition.create({
       data: {

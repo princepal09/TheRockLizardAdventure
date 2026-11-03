@@ -9,6 +9,7 @@ import type { CreateItineraryDTO, UpdateItineraryDTO } from '../itinerary/itiner
 import type { CreateExpeditionDTO, UpdateExpeditionDTO } from './expedition.schema.js';
 
 type ExpeditionCover = Partial<Pick<Expedition, 'coverImagePublicId'>>;
+export type CreateExpeditionRecord = CreateExpeditionDTO & ExpeditionCover & Pick<Expedition, 'slug'>;
 type ExpeditionSeasons = { seasons: { seasonId: string; season: Season }[] };
 type ExpeditionDetails = ExpeditionSeasons & {
   itineraries: ExpeditionItinerary[];
@@ -17,7 +18,7 @@ type ExpeditionDetails = ExpeditionSeasons & {
 
 export interface IExpeditionRepository {
   createExpedition(
-    data: CreateExpeditionDTO & ExpeditionCover,
+    data: CreateExpeditionRecord,
     adminId: string,
   ): Promise<Expedition & ExpeditionSeasons>;
   findExpeditions(): Promise<Expedition[]>;

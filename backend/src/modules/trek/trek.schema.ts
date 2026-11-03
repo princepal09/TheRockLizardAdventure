@@ -22,7 +22,6 @@ export const trekSlugSchema = z
 export const createTrekSchema = z
   .object({
     name: z.string().trim().min(1).max(200),
-    slug: trekSlugSchema,
     summary: z.string().max(500).nullable().optional(),
     description: z.string().nullable().optional(),
     regionId: z.uuid('Invalid region ID'),

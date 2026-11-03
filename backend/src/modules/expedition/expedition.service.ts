@@ -7,6 +7,7 @@ import {
   uploadToCloudinary,
 } from '../../utils/cloudinary/cloudinary.helper.js';
 import { AppError } from '../../utils/common/error/AppError.js';
+import { createWithSlug } from '../../utils/common/create-with-slug.js';
 import type { IExpeditionRepository } from './expedition.interface.js';
 import type { CreateExpeditionDTO, UpdateExpeditionDTO } from './expedition.schema.js';
 
@@ -15,13 +16,13 @@ export class ExpeditionService {
 
   async createExpedition(data: CreateExpeditionDTO, adminId: string, file?: Express.Multer.File) {
     const image = file ? await uploadToCloudinary(file, 'rocklizard/expeditions') : undefined;
+    const fields = image
+      ? { ...data, coverImageUrl: image.secure_url, coverImagePublicId: image.public_id }
+      : data;
 
     try {
-      return await this.expeditionRepo.createExpedition(
-        image
-          ? { ...data, coverImageUrl: image.secure_url, coverImagePublicId: image.public_id }
-          : data,
-        adminId,
+      return await createWithSlug(data.name, 'expedition', 200, (slug) =>
+        this.expeditionRepo.createExpedition({ ...fields, slug }, adminId),
       );
     } catch (error) {
       await this.cleanupImage(image?.public_id);

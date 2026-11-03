@@ -2,9 +2,10 @@ import type { Region } from '../../../generated/prisma/client.js';
 import type { CreateRegionDTO, UpdateRegionDTO } from './region.schema.js';
 
 type RegionImage = Pick<Region, 'imagePublicId'>;
+export type CreateRegionRecord = CreateRegionDTO & Partial<RegionImage> & Pick<Region, 'slug'>;
 
 export interface IRegionRepository {
-  createRegion(data: CreateRegionDTO & Partial<RegionImage>): Promise<Region>;
+  createRegion(data: CreateRegionRecord): Promise<Region>;
   findRegions(): Promise<Region[]>;
   findRegionById(id: string): Promise<Region | null>;
   updateRegion(

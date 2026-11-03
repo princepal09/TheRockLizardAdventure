@@ -1,10 +1,10 @@
 import type { Region } from '../../../generated/prisma/client.js';
 import { prisma } from '../../lib/prisma.js';
-import type { IRegionRepository } from './region.interface.js';
-import type { CreateRegionDTO, UpdateRegionDTO } from './region.schema.js';
+import type { CreateRegionRecord, IRegionRepository } from './region.interface.js';
+import type { UpdateRegionDTO } from './region.schema.js';
 
 export class RegionRepository implements IRegionRepository {
-  async createRegion(data: CreateRegionDTO & { imagePublicId?: string | null }): Promise<Region> {
+  async createRegion(data: CreateRegionRecord): Promise<Region> {
     return prisma.region.create({ data });
   }
 

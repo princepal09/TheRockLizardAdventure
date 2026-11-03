@@ -30,15 +30,15 @@ const groups: { label: string; items: NavigationItem[] }[] = [
   {
     label: "Trips",
     items: [
-      { label: "Treks", icon: Route },
-      { label: "Expeditions", icon: Mountain },
+      { label: "Treks", icon: Route, href: "/admin/treks" },
+      { label: "Expeditions", icon: Mountain, href: "/admin/expeditions" },
     ],
   },
   {
     label: "Website",
     items: [
-      { label: "Regions", icon: MapPin },
-      { label: "Seasons", icon: CalendarDays },
+      { label: "Regions", icon: MapPin, href: "/admin/regions" },
+      { label: "Seasons", icon: CalendarDays, href: "/admin/seasons" },
       { label: "Gallery", icon: Images },
       { label: "Site Settings", icon: Settings },
     ],

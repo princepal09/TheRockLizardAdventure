@@ -4,11 +4,12 @@ import type { CreateItineraryDTO, UpdateItineraryDTO } from '../itinerary/itiner
 import type { CreateTrekDTO, UpdateTrekDTO } from './trek.schema.js';
 
 type TrekCover = Partial<Pick<Trek, 'coverImagePublicId'>>;
+export type CreateTrekRecord = CreateTrekDTO & TrekCover & Pick<Trek, 'slug'>;
 type TrekSeasons = { seasons: { seasonId: string; season: Season }[] };
 type TrekDetails = TrekSeasons & { itineraries: TrekItinerary[]; images: TrekImage[] };
 
 export interface ITrekRepository {
-  createTrek(data: CreateTrekDTO & TrekCover, adminId: string): Promise<Trek & TrekSeasons>;
+  createTrek(data: CreateTrekRecord, adminId: string): Promise<Trek & TrekSeasons>;
   findTreks(): Promise<Trek[]>;
   findTrekById(id: string): Promise<(Trek & TrekDetails) | null>;
   findPublishedTreks(): Promise<Omit<Trek, 'createdBy'>[]>;

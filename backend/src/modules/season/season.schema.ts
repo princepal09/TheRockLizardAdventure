@@ -19,12 +19,6 @@ export const seasonIdsSchema = z.preprocess(
 export const createSeasonSchema = z
   .object({
     name: z.string().trim().min(1).max(100),
-    slug: z
-      .string()
-      .trim()
-      .min(1)
-      .max(120)
-      .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/),
     description: z.string().nullable().optional(),
     startMonth: z.int().min(1).max(12).nullable().optional(),
     endMonth: z.int().min(1).max(12).nullable().optional(),

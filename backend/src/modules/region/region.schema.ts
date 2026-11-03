@@ -5,12 +5,6 @@ export const regionIdSchema = z.uuid('Invalid region ID');
 export const createRegionSchema = z
   .object({
     name: z.string().trim().min(1).max(150),
-    slug: z
-      .string()
-      .trim()
-      .min(1)
-      .max(180)
-      .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/),
     description: z.string().nullable().optional(),
     imageUrl: z.url().max(1000).nullable().optional(),
     isActive: z

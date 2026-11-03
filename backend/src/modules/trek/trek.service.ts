@@ -7,6 +7,7 @@ import {
   uploadToCloudinary,
 } from '../../utils/cloudinary/cloudinary.helper.js';
 import { AppError } from '../../utils/common/error/AppError.js';
+import { createWithSlug } from '../../utils/common/create-with-slug.js';
 import type { ITrekRepository } from './trek.interface.js';
 import type { CreateTrekDTO, UpdateTrekDTO } from './trek.schema.js';
 
@@ -15,13 +16,13 @@ export class TrekService {
 
   async createTrek(data: CreateTrekDTO, adminId: string, file?: Express.Multer.File) {
     const image = file ? await uploadToCloudinary(file, 'rocklizard/treks') : undefined;
+    const fields = image
+      ? { ...data, coverImageUrl: image.secure_url, coverImagePublicId: image.public_id }
+      : data;
 
     try {
-      return await this.trekRepo.createTrek(
-        image
-          ? { ...data, coverImageUrl: image.secure_url, coverImagePublicId: image.public_id }
-          : data,
-        adminId,
+      return await createWithSlug(data.name, 'trek', 200, (slug) =>
+        this.trekRepo.createTrek({ ...fields, slug }, adminId),
       );
     } catch (error) {
       await this.cleanupImage(image?.public_id);

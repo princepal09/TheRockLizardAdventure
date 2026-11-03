@@ -1,3 +1,5 @@
+import type { TripKind } from "@/types/trip";
+
 export const authKeys = {
   all: ["auth"] as const,
 
@@ -8,4 +10,19 @@ export const enquiryKeys = {
   list: (sessionVersion: number) => [...enquiryKeys.all, sessionVersion, "list"] as const,
   detail: (sessionVersion: number, id: string) =>
     [...enquiryKeys.all, sessionVersion, "detail", id] as const,
+};
+
+export const tripKeys = {
+  all: ["trips"] as const,
+  session: (version: number) => [...tripKeys.all, version] as const,
+  list: (version: number, kind: TripKind) => [...tripKeys.session(version), kind, "list"] as const,
+  detail: (version: number, kind: TripKind, id?: string) => [...tripKeys.session(version), kind, "detail", id] as const,
+  options: (version: number) => [...tripKeys.session(version), "options"] as const,
+};
+
+export const tripOptionKeys = {
+  all: ["trip-options"] as const,
+  list: (version: number, kind: string) => [...tripOptionKeys.all, version, kind, "list"] as const,
+  detail: (version: number, kind: string, id?: string) =>
+    [...tripOptionKeys.all, version, kind, "detail", id] as const,
 };

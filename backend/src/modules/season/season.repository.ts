@@ -1,10 +1,10 @@
 import type { Season } from '../../../generated/prisma/client.js';
 import { prisma } from '../../lib/prisma.js';
-import type { ISeasonRepository } from './season.interface.js';
-import type { CreateSeasonDTO, UpdateSeasonDTO } from './season.schema.js';
+import type { CreateSeasonRecord, ISeasonRepository } from './season.interface.js';
+import type { UpdateSeasonDTO } from './season.schema.js';
 
 export class SeasonRepository implements ISeasonRepository {
-  async createSeason(data: CreateSeasonDTO): Promise<Season> {
+  async createSeason(data: CreateSeasonRecord): Promise<Season> {
     return prisma.season.create({ data });
   }
 

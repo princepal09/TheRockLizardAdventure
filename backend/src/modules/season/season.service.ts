@@ -1,5 +1,6 @@
 import { Prisma } from '../../../generated/prisma/client.js';
 import { AppError } from '../../utils/common/error/AppError.js';
+import { createWithSlug } from '../../utils/common/create-with-slug.js';
 import type { ISeasonRepository } from './season.interface.js';
 import type { CreateSeasonDTO, UpdateSeasonDTO } from './season.schema.js';
 
@@ -8,7 +9,9 @@ export class SeasonService {
 
   async createSeason(data: CreateSeasonDTO) {
     try {
-      return await this.seasonRepo.createSeason(data);
+      return await createWithSlug(data.name, 'season', 100, (slug) =>
+        this.seasonRepo.createSeason({ ...data, slug }),
+      );
     } catch (error) {
       this.handleWriteError(error);
     }

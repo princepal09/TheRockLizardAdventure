@@ -2,11 +2,11 @@ import { ContentStatus, type Trek } from '../../../generated/prisma/client.js';
 import { prisma } from '../../lib/prisma.js';
 import type { CreateGalleryImageDTO, UpdateGalleryImageDTO } from '../gallery/gallery.schema.js';
 import type { CreateItineraryDTO, UpdateItineraryDTO } from '../itinerary/itinerary.schema.js';
-import type { ITrekRepository } from './trek.interface.js';
-import type { CreateTrekDTO, UpdateTrekDTO } from './trek.schema.js';
+import type { CreateTrekRecord, ITrekRepository } from './trek.interface.js';
+import type { UpdateTrekDTO } from './trek.schema.js';
 
 export class TrekRepository implements ITrekRepository {
-  async createTrek(data: CreateTrekDTO & { coverImagePublicId?: string | null }, adminId: string) {
+  async createTrek(data: CreateTrekRecord, adminId: string) {
     const { seasonIds, ...fields } = data;
     return prisma.trek.create({
       data: {
