@@ -1,4 +1,6 @@
+import { readFile } from 'node:fs/promises';
 import { env } from '../config/env.config.js';
+import { emailLogoId } from '../emails/templates/email-layout.js';
 
 import { Resend } from 'resend';
 
@@ -10,14 +12,30 @@ interface SendEmailOptions {
   to: string | string[];
   subject: string;
   html: string;
+  replyTo?: string;
 }
 
-export const sendEmail = async ({ to, subject, html }: SendEmailOptions): Promise<void> => {
+export const sendEmail = async ({
+  to,
+  subject,
+  html,
+  replyTo,
+}: SendEmailOptions): Promise<void> => {
+  const logo = await readFile('assets/rocklizard-logo-transparent.png');
   const { error } = await resend.emails.send({
     from: env.MAIL_FROM,
     to,
     subject,
     html,
+    replyTo,
+    attachments: [
+      {
+        filename: 'rocklizard-logo.png',
+        content: logo,
+        contentType: 'image/png',
+        contentId: emailLogoId,
+      },
+    ],
   });
 
   if (error) {

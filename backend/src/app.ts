@@ -10,6 +10,7 @@ import regionRoutes from './modules/region/region.route.js';
 import trekRoutes from './modules/trek/trek.route.js';
 import expeditionRoutes from './modules/expedition/expedition.route.js';
 import seasonRoutes from './modules/season/season.route.js';
+import contactRoutes from './modules/contact/contact.route.js';
 import { globalErrorHandler } from './middlewares/error.middleware.js';
 
 import { requestLogger } from './middlewares/request-logger.middleware.js';
@@ -42,6 +43,7 @@ app.use('/api/v1/regions', regionRoutes);
 app.use('/api/v1/treks', trekRoutes);
 app.use('/api/v1/expeditions', expeditionRoutes);
 app.use('/api/v1/seasons', seasonRoutes);
+app.use('/api/v1/enquiries', contactRoutes);
 
 app.use((req, _res, next) => {
   next(new AppError(`Cannot find ${req.originalUrl} on this server`, 404));
