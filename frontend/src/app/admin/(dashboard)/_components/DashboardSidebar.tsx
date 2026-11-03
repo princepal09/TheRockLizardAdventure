@@ -24,7 +24,7 @@ const groups: { label: string; items: NavigationItem[] }[] = [
     label: "Workspace",
     items: [
       { label: "Overview", icon: LayoutDashboard, href: "/admin/dashboard" },
-      { label: "Enquiries", icon: Inbox },
+      { label: "Enquiries", icon: Inbox, href: "/admin/enquiries" },
     ],
   },
   {
@@ -60,7 +60,7 @@ function SidebarContents({ onNavigate }: { onNavigate?: () => void }) {
           </p>
           <ul className="space-y-0.5">
             {items.map(({ label, href, icon: Icon }) => {
-              const active = href === pathname;
+              const active = href && (pathname === href || pathname.startsWith(`${href}/`));
               const content = (
                 <>
                   <Icon aria-hidden="true" className="size-4 shrink-0" />
