@@ -31,7 +31,7 @@ function EnquiryEditor({ enquiry }: { enquiry: Enquiry }) {
   }
 
   return (
-    <form onSubmit={save} className="space-y-4 rounded-xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+    <form noValidate onSubmit={save} className="space-y-4 rounded-xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
       <h2 className="font-semibold text-primary">Enquiry management</h2>
       <label className="block space-y-1.5 text-sm font-medium">
         <span className="block">Status</span>

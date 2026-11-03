@@ -7,6 +7,8 @@ import { Button } from "@/components/ui/button";
 import { useTripMutation } from "@/hooks/trips/useTrips";
 import { deleteTripPhoto, updateTripPhoto, uploadTripCover, uploadTripPhotos } from "@/lib/api/trips";
 import type { TripDetail, TripKind, TripPhotoInput } from "@/types/trip";
+import { tripPhotoFormSchema } from "@/lib/validation/admin";
+import { imageFileSchema } from "@/lib/validation/image";
 import { getErrorMessage } from "@/utils/error";
 import { TripField, tripPanelClass, tripText } from "./TripFields";
 import GalleryUploadForm from "../GalleryUploadForm";
@@ -14,7 +16,7 @@ import { ImageUploadField } from "../ImageUploadField";
 import DeleteConfirmation from "../DeleteConfirmation";
 
 function CoverForm({ kind, trip }: { kind: TripKind; trip: TripDetail }) {
-  const save = useTripMutation(kind, (file: File) => uploadTripCover(kind, trip.id, file), "Cover image updated", trip.id);
+  const save = useTripMutation(kind, async (file: FormDataEntryValue | null) => uploadTripCover(kind, trip.id, imageFileSchema.parse(file)), "Cover image updated", trip.id);
 
   function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -22,12 +24,11 @@ function CoverForm({ kind, trip }: { kind: TripKind; trip: TripDetail }) {
     const element = event.currentTarget;
     const form = new FormData(element);
     const file = form.get("coverImage");
-    if (!(file instanceof File) || !file.name) return;
     save.mutate(file, { onSuccess: () => element.reset() });
   }
 
   return (
-    <form onSubmit={submit} className="space-y-3 rounded-lg border border-slate-200 p-4">
+    <form noValidate onSubmit={submit} className="space-y-3 rounded-lg border border-slate-200 p-4">
       <h3 className="text-sm font-semibold text-primary">Cover image</h3>
       {trip.coverImageUrl && <Image src={trip.coverImageUrl} alt="Current trip cover" width={320} height={180} unoptimized className="aspect-video w-48 rounded-lg object-cover" />}
       <fieldset disabled={save.isPending} className="space-y-3">
@@ -40,7 +41,7 @@ function CoverForm({ kind, trip }: { kind: TripKind; trip: TripDetail }) {
 }
 
 function PhotoForm({ kind, tripId, photo }: { kind: TripKind; tripId: string; photo: TripDetail["images"][number] }) {
-  const save = useTripMutation(kind, (input: TripPhotoInput) => updateTripPhoto(kind, tripId, photo.id, input), "Photo updated", tripId);
+  const save = useTripMutation(kind, async (input: TripPhotoInput) => updateTripPhoto(kind, tripId, photo.id, tripPhotoFormSchema.parse(input)), "Photo updated", tripId);
   const remove = useTripMutation(kind, () => deleteTripPhoto(kind, tripId, photo.id), "Photo deleted", tripId);
   const busy = save.isPending || remove.isPending;
 
@@ -51,12 +52,12 @@ function PhotoForm({ kind, tripId, photo }: { kind: TripKind; tripId: string; ph
     save.mutate({
       altText: tripText(form, "altText") || null,
       caption: tripText(form, "caption") || null,
-      sortOrder: Number(tripText(form, "sortOrder")),
+      sortOrder: Number(tripText(form, "sortOrder") || NaN),
     });
   }
 
   return (
-    <form onSubmit={submit} className="min-w-0 space-y-3 rounded-lg border border-slate-200 p-4">
+    <form noValidate onSubmit={submit} className="min-w-0 space-y-3 rounded-lg border border-slate-200 p-4">
       <Image src={photo.imageUrl} alt={photo.altText || "Trip gallery photo"} width={320} height={180} unoptimized className="aspect-video w-full rounded-lg object-cover" />
       <fieldset disabled={busy} className="space-y-3">
         <TripField label="Alt text" name="altText" maxLength={255} defaultValue={photo.altText ?? ""} />

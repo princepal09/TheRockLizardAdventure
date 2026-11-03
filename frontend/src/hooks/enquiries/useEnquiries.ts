@@ -5,6 +5,7 @@ import { toast } from "sonner";
 
 import { getEnquiries, getEnquiry, updateEnquiry } from "@/lib/api/enquiries";
 import { enquiryKeys } from "@/lib/api/query-keys";
+import { enquiryStatusSchema } from "@/lib/validation/admin";
 import { useAuthStore } from "@/stores/auth.store";
 import type { UpdateEnquiryInput } from "@/types/enquiry";
 
@@ -30,7 +31,7 @@ export function useUpdateEnquiry(id: string) {
 
   return useMutation({
     gcTime: 0,
-    mutationFn: (input: UpdateEnquiryInput) => updateEnquiry(id, input),
+    mutationFn: async (input: UpdateEnquiryInput) => updateEnquiry(id, enquiryStatusSchema.parse(input)),
     onSuccess: async (enquiry) => {
       const listKey = enquiryKeys.list(sessionVersion);
       const detailKey = enquiryKeys.detail(sessionVersion, id);

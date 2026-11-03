@@ -6,6 +6,8 @@ import { useState, type FormEvent } from "react";
 import { Button } from "@/components/ui/button";
 import { useSaveSiteSettings, useSiteSettings } from "@/hooks/site-settings/useSiteSettings";
 import type { SiteSettings, SiteSettingsUpdate } from "@/types/site-settings";
+import { siteDetailsSchema } from "@/lib/validation/admin";
+import { brandingFilesSchema } from "@/lib/validation/image";
 import { getErrorMessage } from "@/utils/error";
 import DeleteConfirmation from "../../_components/DeleteConfirmation";
 import { ImageUploadField } from "../../_components/ImageUploadField";
@@ -33,25 +35,20 @@ function BrandingForm({ settings, pending, save }: EditorProps) {
 
     const form = event.currentTarget;
     const selected = new FormData(form);
-    const upload = new FormData();
-
-    for (const { name, label } of branding) {
+    const getFile = (name: string) => {
       const file = selected.get(name);
-      if (!(file instanceof File) || !file.name) continue;
-      if (!file.size || file.size > 5 * 1024 * 1024) {
-        setError(`${label} must be an image up to 5 MB.`);
-        return;
-      }
-      upload.set(name, file);
-    }
-
-    if (!upload.has("logo") && !upload.has("heroImage")) {
-      setError("Choose a logo or hero image to upload.");
-      return;
-    }
+      return file instanceof File && file.name ? file : undefined;
+    };
 
     setError("");
     try {
+      const { logo, heroImage } = brandingFilesSchema.parse({
+        logo: getFile("logo"),
+        heroImage: getFile("heroImage"),
+      });
+      const upload = new FormData();
+      if (logo) upload.set("logo", logo);
+      if (heroImage) upload.set("heroImage", heroImage);
       await save(upload);
       form.reset();
     } catch (error) {
@@ -60,7 +57,7 @@ function BrandingForm({ settings, pending, save }: EditorProps) {
   }
 
   return (
-    <form onSubmit={submit} onChange={() => setError("")} className={panelClass}>
+    <form noValidate onSubmit={submit} onChange={() => setError("")} className={panelClass}>
       <div>
         <h2 className="font-semibold text-primary">Branding</h2>
         <p className="mt-1 text-sm text-slate-600">Update the site logo and homepage hero image.</p>
@@ -140,7 +137,7 @@ function DetailsForm({ settings, pending, save }: EditorProps) {
 
     setError("");
     try {
-      await save(changes);
+      await save(siteDetailsSchema.parse(changes));
       setDraft({});
     } catch (error) {
       setError(getErrorMessage(error));
@@ -148,7 +145,7 @@ function DetailsForm({ settings, pending, save }: EditorProps) {
   }
 
   return (
-    <form onSubmit={submit} className={panelClass}>
+    <form noValidate onSubmit={submit} className={panelClass}>
       <fieldset disabled={pending} className="space-y-4">
         <legend className="font-semibold text-primary">Contact details</legend>
         <div className="grid gap-4 sm:grid-cols-2">

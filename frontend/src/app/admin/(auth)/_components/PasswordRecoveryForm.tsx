@@ -13,6 +13,7 @@ import { useState, type FormEvent } from "react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { forgotPassword, resetPassword } from "@/lib/api/auth";
+import { forgotPasswordEmailSchema, resetPasswordFormSchema } from "@/types/auth";
 import { getErrorMessage } from "@/utils/error";
 
 export default function PasswordRecoveryForm({ token }: { token?: string }) {
@@ -21,10 +22,10 @@ export default function PasswordRecoveryForm({ token }: { token?: string }) {
   const [error, setError] = useState("");
   const recovery = useMutation({
     gcTime: 0,
-    mutationFn: (value: string) =>
+    mutationFn: async (value: string) =>
       token === undefined
-        ? forgotPassword(value.trim())
-        : resetPassword({ token, newPassword: value }),
+        ? forgotPassword(forgotPasswordEmailSchema.parse(value))
+        : resetPassword(resetPasswordFormSchema.parse({ token, newPassword: value })),
   });
 
   async function submit(event: FormEvent<HTMLFormElement>) {
@@ -99,7 +100,7 @@ export default function PasswordRecoveryForm({ token }: { token?: string }) {
           .
         </p>
       ) : (
-        <form className="space-y-4" onSubmit={submit}>
+        <form className="space-y-4" noValidate onSubmit={submit}>
           <div className="space-y-2">
             <label
               htmlFor="recovery-value"

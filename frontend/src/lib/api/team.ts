@@ -24,10 +24,6 @@ export async function getTeamMember(id: string, signal: AbortSignal) {
 export async function saveTeamMember(id: string | undefined, input: TeamMemberInput, photo?: File) {
   let body: TeamMemberInput | FormData = input;
   if (photo) {
-    if (!photo.size || photo.size > 5 * 1024 * 1024) {
-      throw new Error("Choose a photo up to 5 MB.");
-    }
-
     const form = new FormData();
     Object.entries(input).forEach(([key, value]) => form.set(key, String(value ?? "")));
     form.set("photo", photo);

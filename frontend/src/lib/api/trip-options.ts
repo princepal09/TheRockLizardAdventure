@@ -25,10 +25,6 @@ export async function saveTripOption(id: string | undefined, input: TripOptionIn
   if (input.kind === "seasons") {
     body = { ...fields, startMonth: input.startMonth, endMonth: input.endMonth };
   } else if (input.image) {
-    if (input.image.size > 5 * 1024 * 1024) {
-      throw new Error("Choose a region image up to 5 MB.");
-    }
-
     const form = new FormData();
     form.set("name", name);
     form.set("description", description ?? "");

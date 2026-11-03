@@ -47,9 +47,6 @@ export async function saveTrip(
   cover?: File,
 ) {
   if (cover) {
-    if (cover.size > 5 * 1024 * 1024) {
-      throw new Error("Choose a cover image up to 5 MB.");
-    }
     const body = new FormData();
     body.set("coverImage", cover);
     for (const [name, value] of Object.entries(input)) {
@@ -74,9 +71,6 @@ export async function deleteTrip(kind: TripKind, id: string) {
 }
 
 export async function uploadTripCover(kind: TripKind, id: string, file: File) {
-  if (file.size > 5 * 1024 * 1024) {
-    throw new Error("Choose a cover image up to 5 MB.");
-  }
   const body = new FormData();
   body.set("coverImage", file);
   await api.patch(`/${kind}/${id}`, body);

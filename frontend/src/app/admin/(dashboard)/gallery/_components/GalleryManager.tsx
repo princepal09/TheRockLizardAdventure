@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { useGallery, useGalleryMutation } from "@/hooks/gallery/useGallery";
 import { deleteGalleryImage, updateGalleryImage, uploadGalleryImages } from "@/lib/api/gallery";
 import type { GalleryImage, GalleryImageInput } from "@/types/gallery";
+import { galleryPhotoFormSchema } from "@/lib/validation/admin";
 import { getErrorMessage } from "@/utils/error";
 import GalleryUploadForm from "../../_components/GalleryUploadForm";
 import DeleteConfirmation from "../../_components/DeleteConfirmation";
@@ -16,7 +17,7 @@ const inputClass = "block min-h-11 w-full rounded-lg border border-slate-300 bg-
 
 function GalleryCard({ image }: { image: GalleryImage }) {
   const save = useGalleryMutation(
-    (input: GalleryImageInput) => updateGalleryImage(image.id, input),
+    async (input: GalleryImageInput) => updateGalleryImage(image.id, galleryPhotoFormSchema.parse(input)),
     "Gallery photo updated",
   );
   const remove = useGalleryMutation(() => deleteGalleryImage(image.id), "Gallery photo deleted");
@@ -29,7 +30,7 @@ function GalleryCard({ image }: { image: GalleryImage }) {
     const form = new FormData(event.currentTarget);
     save.mutate({
       altText: String(form.get("altText") ?? "").trim() || null,
-      sortOrder: Number(form.get("sortOrder")),
+      sortOrder: Number(form.get("sortOrder") || NaN),
       isActive: form.has("isActive"),
     });
   }
@@ -42,7 +43,7 @@ function GalleryCard({ image }: { image: GalleryImage }) {
           {image.isActive ? "Visible" : "Hidden"}
         </span>
       </div>
-      <form onSubmit={submit} className="space-y-4 p-4">
+      <form noValidate onSubmit={submit} className="space-y-4 p-4">
         <fieldset disabled={busy} className="space-y-3">
           <label className="block space-y-1 text-sm font-medium">
             <span>Alt text</span>

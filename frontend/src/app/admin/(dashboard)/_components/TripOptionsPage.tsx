@@ -7,6 +7,7 @@ import { useEffect, useRef, useState, type ComponentProps, type FormEvent } from
 import { Button } from "@/components/ui/button";
 import { useTripOption, useTripOptionMutation, useTripOptions } from "@/hooks/trip-options/useTripOptions";
 import { deleteTripOption, saveTripOption } from "@/lib/api/trip-options";
+import { tripOptionFormSchema } from "@/lib/validation/admin";
 import type { Region, Season, TripOptionInput, TripOptionKind } from "@/types/trip-option";
 import { getErrorMessage } from "@/utils/error";
 import DeleteConfirmation from "./DeleteConfirmation";
@@ -44,7 +45,7 @@ function OptionForm({ kind, item, onClose }: {
   const label = isRegion ? "Region" : "Season";
   const region = item && "imageUrl" in item ? item : undefined;
   const season = item && "startMonth" in item ? item : undefined;
-  const save = useTripOptionMutation(kind, (input: TripOptionInput) => saveTripOption(item?.id, input), item ? `${label} updated` : `${label} created`, item?.id);
+  const save = useTripOptionMutation(kind, async (input: TripOptionInput) => saveTripOption(item?.id, tripOptionFormSchema.parse(input)), item ? `${label} updated` : `${label} created`, item?.id);
   const remove = useTripOptionMutation(kind, (id: string) => deleteTripOption(kind, id), `${label} deleted`, item?.id);
   const busy = save.isPending || remove.isPending;
   const headingRef = useRef<HTMLHeadingElement>(null);
@@ -72,7 +73,7 @@ function OptionForm({ kind, item, onClose }: {
   }
 
   return (
-    <form onSubmit={submit} className={`${panelClass} space-y-4 p-5 sm:p-6`}>
+    <form noValidate onSubmit={submit} className={`${panelClass} space-y-4 p-5 sm:p-6`}>
       <header className="border-b border-slate-200 pb-4">
         <h2 ref={headingRef} tabIndex={-1} className="scroll-mt-24 text-lg font-semibold text-primary">{item ? `Edit ${label.toLowerCase()}` : `New ${label.toLowerCase()}`}</h2>
         <p className="mt-1 text-xs text-slate-600"><RequiredMark /> Required field</p>

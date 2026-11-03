@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { useTripMutation } from "@/hooks/trips/useTrips";
 import { deleteTripItinerary, saveTripItinerary } from "@/lib/api/trips";
 import type { ItineraryInput, TripDetail, TripKind } from "@/types/trip";
+import { itineraryFormSchema } from "@/lib/validation/admin";
 import { getErrorMessage } from "@/utils/error";
 import DeleteConfirmation from "../DeleteConfirmation";
 import {
@@ -28,7 +29,7 @@ function ItineraryForm({
 }) {
   const save = useTripMutation(
     kind,
-    (input: ItineraryInput) => saveTripItinerary(kind, tripId, input, day?.id),
+    async (input: ItineraryInput) => saveTripItinerary(kind, tripId, itineraryFormSchema.parse(input), day?.id),
     day ? "Itinerary day updated" : "Itinerary day added",
     tripId,
   );
@@ -63,6 +64,7 @@ function ItineraryForm({
 
   return (
     <form
+      noValidate
       onSubmit={submit}
       className="space-y-3 rounded-lg border border-slate-200 p-4"
     >

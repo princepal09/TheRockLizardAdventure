@@ -8,6 +8,8 @@ import { Button } from "@/components/ui/button";
 import { useTeamMember, useTeamMembers, useTeamMutation } from "@/hooks/team/useTeam";
 import { deleteTeamMember, saveTeamMember } from "@/lib/api/team";
 import type { TeamMember, TeamMemberInput } from "@/types/team";
+import { teamMemberFormSchema } from "@/lib/validation/admin";
+import { imageFileSchema } from "@/lib/validation/image";
 import { getErrorMessage } from "@/utils/error";
 import DeleteConfirmation from "../../_components/DeleteConfirmation";
 import { ImageUploadField, RequiredMark } from "../../_components/ImageUploadField";
@@ -17,7 +19,7 @@ const inputClass = "block min-h-11 w-full rounded-lg border border-slate-300 bg-
 
 function TeamMemberForm({ member, onClose }: { member?: TeamMember; onClose: () => void }) {
   const save = useTeamMutation(
-    ({ input, photo }: { input: TeamMemberInput; photo?: File }) => saveTeamMember(member?.id, input, photo),
+    async ({ input, photo }: { input: TeamMemberInput; photo?: File }) => saveTeamMember(member?.id, teamMemberFormSchema.parse(input), imageFileSchema.optional().parse(photo)),
     member ? "Team member updated" : "Team member created",
     member?.id,
   );
@@ -43,7 +45,7 @@ function TeamMemberForm({ member, onClose }: { member?: TeamMember; onClose: () 
         role: text("role"),
         bio: text("bio") || null,
         qualifications: text("qualifications") || null,
-        sortOrder: Number(text("sortOrder")),
+        sortOrder: Number(text("sortOrder") || NaN),
         isActive: form.has("isActive"),
       },
       photo: file instanceof File && file.name ? file : undefined,
@@ -51,7 +53,7 @@ function TeamMemberForm({ member, onClose }: { member?: TeamMember; onClose: () 
   }
 
   return (
-    <form onSubmit={submit} className={`${panelClass} space-y-4 p-5 sm:p-6`}>
+    <form noValidate onSubmit={submit} className={`${panelClass} space-y-4 p-5 sm:p-6`}>
       <header className="border-b border-slate-200 pb-4">
         <h2 ref={headingRef} tabIndex={-1} className="scroll-mt-24 text-lg font-semibold text-primary">
           {member ? "Edit team member" : "New team member"}

@@ -11,6 +11,8 @@ import {
   useTripOptions,
 } from "@/hooks/trips/useTrips";
 import { deleteTrip, saveTrip } from "@/lib/api/trips";
+import { tripFormSchema } from "@/lib/validation/admin";
+import { imageFileSchema } from "@/lib/validation/image";
 import {
   tripDifficulties,
   tripStatuses,
@@ -55,9 +57,10 @@ function TripForm({
   const label = kind === "treks" ? "Trek" : "Expedition";
   const save = useTripMutation(
     kind,
-    ({ input, cover }: { input: TripInput; cover?: File }) => {
-      if (!trip) return saveTrip(kind, undefined, input, cover);
-      return saveTrip(kind, trip.id, input);
+    async ({ input, cover }: { input: TripInput; cover?: File }) => {
+      const details = tripFormSchema.parse(input);
+      if (!trip) return saveTrip(kind, undefined, details, imageFileSchema.optional().parse(cover));
+      return saveTrip(kind, trip.id, details);
     },
     trip ? `${label} updated` : `${label} created`,
     trip?.id,
@@ -102,7 +105,7 @@ function TripForm({
     };
 
     const file = form.get("coverImage");
-    const cover = file instanceof File && file.size > 0 ? file : undefined;
+    const cover = file instanceof File && file.name ? file : undefined;
     const saved = await save
       .mutateAsync({ input, cover })
       .catch(() => undefined);
@@ -116,7 +119,7 @@ function TripForm({
   }
 
   return (
-    <form onSubmit={submit} className={tripPanelClass}>
+    <form noValidate onSubmit={submit} className={tripPanelClass}>
       <header className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200 pb-4">
         <h2 className="text-lg font-semibold text-primary">{label} details</h2>
         <p className="text-xs text-slate-600">

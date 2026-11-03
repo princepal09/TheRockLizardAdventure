@@ -25,12 +25,14 @@ export function ImageUploadField({
   multiple,
   required,
   disabled,
+  onFilesChange,
 }: {
   label: string;
   name: string;
   multiple?: boolean;
   required?: boolean;
   disabled?: boolean;
+  onFilesChange?: (files: FileList | null) => void;
 }) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [previews, setPreviews] = useState<ReturnType<typeof previewFiles>>([]);
@@ -68,6 +70,7 @@ export function ImageUploadField({
     }
 
     setPreviews(previewFiles(input.files));
+    onFilesChange?.(input.files);
     setSelectionLimited(false);
     input.focus();
   }
@@ -105,6 +108,7 @@ export function ImageUploadField({
               }
               setSelectionLimited(overLimit);
               setPreviews(previewFiles(input.files));
+              onFilesChange?.(input.files);
             }}
             className="mt-2 block w-full rounded-md text-sm text-slate-600 file:mr-2 file:rounded-md file:border-0 file:bg-primary file:px-3 file:py-2 file:text-xs file:font-semibold file:text-primary-foreground focus-visible:outline-2 focus-visible:outline-tertiary disabled:opacity-60"
           />

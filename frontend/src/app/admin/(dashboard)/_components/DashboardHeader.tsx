@@ -51,7 +51,14 @@ export default function DashboardHeader() {
           >
             <span className="grid size-8 shrink-0 place-items-center overflow-hidden rounded-full bg-tertiary text-tertiary-foreground">
               {admin?.profileImage ? (
-                <Image src={admin.profileImage} alt="" width={32} height={32} unoptimized className="size-8 object-cover" />
+                <Image
+                  src={admin.profileImage}
+                  alt=""
+                  width={32}
+                  height={32}
+                  unoptimized
+                  className="size-8 object-cover"
+                />
               ) : (
                 <UserRound aria-hidden="true" className="size-4" />
               )}
@@ -64,7 +71,7 @@ export default function DashboardHeader() {
             aria-label="Log out"
             disabled={logout.isPending}
             onClick={() => logout.mutate()}
-            className="size-11 gap-2 bg-secondary text-white hover:bg-secondary/90 focus-visible:ring-tertiary/60 sm:h-9 sm:w-auto sm:px-3"
+            className="size-11 gap-2 bg-red-500 text-white hover:bg-red-600 focus-visible:ring-tertiary/60 sm:h-9 sm:w-auto sm:px-3"
           >
             <LogOut aria-hidden="true" className="size-4" />
             <span className="hidden sm:inline">
