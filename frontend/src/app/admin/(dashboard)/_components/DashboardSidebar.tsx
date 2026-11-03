@@ -39,8 +39,8 @@ const groups: { label: string; items: NavigationItem[] }[] = [
     items: [
       { label: "Regions", icon: MapPin, href: "/admin/regions" },
       { label: "Seasons", icon: CalendarDays, href: "/admin/seasons" },
-      { label: "Gallery", icon: Images },
-      { label: "Site Settings", icon: Settings },
+      { label: "Gallery", icon: Images, href: "/admin/gallery" },
+      { label: "Site Settings", icon: Settings, href: "/admin/site-settings" },
     ],
   },
 ];
@@ -60,7 +60,8 @@ function SidebarContents({ onNavigate }: { onNavigate?: () => void }) {
           </p>
           <ul className="space-y-0.5">
             {items.map(({ label, href, icon: Icon }) => {
-              const active = href && (pathname === href || pathname.startsWith(`${href}/`));
+              const active =
+                href && (pathname === href || pathname.startsWith(`${href}/`));
               const content = (
                 <>
                   <Icon aria-hidden="true" className="size-4 shrink-0" />

@@ -26,3 +26,13 @@ export const tripOptionKeys = {
   detail: (version: number, kind: string, id?: string) =>
     [...tripOptionKeys.all, version, kind, "detail", id] as const,
 };
+
+export const galleryKeys = {
+  all: ["gallery"] as const,
+  list: (version: number) => [...galleryKeys.all, version, "list"] as const,
+};
+
+export const siteSettingsKeys = {
+  all: ["site-settings"] as const,
+  detail: (version: number) => [...siteSettingsKeys.all, version] as const,
+};

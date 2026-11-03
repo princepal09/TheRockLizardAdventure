@@ -9,6 +9,7 @@ import { useTripOption, useTripOptionMutation, useTripOptions } from "@/hooks/tr
 import { deleteTripOption, saveTripOption } from "@/lib/api/trip-options";
 import type { Region, Season, TripOptionInput, TripOptionKind } from "@/types/trip-option";
 import { getErrorMessage } from "@/utils/error";
+import DeleteConfirmation from "./DeleteConfirmation";
 
 const inputClass = "block min-h-11 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-base focus-visible:outline-2 focus-visible:outline-tertiary";
 const panelClass = "rounded-xl border border-slate-200 bg-white shadow-sm";
@@ -112,18 +113,23 @@ function OptionForm({ kind, item, onClose }: {
         </label>
       </fieldset>
 
-      {(save.error || remove.error) && (
-        <p role="alert" className="text-sm text-red-800">{getErrorMessage(save.error ?? remove.error)}</p>
+      {save.error && (
+        <p role="alert" className="text-sm text-red-800">{getErrorMessage(save.error)}</p>
       )}
       <div className="flex flex-wrap gap-2 border-t border-slate-200 pt-4">
         <Button type="submit" variant="secondary" disabled={busy}>{save.isPending ? "Saving…" : item ? "Save changes" : `Create ${label.toLowerCase()}`}</Button>
         <Button type="button" variant="outline" disabled={busy} onClick={onClose}>Cancel</Button>
         {item && (
-          <Button type="button" variant="destructive" disabled={busy} onClick={() => {
-            if (window.confirm(`Delete "${item.name}"?`)) remove.mutate(item.id, { onSuccess: onClose });
-          }}>
-            {remove.isPending ? "Deleting…" : "Delete"}
-          </Button>
+          <DeleteConfirmation
+            label="Delete"
+            title={`Delete ${label.toLowerCase()}?`}
+            description={`“${item.name}” will be permanently deleted.`}
+            disabled={busy}
+            onConfirm={async () => {
+              await remove.mutateAsync(item.id);
+              onClose();
+            }}
+          />
         )}
       </div>
     </form>

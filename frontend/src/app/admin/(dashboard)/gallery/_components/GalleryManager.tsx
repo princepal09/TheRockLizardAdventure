@@ -1,0 +1,105 @@
+"use client";
+
+import Image from "next/image";
+import type { FormEvent } from "react";
+
+import { Button } from "@/components/ui/button";
+import { useGallery, useGalleryMutation } from "@/hooks/gallery/useGallery";
+import { deleteGalleryImage, updateGalleryImage, uploadGalleryImages } from "@/lib/api/gallery";
+import type { GalleryImage, GalleryImageInput } from "@/types/gallery";
+import { getErrorMessage } from "@/utils/error";
+import GalleryUploadForm from "../../_components/GalleryUploadForm";
+import DeleteConfirmation from "../../_components/DeleteConfirmation";
+import { RequiredMark } from "../../_components/ImageUploadField";
+
+const inputClass = "block min-h-11 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-base focus-visible:outline-2 focus-visible:outline-tertiary";
+
+function GalleryCard({ image }: { image: GalleryImage }) {
+  const save = useGalleryMutation(
+    (input: GalleryImageInput) => updateGalleryImage(image.id, input),
+    "Gallery photo updated",
+  );
+  const remove = useGalleryMutation(() => deleteGalleryImage(image.id), "Gallery photo deleted");
+  const busy = save.isPending || remove.isPending;
+
+  function submit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    if (busy) return;
+
+    const form = new FormData(event.currentTarget);
+    save.mutate({
+      altText: String(form.get("altText") ?? "").trim() || null,
+      sortOrder: Number(form.get("sortOrder")),
+      isActive: form.has("isActive"),
+    });
+  }
+
+  return (
+    <li className="min-w-0 overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
+      <div className="relative aspect-video bg-slate-100">
+        <Image src={image.imageUrl} alt={image.altText ?? ""} fill sizes="(min-width: 1280px) 25vw, (min-width: 640px) 50vw, 100vw" unoptimized className="object-cover" />
+        <span className="absolute top-3 right-3 rounded-full bg-primary px-2.5 py-1 text-xs font-semibold text-primary-foreground">
+          {image.isActive ? "Visible" : "Hidden"}
+        </span>
+      </div>
+      <form onSubmit={submit} className="space-y-4 p-4">
+        <fieldset disabled={busy} className="space-y-3">
+          <label className="block space-y-1 text-sm font-medium">
+            <span>Alt text</span>
+            <input name="altText" maxLength={255} defaultValue={image.altText ?? ""} className={inputClass} />
+          </label>
+          <label className="block space-y-1 text-sm font-medium">
+            <span>Display order<RequiredMark /></span>
+            <input name="sortOrder" type="number" min={0} max={2147483647} required defaultValue={image.sortOrder} className={inputClass} />
+          </label>
+          <label className="flex min-h-9 items-center gap-2 text-sm font-medium">
+            <input name="isActive" type="checkbox" defaultChecked={image.isActive} />
+            Show in public gallery
+          </label>
+        </fieldset>
+
+        {save.error && (
+          <p role="alert" className="text-sm text-red-800">{getErrorMessage(save.error)}</p>
+        )}
+        <div className="flex flex-wrap gap-2 border-t border-slate-200 pt-4">
+          <Button type="submit" variant="secondary" disabled={busy}>{save.isPending ? "Saving…" : "Save photo"}</Button>
+          <DeleteConfirmation
+            label="Delete"
+            title="Delete gallery photo?"
+            description="This photo will be permanently removed from the site gallery."
+            disabled={busy}
+            onConfirm={() => remove.mutateAsync()}
+          />
+        </div>
+      </form>
+    </li>
+  );
+}
+
+export default function GalleryManager() {
+  const gallery = useGallery();
+  const upload = useGalleryMutation(uploadGalleryImages, "Gallery photos uploaded");
+
+  return (
+    <section className="mx-auto max-w-6xl space-y-6">
+      <header className="space-y-1">
+        <p className="text-xs font-semibold tracking-widest text-slate-600 uppercase">Website</p>
+        <h1 className="text-3xl font-bold text-primary">Gallery</h1>
+        <p className="text-sm text-slate-600">Manage the photos shown in the public site gallery.</p>
+      </header>
+      <GalleryUploadForm upload={upload.mutateAsync} pending={upload.isPending} error={upload.error} />
+      {gallery.data ? (
+        gallery.data.length ? (
+          <ul className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+            {gallery.data.map((image) => <GalleryCard key={image.id} image={image} />)}
+          </ul>
+        ) : <p className="rounded-xl border border-slate-200 bg-white p-5 text-sm text-slate-600">No gallery photos yet.</p>
+      ) : gallery.isError ? (
+        <div className="space-y-3 rounded-xl border border-slate-200 bg-white p-5">
+          <p role="alert" className="text-sm text-red-800">{getErrorMessage(gallery.error)}</p>
+          <Button type="button" variant="outline" disabled={gallery.isFetching} onClick={() => void gallery.refetch()}>Retry</Button>
+        </div>
+      ) : <p role="status" className="text-sm text-slate-600">Loading gallery…</p>}
+    </section>
+  );
+}
