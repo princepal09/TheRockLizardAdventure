@@ -1,8 +1,19 @@
-import type { Expedition, Season } from '../../../generated/prisma/client.js';
+import type {
+  Expedition,
+  ExpeditionImage,
+  ExpeditionItinerary,
+  Season,
+} from '../../../generated/prisma/client.js';
+import type { CreateGalleryImageDTO, UpdateGalleryImageDTO } from '../gallery/gallery.schema.js';
+import type { CreateItineraryDTO, UpdateItineraryDTO } from '../itinerary/itinerary.schema.js';
 import type { CreateExpeditionDTO, UpdateExpeditionDTO } from './expedition.schema.js';
 
 type ExpeditionCover = Partial<Pick<Expedition, 'coverImagePublicId'>>;
 type ExpeditionSeasons = { seasons: { seasonId: string; season: Season }[] };
+type ExpeditionDetails = ExpeditionSeasons & {
+  itineraries: ExpeditionItinerary[];
+  images: ExpeditionImage[];
+};
 
 export interface IExpeditionRepository {
   createExpedition(
@@ -10,15 +21,32 @@ export interface IExpeditionRepository {
     adminId: string,
   ): Promise<Expedition & ExpeditionSeasons>;
   findExpeditions(): Promise<Expedition[]>;
-  findExpeditionById(id: string): Promise<(Expedition & ExpeditionSeasons) | null>;
+  findExpeditionById(id: string): Promise<(Expedition & ExpeditionDetails) | null>;
   findPublishedExpeditions(): Promise<Omit<Expedition, 'createdBy'>[]>;
   findPublishedExpeditionBySlug(
     slug: string,
-  ): Promise<(Omit<Expedition, 'createdBy'> & ExpeditionSeasons) | null>;
+  ): Promise<(Omit<Expedition, 'createdBy'> & ExpeditionDetails) | null>;
   updateExpedition(
     id: string,
     data: UpdateExpeditionDTO & ExpeditionCover,
     coverImagePublicId?: string | null,
   ): Promise<Expedition & ExpeditionSeasons>;
-  deleteExpedition(id: string): Promise<Expedition>;
+  deleteExpedition(id: string): Promise<Expedition & { images: ExpeditionImage[] }>;
+  createGalleryImages(
+    expeditionId: string,
+    images: CreateGalleryImageDTO[],
+  ): Promise<ExpeditionImage[]>;
+  updateGalleryImage(
+    expeditionId: string,
+    id: string,
+    data: UpdateGalleryImageDTO,
+  ): Promise<ExpeditionImage>;
+  deleteGalleryImage(expeditionId: string, id: string): Promise<ExpeditionImage>;
+  createItinerary(expeditionId: string, data: CreateItineraryDTO): Promise<ExpeditionItinerary>;
+  updateItinerary(
+    expeditionId: string,
+    id: string,
+    data: UpdateItineraryDTO,
+  ): Promise<ExpeditionItinerary>;
+  deleteItinerary(expeditionId: string, id: string): Promise<void>;
 }

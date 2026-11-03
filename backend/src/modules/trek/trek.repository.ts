@@ -1,5 +1,7 @@
 import { ContentStatus, type Trek } from '../../../generated/prisma/client.js';
 import { prisma } from '../../lib/prisma.js';
+import type { CreateGalleryImageDTO, UpdateGalleryImageDTO } from '../gallery/gallery.schema.js';
+import type { CreateItineraryDTO, UpdateItineraryDTO } from '../itinerary/itinerary.schema.js';
 import type { ITrekRepository } from './trek.interface.js';
 import type { CreateTrekDTO, UpdateTrekDTO } from './trek.schema.js';
 
@@ -25,7 +27,11 @@ export class TrekRepository implements ITrekRepository {
   async findTrekById(id: string) {
     return prisma.trek.findUnique({
       where: { id },
-      include: { seasons: { include: { season: true } } },
+      include: {
+        seasons: { include: { season: true } },
+        itineraries: { orderBy: { dayNumber: 'asc' } },
+        images: { orderBy: [{ sortOrder: 'asc' }, { createdAt: 'asc' }, { id: 'asc' }] },
+      },
     });
   }
 
@@ -41,7 +47,11 @@ export class TrekRepository implements ITrekRepository {
     return prisma.trek.findUnique({
       where: { slug, status: ContentStatus.PUBLISHED },
       omit: { createdBy: true },
-      include: { seasons: { where: { season: { isActive: true } }, include: { season: true } } },
+      include: {
+        seasons: { where: { season: { isActive: true } }, include: { season: true } },
+        itineraries: { orderBy: { dayNumber: 'asc' } },
+        images: { orderBy: [{ sortOrder: 'asc' }, { createdAt: 'asc' }, { id: 'asc' }] },
+      },
     });
   }
 
@@ -71,7 +81,33 @@ export class TrekRepository implements ITrekRepository {
     });
   }
 
-  async deleteTrek(id: string): Promise<Trek> {
-    return prisma.trek.delete({ where: { id } });
+  async deleteTrek(id: string) {
+    return prisma.trek.delete({ where: { id }, include: { images: true } });
+  }
+
+  async createGalleryImages(trekId: string, images: CreateGalleryImageDTO[]) {
+    return prisma.$transaction(
+      images.map((image) => prisma.trekImage.create({ data: { ...image, trekId } })),
+    );
+  }
+
+  async updateGalleryImage(trekId: string, id: string, data: UpdateGalleryImageDTO) {
+    return prisma.trekImage.update({ where: { id, trekId }, data });
+  }
+
+  async deleteGalleryImage(trekId: string, id: string) {
+    return prisma.trekImage.delete({ where: { id, trekId } });
+  }
+
+  async createItinerary(trekId: string, data: CreateItineraryDTO) {
+    return prisma.trekItinerary.create({ data: { ...data, trekId } });
+  }
+
+  async updateItinerary(trekId: string, id: string, data: UpdateItineraryDTO) {
+    return prisma.trekItinerary.update({ where: { id, trekId }, data });
+  }
+
+  async deleteItinerary(trekId: string, id: string): Promise<void> {
+    await prisma.trekItinerary.delete({ where: { id, trekId } });
   }
 }

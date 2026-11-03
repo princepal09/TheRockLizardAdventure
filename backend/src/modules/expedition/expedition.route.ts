@@ -1,9 +1,11 @@
 import express from 'express';
 
 import { verifyUser } from '../../middlewares/auth.middleware.js';
-import { upload } from '../../middlewares/muler.middleware.js';
+import { upload, uploadGalleryImages } from '../../middlewares/muler.middleware.js';
 import { validate } from '../../middlewares/validate.middleware.js';
 import { authService } from '../auth/auth.container.js';
+import { updateGalleryImageSchema } from '../gallery/gallery.schema.js';
+import { createItinerarySchema, updateItinerarySchema } from '../itinerary/itinerary.schema.js';
 import { expeditionController } from './expedition.container.js';
 import { createExpeditionSchema, updateExpeditionSchema } from './expedition.schema.js';
 
@@ -29,5 +31,31 @@ router.patch(
   expeditionController.updateExpeditionController,
 );
 router.delete('/:expeditionId', expeditionController.deleteExpeditionController);
+router.post(
+  '/:expeditionId/itineraries',
+  validate(createItinerarySchema),
+  expeditionController.createItineraryController,
+);
+router.patch(
+  '/:expeditionId/itineraries/:itineraryId',
+  validate(updateItinerarySchema),
+  expeditionController.updateItineraryController,
+);
+router.delete(
+  '/:expeditionId/itineraries/:itineraryId',
+  expeditionController.deleteItineraryController,
+);
+
+router.post(
+  '/:expeditionId/images',
+  uploadGalleryImages,
+  expeditionController.createGalleryImagesController,
+);
+router.patch(
+  '/:expeditionId/images/:imageId',
+  validate(updateGalleryImageSchema),
+  expeditionController.updateGalleryImageController,
+);
+router.delete('/:expeditionId/images/:imageId', expeditionController.deleteGalleryImageController);
 
 export default router;

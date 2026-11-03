@@ -1,5 +1,7 @@
 import { ContentStatus, type Expedition } from '../../../generated/prisma/client.js';
 import { prisma } from '../../lib/prisma.js';
+import type { CreateGalleryImageDTO, UpdateGalleryImageDTO } from '../gallery/gallery.schema.js';
+import type { CreateItineraryDTO, UpdateItineraryDTO } from '../itinerary/itinerary.schema.js';
 import type { IExpeditionRepository } from './expedition.interface.js';
 import type { CreateExpeditionDTO, UpdateExpeditionDTO } from './expedition.schema.js';
 
@@ -28,7 +30,11 @@ export class ExpeditionRepository implements IExpeditionRepository {
   async findExpeditionById(id: string) {
     return prisma.expedition.findUnique({
       where: { id },
-      include: { seasons: { include: { season: true } } },
+      include: {
+        seasons: { include: { season: true } },
+        itineraries: { orderBy: { dayNumber: 'asc' } },
+        images: { orderBy: [{ sortOrder: 'asc' }, { createdAt: 'asc' }, { id: 'asc' }] },
+      },
     });
   }
 
@@ -44,7 +50,11 @@ export class ExpeditionRepository implements IExpeditionRepository {
     return prisma.expedition.findUnique({
       where: { slug, status: ContentStatus.PUBLISHED },
       omit: { createdBy: true },
-      include: { seasons: { where: { season: { isActive: true } }, include: { season: true } } },
+      include: {
+        seasons: { where: { season: { isActive: true } }, include: { season: true } },
+        itineraries: { orderBy: { dayNumber: 'asc' } },
+        images: { orderBy: [{ sortOrder: 'asc' }, { createdAt: 'asc' }, { id: 'asc' }] },
+      },
     });
   }
 
@@ -74,7 +84,33 @@ export class ExpeditionRepository implements IExpeditionRepository {
     });
   }
 
-  async deleteExpedition(id: string): Promise<Expedition> {
-    return prisma.expedition.delete({ where: { id } });
+  async deleteExpedition(id: string) {
+    return prisma.expedition.delete({ where: { id }, include: { images: true } });
+  }
+
+  async createGalleryImages(expeditionId: string, images: CreateGalleryImageDTO[]) {
+    return prisma.$transaction(
+      images.map((image) => prisma.expeditionImage.create({ data: { ...image, expeditionId } })),
+    );
+  }
+
+  async updateGalleryImage(expeditionId: string, id: string, data: UpdateGalleryImageDTO) {
+    return prisma.expeditionImage.update({ where: { id, expeditionId }, data });
+  }
+
+  async deleteGalleryImage(expeditionId: string, id: string) {
+    return prisma.expeditionImage.delete({ where: { id, expeditionId } });
+  }
+
+  async createItinerary(expeditionId: string, data: CreateItineraryDTO) {
+    return prisma.expeditionItinerary.create({ data: { ...data, expeditionId } });
+  }
+
+  async updateItinerary(expeditionId: string, id: string, data: UpdateItineraryDTO) {
+    return prisma.expeditionItinerary.update({ where: { id, expeditionId }, data });
+  }
+
+  async deleteItinerary(expeditionId: string, id: string): Promise<void> {
+    await prisma.expeditionItinerary.delete({ where: { id, expeditionId } });
   }
 }

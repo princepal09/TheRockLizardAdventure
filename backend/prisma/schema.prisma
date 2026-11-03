@@ -212,6 +212,7 @@ model TrekImage {
   id        String   @id @default(uuid()) @db.Char(36)
   trekId    String   @map("trek_id") @db.Char(36)
   imageUrl  String   @map("image_url") @db.VarChar(1000)
+  imagePublicId String? @map("image_public_id") @db.VarChar(1000)
   altText   String?  @map("alt_text") @db.VarChar(255)
   caption   String?  @db.VarChar(255)
   sortOrder Int      @default(0) @map("sort_order")
@@ -302,6 +303,7 @@ model ExpeditionImage {
   id           String   @id @default(uuid()) @db.Char(36)
   expeditionId String   @map("expedition_id") @db.Char(36)
   imageUrl     String   @map("image_url") @db.VarChar(1000)
+  imagePublicId String @map("image_public_id") @db.VarChar(1000)
   altText      String?  @map("alt_text") @db.VarChar(255)
   caption      String?  @db.VarChar(255)
   sortOrder    Int      @default(0) @map("sort_order")
@@ -318,6 +320,7 @@ model ExpeditionImage {
 model Gallery {
   id        String   @id @default(uuid()) @db.Char(36)
   imageUrl  String   @map("image_url") @db.VarChar(1000)
+  imagePublicId String @map("image_public_id") @db.VarChar(1000)
   altText   String?  @map("alt_text") @db.VarChar(255)
   sortOrder Int      @default(0) @map("sort_order")
   isActive  Boolean  @default(true) @map("is_active")

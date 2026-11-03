@@ -1,4 +1,6 @@
 import type { Request, Response } from 'express';
+import { galleryImageIdSchema } from '../gallery/gallery.schema.js';
+import { itineraryIdSchema } from '../itinerary/itinerary.schema.js';
 import { AppError } from '../../utils/common/error/AppError.js';
 import { catchAsync } from '../../utils/common/helpers/CathAsync.js';
 import { sendResponse } from '../../utils/response/AppResponse.js';
@@ -63,6 +65,98 @@ export class TrekController {
 
     sendResponse(res, 200, { success: true, message: 'Trek deleted successfully' });
   });
+
+  createItineraryController = catchAsync(async (req: Request, res: Response) => {
+    const itinerary = await this.trekService.createItinerary(
+      this.parseTrekId(req.params.trekId),
+      req.body,
+    );
+
+    sendResponse(res, 201, {
+      success: true,
+      message: 'Itinerary day created successfully',
+      data: itinerary,
+    });
+  });
+
+  updateItineraryController = catchAsync(async (req: Request, res: Response) => {
+    const itinerary = await this.trekService.updateItinerary(
+      this.parseTrekId(req.params.trekId),
+      this.parseItineraryId(req.params.itineraryId),
+      req.body,
+    );
+
+    sendResponse(res, 200, {
+      success: true,
+      message: 'Itinerary day updated successfully',
+      data: itinerary,
+    });
+  });
+
+  deleteItineraryController = catchAsync(async (req: Request, res: Response) => {
+    await this.trekService.deleteItinerary(
+      this.parseTrekId(req.params.trekId),
+      this.parseItineraryId(req.params.itineraryId),
+    );
+
+    sendResponse(res, 200, { success: true, message: 'Itinerary day deleted successfully' });
+  });
+
+  createGalleryImagesController = catchAsync(async (req: Request, res: Response) => {
+    const images = await this.trekService.createGalleryImages(
+      this.parseTrekId(req.params.trekId),
+      Array.isArray(req.files) ? req.files : [],
+    );
+
+    sendResponse(res, 201, {
+      success: true,
+      message: 'Gallery images uploaded successfully',
+      data: images,
+    });
+  });
+
+  updateGalleryImageController = catchAsync(async (req: Request, res: Response) => {
+    const image = await this.trekService.updateGalleryImage(
+      this.parseTrekId(req.params.trekId),
+      this.parseGalleryImageId(req.params.imageId),
+      req.body,
+    );
+
+    sendResponse(res, 200, {
+      success: true,
+      message: 'Gallery image updated successfully',
+      data: image,
+    });
+  });
+
+  deleteGalleryImageController = catchAsync(async (req: Request, res: Response) => {
+    await this.trekService.deleteGalleryImage(
+      this.parseTrekId(req.params.trekId),
+      this.parseGalleryImageId(req.params.imageId),
+    );
+
+    sendResponse(res, 200, { success: true, message: 'Gallery image deleted successfully' });
+  });
+
+  private parseGalleryImageId(value: unknown): string {
+    const result = galleryImageIdSchema.safeParse(value);
+
+    if (!result.success) {
+      throw new AppError('Invalid gallery image ID', 400);
+    }
+
+    return result.data;
+  }
+
+  private parseItineraryId(value: unknown): string {
+    const result = itineraryIdSchema.safeParse(value);
+
+    if (!result.success) {
+      throw new AppError('Invalid itinerary ID', 400);
+    }
+
+    return result.data;
+  }
 
   private parseTrekId(value: unknown): string {
     const result = trekIdSchema.safeParse(value);

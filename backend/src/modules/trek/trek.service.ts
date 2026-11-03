@@ -1,4 +1,6 @@
 import { Prisma } from '../../../generated/prisma/client.js';
+import type { CreateGalleryImageDTO, UpdateGalleryImageDTO } from '../gallery/gallery.schema.js';
+import type { CreateItineraryDTO, UpdateItineraryDTO } from '../itinerary/itinerary.schema.js';
 import { logger } from '../../lib/logger.js';
 import {
   deleteFromCloudinary,
@@ -93,9 +95,100 @@ export class TrekService {
     try {
       const trek = await this.trekRepo.deleteTrek(id);
       await this.cleanupImage(trek.coverImagePublicId);
+      await Promise.all(trek.images.map((image) => this.cleanupImage(image.imagePublicId)));
     } catch (error) {
       this.handleWriteError(error);
     }
+  }
+
+  async createItinerary(trekId: string, data: CreateItineraryDTO) {
+    try {
+      return await this.trekRepo.createItinerary(trekId, data);
+    } catch (error) {
+      this.handleItineraryError(error);
+    }
+  }
+
+  async updateItinerary(trekId: string, id: string, data: UpdateItineraryDTO) {
+    try {
+      return await this.trekRepo.updateItinerary(trekId, id, data);
+    } catch (error) {
+      this.handleItineraryError(error);
+    }
+  }
+
+  async deleteItinerary(trekId: string, id: string): Promise<void> {
+    try {
+      await this.trekRepo.deleteItinerary(trekId, id);
+    } catch (error) {
+      this.handleItineraryError(error);
+    }
+  }
+
+  private handleItineraryError(error: unknown): never {
+    if (error instanceof Prisma.PrismaClientKnownRequestError) {
+      switch (error.code) {
+        case 'P2002':
+          throw new AppError('An itinerary already exists for this day', 409);
+        case 'P2003':
+          throw new AppError('Trek not found', 404);
+        case 'P2025':
+          throw new AppError('Itinerary day not found', 404);
+      }
+    }
+
+    throw error;
+  }
+
+  async createGalleryImages(trekId: string, files: Express.Multer.File[]) {
+    if (files.length === 0 || files.length > 5) {
+      throw new AppError('Upload between 1 and 5 photos', 400);
+    }
+
+    await this.getTrek(trekId);
+    const images: CreateGalleryImageDTO[] = [];
+
+    try {
+      for (const file of files) {
+        const image = await uploadToCloudinary(file, 'rocklizard/treks/gallery');
+        images.push({ imageUrl: image.secure_url, imagePublicId: image.public_id });
+      }
+
+      return await this.trekRepo.createGalleryImages(trekId, images);
+    } catch (error) {
+      await Promise.all(images.map((image) => this.cleanupImage(image.imagePublicId)));
+      this.handleGalleryError(error);
+    }
+  }
+
+  async updateGalleryImage(trekId: string, id: string, data: UpdateGalleryImageDTO) {
+    try {
+      return await this.trekRepo.updateGalleryImage(trekId, id, data);
+    } catch (error) {
+      this.handleGalleryError(error);
+    }
+  }
+
+  async deleteGalleryImage(trekId: string, id: string): Promise<void> {
+    try {
+      const image = await this.trekRepo.deleteGalleryImage(trekId, id);
+      await this.cleanupImage(image.imagePublicId);
+    } catch (error) {
+      this.handleGalleryError(error);
+    }
+  }
+
+  private handleGalleryError(error: unknown): never {
+    if (error instanceof Prisma.PrismaClientKnownRequestError) {
+      switch (error.code) {
+        case 'P2003':
+          throw new AppError('Trek not found', 404);
+        case 'P2025':
+          throw new AppError('Gallery image not found', 404);
+      }
+    }
+
+    throw error;
   }
 
   private async cleanupImage(publicId?: string | null): Promise<void> {
