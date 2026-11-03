@@ -2,10 +2,11 @@
 
 import { useEffect, type ReactNode } from "react";
 import { useRouter } from "next/navigation";
-
 import { Button } from "@/components/ui/button";
 import { useAuthStore } from "@/stores/auth.store";
 import { useAuthInit } from "@/stores/useAuthInit";
+import DashboardHeader from "./_components/DashboardHeader";
+import DashboardSidebar from "./_components/DashboardSidebar";
 
 export default function DashboardLayout({ children }: { children: ReactNode }) {
   const router = useRouter();
@@ -43,5 +44,16 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
     );
   }
 
-  return children;
+  return (
+    <div className="flex min-h-dvh flex-col bg-background text-foreground">
+      <DashboardHeader />
+
+      <div className="flex flex-1 min-w-0">
+        <DashboardSidebar />
+        <div className="flex min-w-0 flex-1 flex-col">
+          <main className="flex-1 px-4 py-5 sm:px-6 sm:py-8">{children}</main>
+        </div>
+      </div>
+    </div>
+  );
 }

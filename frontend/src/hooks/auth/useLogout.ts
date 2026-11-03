@@ -1,6 +1,7 @@
 "use client";
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { toast } from "sonner";
 
 import { logout } from "@/lib/api/auth";
 import { authKeys } from "@/lib/api/query-keys";
@@ -20,6 +21,7 @@ export function useLogout() {
       await queryClient.cancelQueries({ queryKey: authKeys.currentAdmin() });
       useAuthStore.getState().clearAuth();
       queryClient.setQueryData(authKeys.currentAdmin(), null);
+      toast.success("Signed out successfully");
     },
   });
 }

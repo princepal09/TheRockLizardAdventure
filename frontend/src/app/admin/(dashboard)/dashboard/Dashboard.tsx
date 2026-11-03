@@ -1,22 +1,29 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { useLogout } from "@/hooks/auth/useLogout";
 import { useAuthInit } from "@/stores/useAuthInit";
-import { getErrorMessage } from "@/utils/error";
 
 export default function Dashboard() {
   const { data: admin } = useAuthInit();
-  const logout = useLogout();
 
   return (
-    <main className="mx-auto w-full max-w-5xl space-y-4 p-8">
-      <h1 className="text-2xl font-bold">Dashboard</h1>
-      <p>Signed in as {admin?.email}</p>
-      <Button disabled={logout.isPending} onClick={() => logout.mutate()}>
-        {logout.isPending ? "Signing out…" : "Sign out"}
-      </Button>
-      {logout.isError && <p role="alert">{getErrorMessage(logout.error)}</p>}
-    </main>
+    <section
+      aria-labelledby="dashboard-heading"
+      className="mx-auto w-full max-w-6xl space-y-2"
+    >
+      <p className="text-xs font-semibold tracking-widest text-slate-600 uppercase">
+        Workspace
+      </p>
+      <h1
+        id="dashboard-heading"
+        className="text-2xl font-bold tracking-tight text-primary sm:text-3xl"
+      >
+        Dashboard overview
+      </h1>
+      {admin?.email && (
+        <p className="text-sm break-all text-slate-600">
+          Signed in as {admin.email}
+        </p>
+      )}
+    </section>
   );
 }
