@@ -260,6 +260,6 @@ export class AuthService {
       throw new AppError('Admin not found', 404);
     }
 
-    return updatedAdmin;
+    return sanitizedUserResponse(updatedAdmin);
   }
 }

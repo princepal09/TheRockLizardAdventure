@@ -1,0 +1,24 @@
+{
+  "name": "therocklizard",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "concurrently --kill-others-on-fail --names frontend,backend \"npm --prefix frontend run dev\" \"npm --prefix backend run dev\"",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/princepal09/TheRockLizardAdventure.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/princepal09/TheRockLizardAdventure/issues"
+  },
+  "homepage": "https://github.com/princepal09/TheRockLizardAdventure#readme",
+  "devDependencies": {
+    "concurrently": "^10.0.6"
+  }
+}
