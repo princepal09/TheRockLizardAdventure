@@ -1,5 +1,6 @@
 import z from 'zod';
 import { ContentStatus, DifficultyLevel } from '../../../generated/prisma/client.js';
+import { seasonIdsSchema } from '../season/season.schema.js';
 
 const numberInput = z.union([
   z.number(),
@@ -25,6 +26,7 @@ export const createExpeditionSchema = z
     summary: z.string().max(500).nullable().optional(),
     description: z.string().nullable().optional(),
     regionId: z.uuid('Invalid region ID'),
+    seasonIds: seasonIdsSchema.optional(),
     difficulty: z.enum(DifficultyLevel),
     status: z.enum(ContentStatus).optional(),
     durationDays: numberInput.pipe(z.int32().positive()),

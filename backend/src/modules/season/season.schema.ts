@@ -2,6 +2,20 @@ import z from 'zod';
 
 export const seasonIdSchema = z.uuid('Invalid season ID');
 
+export const seasonIdsSchema = z.preprocess(
+  (value) => {
+    if (typeof value !== 'string') return value;
+    if (!value.trim().startsWith('[')) return [value];
+
+    try {
+      return JSON.parse(value);
+    } catch {
+      return value;
+    }
+  },
+  z.array(seasonIdSchema).transform((ids) => [...new Set(ids)]),
+);
+
 export const createSeasonSchema = z
   .object({
     name: z.string().trim().min(1).max(100),
