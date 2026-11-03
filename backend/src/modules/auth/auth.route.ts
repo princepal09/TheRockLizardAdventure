@@ -20,7 +20,7 @@ router.post('/refresh', authController.refreshTokenController);
 router.post('/logout', verifyUser(authService), authController.logoutController);
 router.post('/logout-all', verifyUser(authService), authController.logoutAllController);
 router.patch(
-  'change-password',
+  '/change-password',
   verifyUser(authService),
   validate(updatePasswordSchema),
   authController.updatePasswordController,

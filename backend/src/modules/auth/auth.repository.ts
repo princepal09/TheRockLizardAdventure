@@ -85,12 +85,6 @@ export class AuthRepository implements IAuthRepository {
         id: adminId,
       },
       data,
-      select: {
-        id: true,
-        name: true,
-        email: true,
-        profileImageUrl: true,
-      },
     });
 
     return admin;
@@ -125,7 +119,7 @@ export class AuthRepository implements IAuthRepository {
     tokenHash: string,
     expiresAt: Date,
   ): Promise<any> {
-    return prisma.passwordResetToken.create({
+    return prisma.resetPasswordToken.create({
       data: {
         adminId,
         tokenHash,
@@ -135,7 +129,7 @@ export class AuthRepository implements IAuthRepository {
   }
 
   async findPasswordResetToken(tokenHash: string): Promise<any> {
-    return prisma.passwordResetToken.findUnique({
+    return prisma.resetPasswordToken.findUnique({
       where: {
         tokenHash,
       },
@@ -143,7 +137,7 @@ export class AuthRepository implements IAuthRepository {
   }
 
   async deletePasswordResetToken(tokenId: string): Promise<void> {
-    await prisma.passwordResetToken.delete({
+    await prisma.resetPasswordToken.delete({
       where: {
         id: tokenId,
       },
@@ -151,7 +145,7 @@ export class AuthRepository implements IAuthRepository {
   }
 
   async deletePasswordResetTokensByAdminId(adminId: string): Promise<void> {
-    await prisma.passwordResetToken.deleteMany({
+    await prisma.resetPasswordToken.deleteMany({
       where: {
         adminId,
       },
@@ -173,7 +167,7 @@ export class AuthRepository implements IAuthRepository {
         },
       });
 
-      await tx.passwordResetToken.delete({
+      await tx.resetPasswordToken.delete({
         where: {
           id: resetTokenId,
         },
