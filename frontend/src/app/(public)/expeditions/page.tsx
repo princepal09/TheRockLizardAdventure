@@ -1,9 +1,9 @@
-import React from 'react'
+import ExpeditionsGridSection from "../_components/home/ExpeditionsGridSection";
 
-const page = () => {
+export default function ExpeditionsPage() {
   return (
-    <div>Expeditions</div>
-  )
+    <main>
+      <ExpeditionsGridSection showAll />
+    </main>
+  );
 }
-
-export default page
