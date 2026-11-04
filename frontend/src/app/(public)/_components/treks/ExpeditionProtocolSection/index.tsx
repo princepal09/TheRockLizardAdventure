@@ -38,7 +38,7 @@ export default function ExpeditionProtocolSection() {
       </p>
       <h2
         id="expedition-protocol-heading"
-        className="mt-1 font-heading text-3xl font-semibold tracking-tight sm:text-4xl"
+        className="section-heading-accent mt-1 font-heading text-3xl font-semibold tracking-tight sm:text-4xl"
       >
         The Rock Lizard Expedition Protocol
       </h2>

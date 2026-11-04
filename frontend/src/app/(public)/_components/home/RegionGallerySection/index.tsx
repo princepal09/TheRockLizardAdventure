@@ -44,7 +44,7 @@ export default function RegionGallerySection() {
           </p>
           <h2
             id="region-gallery-title"
-            className="mt-1 text-xl font-extrabold tracking-tight sm:text-2xl lg:text-3xl"
+            className="section-heading-accent mt-1 text-xl font-extrabold tracking-tight sm:text-2xl lg:text-3xl"
           >
             Choose Your Mountain Discipline
           </h2>

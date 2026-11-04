@@ -16,7 +16,7 @@ export default function FaqSection() {
           </p>
           <h2
             id="faq-heading"
-            className="mt-1 text-2xl font-extrabold tracking-tight sm:text-3xl"
+            className="section-heading-accent section-heading-accent--center mt-1 text-2xl font-extrabold tracking-tight sm:text-3xl"
           >
             Climber Field Notes &amp; High-Altitude FAQs
           </h2>

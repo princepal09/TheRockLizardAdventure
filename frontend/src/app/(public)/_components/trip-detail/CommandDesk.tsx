@@ -24,7 +24,7 @@ export default function CommandDesk({
         <span className="text-sky-200">Almora Basecamp</span>
       </div>
       <div>
-        <h2 className="max-w-[13rem] text-2xl leading-tight font-bold tracking-tight">
+        <h2 className="section-heading-accent max-w-[13rem] text-2xl leading-tight font-bold tracking-tight">
           Almora Operations Command
         </h2>
         <p className="mt-1.5 text-xs leading-relaxed text-slate-300">

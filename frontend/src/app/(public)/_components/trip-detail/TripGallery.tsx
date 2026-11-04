@@ -18,7 +18,7 @@ export default function TripGallery({
         <p className="font-mono text-[10px] font-bold tracking-widest text-orange-800 uppercase">
           Himalayan Visual Archive
         </p>
-        <h2 className="mt-1 font-heading text-3xl font-bold tracking-tight sm:text-4xl">
+        <h2 className="section-heading-accent mt-1 font-heading text-3xl font-bold tracking-tight sm:text-4xl">
           Route &amp; Terrain Gallery
         </h2>
         <p className="mt-1 text-sm text-slate-600">

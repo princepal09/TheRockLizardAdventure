@@ -15,7 +15,7 @@ export default function TripItinerary({
         <p className="font-mono text-[10px] font-bold tracking-widest text-orange-800 uppercase">
           Day-by-day plan
         </p>
-        <h2 className="mt-1 font-heading text-3xl font-bold tracking-tight sm:text-4xl">
+        <h2 className="section-heading-accent mt-1 font-heading text-3xl font-bold tracking-tight sm:text-4xl">
           Route Itinerary
         </h2>
       </div>

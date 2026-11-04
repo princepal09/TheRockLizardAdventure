@@ -124,7 +124,28 @@
   --sidebar-ring: oklch(0.556 0 0);
 }
 
+@layer components {
+  .section-heading-accent::after {
+    content: "";
+    display: block;
+    width: 4rem;
+    height: 2px;
+    margin-block-start: 0.5rem;
+    background: linear-gradient(90deg, transparent, var(--color-orange-500), transparent);
+  }
+
+  .section-heading-accent--center::after {
+    margin-inline: auto;
+  }
+}
+
 @layer base {
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
   * {
     @apply border-border outline-ring/50;
   }

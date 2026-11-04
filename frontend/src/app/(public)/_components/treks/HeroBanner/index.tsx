@@ -86,10 +86,6 @@ export default function HeroBanner({ kind }: { kind: TripKind }) {
         >
           Traverse Ancient Glacial Valleys, High Bugyals, and Sacred Ridges
         </h1>
-        <div
-          aria-hidden="true"
-          className="mx-auto mt-4 h-0.5 w-20 bg-linear-to-r from-transparent via-sky-500 to-transparent"
-        />
         <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-white text-shadow-sm text-shadow-black/90 sm:text-base">
           Curated Uttarakhand trails stewarded directly by Vinod Kumar&apos;s
           native Almora mountain team. Plan your route with local guides and

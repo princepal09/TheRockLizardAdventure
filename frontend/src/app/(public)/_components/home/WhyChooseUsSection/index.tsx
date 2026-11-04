@@ -14,7 +14,7 @@ export default function WhyChooseUsSection() {
         </p>
         <h2
           id="mountaineering-standard"
-          className="mt-1 text-2xl font-extrabold tracking-tight sm:text-3xl"
+          className="section-heading-accent mt-1 text-2xl font-extrabold tracking-tight sm:text-3xl"
         >
           The Almora Mountaineering Standard
         </h2>

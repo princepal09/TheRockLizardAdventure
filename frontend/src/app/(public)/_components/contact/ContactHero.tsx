@@ -16,7 +16,7 @@ export default function ContactHero() {
         </p>
         <h1
           id="contact-heading"
-          className="max-w-2xl font-heading text-4xl leading-[1.05] font-bold tracking-tight sm:text-5xl lg:text-6xl"
+          className="section-heading-accent max-w-2xl font-heading text-4xl leading-[1.05] font-bold tracking-tight sm:text-5xl lg:text-6xl"
         >
           Talk Directly with Almora’s Mountain Desk
         </h1>
@@ -24,10 +24,6 @@ export default function ContactHero() {
           Get in touch about a trek, a high-altitude expedition, or a private
           group itinerary. Our Almora team can help you plan the next step.
         </p>
-        <div
-          aria-hidden="true"
-          className="h-0.5 w-20 bg-linear-to-r from-orange-500 to-transparent"
-        />
       </div>
       <dl className="grid grid-cols-2 gap-2 rounded-xl border border-stone-200 bg-white p-3 sm:grid-cols-4">
         {highlights.map(({ Icon, label, value }) => (

@@ -39,10 +39,12 @@ export function ContactDetailsCard({
 
   return (
     <Card className="gap-3 rounded-xl border border-stone-200 bg-[#fffefa] p-4 text-slate-900 ring-0! sm:p-5">
-      <h2 className="flex items-center gap-2 text-base font-bold">
-        <Headphones aria-hidden="true" className="size-4 text-orange-700" />{" "}
-        Primary Dispatch Contacts
-      </h2>
+      <div className="section-heading-accent">
+        <h2 className="flex items-center gap-2 text-base font-bold">
+          <Headphones aria-hidden="true" className="size-4 text-orange-700" />{" "}
+          Primary Dispatch Contacts
+        </h2>
+      </div>
       <div className="space-y-2">
         {details.map(({ Icon, label, text, href }) => (
           <a

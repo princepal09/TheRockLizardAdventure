@@ -25,7 +25,7 @@ export default function CustomInquiryBanner() {
           </p>
           <h2
             id="custom-inquiry-heading"
-            className="mt-2 font-heading text-3xl leading-tight font-semibold tracking-tight sm:text-4xl"
+            className="section-heading-accent mt-2 font-heading text-3xl leading-tight font-semibold tracking-tight sm:text-4xl"
           >
             Need a Custom Uttarakhand Itinerary or Solo Group Matching?
           </h2>

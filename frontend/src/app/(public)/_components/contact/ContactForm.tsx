@@ -113,7 +113,7 @@ export default function ContactForm() {
   return (
     <Card className="gap-3 rounded-xl border border-stone-200 bg-[#fffefa] p-4 text-slate-900 ring-0! sm:p-6">
       <div className="flex flex-wrap items-center justify-between gap-2">
-        <h2 className="font-heading text-3xl font-bold tracking-tight">
+        <h2 className="section-heading-accent font-heading text-3xl font-bold tracking-tight">
           Dispatch an Inquiry
         </h2>
         <span className="rounded-full bg-sky-50 px-2.5 py-1 font-mono text-[10px] font-bold tracking-wide text-sky-800 uppercase">

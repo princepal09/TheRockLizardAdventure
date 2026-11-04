@@ -19,7 +19,7 @@ export default function CustomExpeditionsBanner() {
           </p>
           <h2
             id="custom-expeditions-title"
-            className="mt-2 text-xl leading-tight font-extrabold tracking-tight sm:text-2xl"
+            className="section-heading-accent mt-2 text-xl leading-tight font-extrabold tracking-tight sm:text-2xl"
           >
             Planning a Custom Kumaon Route or Need Private Guidance?
           </h2>

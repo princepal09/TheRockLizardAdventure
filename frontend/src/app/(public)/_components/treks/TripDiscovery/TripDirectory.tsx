@@ -27,7 +27,7 @@ export default function TripDirectory({
           </p>
           <h3
             id="trip-directory-title"
-            className="mt-1 font-heading text-3xl font-semibold tracking-tight sm:text-4xl"
+            className="section-heading-accent mt-1 font-heading text-3xl font-semibold tracking-tight sm:text-4xl"
           >
             Curated Uttarakhand Itineraries
           </h3>

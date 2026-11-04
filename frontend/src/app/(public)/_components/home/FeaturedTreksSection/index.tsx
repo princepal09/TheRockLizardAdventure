@@ -32,7 +32,7 @@ export default function FeaturedTreksSection() {
           </p>
           <h2
             id="featured-treks-title"
-            className="mt-1 text-2xl font-extrabold tracking-tight sm:text-3xl"
+            className="section-heading-accent mt-1 text-2xl font-extrabold tracking-tight sm:text-3xl"
           >
             Suggested Treks for Every Experience Level
           </h2>

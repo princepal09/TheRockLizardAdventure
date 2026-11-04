@@ -63,7 +63,7 @@ export default function SeasonalGuideSection({ kind }: { kind: TripKind }) {
         </p>
         <h2
           id="seasonal-guide-heading"
-          className="mt-1 font-heading text-3xl font-semibold tracking-tight sm:text-4xl"
+          className="section-heading-accent section-heading-accent--center mt-1 font-heading text-3xl font-semibold tracking-tight sm:text-4xl"
         >
           When to Trek in Uttarakhand
         </h2>

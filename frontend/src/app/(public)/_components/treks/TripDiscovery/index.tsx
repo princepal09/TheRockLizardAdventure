@@ -34,7 +34,7 @@ async function TripDiscoveryContent({ kind, searchParams }: Props) {
 export default function TripDiscovery(props: Props) {
   return (
     <section className="space-y-6 bg-[#f2f7fa] px-4 py-8 text-slate-900 sm:px-6 xl:px-10">
-      <h2 className="text-center font-heading text-3xl font-semibold tracking-tight sm:text-4xl">
+      <h2 className="section-heading-accent section-heading-accent--center text-center font-heading text-3xl font-semibold tracking-tight sm:text-4xl">
         Filter by Your Mountain Calling
       </h2>
       <Suspense

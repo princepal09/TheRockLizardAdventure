@@ -59,7 +59,7 @@ export default function ExpeditionsGridSection({
           </p>
           <Heading
             id="expeditions-grid-heading"
-            className="mt-1 text-2xl font-extrabold tracking-tight sm:text-3xl"
+            className="section-heading-accent mt-1 text-2xl font-extrabold tracking-tight sm:text-3xl"
           >
             {showAll
               ? "Himalayan Expeditions"

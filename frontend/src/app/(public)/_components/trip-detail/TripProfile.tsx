@@ -75,7 +75,7 @@ export default function TripProfile({
             <DossierIcon name="metric-0" />
           </span>
           <div>
-            <h2 className="font-mono text-xs font-bold tracking-widest text-orange-800 uppercase">
+            <h2 className="section-heading-accent font-mono text-xs font-bold tracking-widest text-orange-800 uppercase">
               Technical Profile Telemetry
             </h2>
             <p className="mt-1 text-xs text-slate-600">
