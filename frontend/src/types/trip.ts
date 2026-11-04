@@ -1,7 +1,13 @@
 export type TripKind = "treks" | "expeditions";
 
 export const tripStatuses = ["DRAFT", "PUBLISHED", "ARCHIVED"] as const;
-export const tripDifficulties = ["EASY", "MODERATE", "DIFFICULT", "VERY_DIFFICULT", "EXTREME"] as const;
+export const tripDifficulties = [
+  "EASY",
+  "MODERATE",
+  "DIFFICULT",
+  "VERY_DIFFICULT",
+  "EXTREME",
+] as const;
 
 export type TripStatus = (typeof tripStatuses)[number];
 export type TripDifficulty = (typeof tripDifficulties)[number];
@@ -61,3 +67,25 @@ export type TripDetail = Trip & {
 };
 
 export type TripOption = { id: string; name: string; isActive: boolean };
+
+export type PublicListingTrip = Pick<
+  Trip,
+  | "id"
+  | "name"
+  | "slug"
+  | "summary"
+  | "coverImageUrl"
+  | "difficulty"
+  | "durationDays"
+  | "maxAltitudeMeters"
+  | "isFeatured"
+  | "regionId"
+  | "startingPoint"
+  | "endingPoint"
+  | "price"
+  | "discountPrice"
+  | "currency"
+> & {
+  region: { name: string };
+  seasons: { seasonId: string; season: { name: string } }[];
+};

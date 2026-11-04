@@ -1,7 +1,7 @@
 import { cacheLife, cacheTag } from "next/cache";
 
 import type { ApiDataResponse } from "@/types/api";
-import type { Trip } from "@/types/trip";
+import type { PublicListingTrip, Trip } from "@/types/trip";
 
 export type PublishedExpedition = Pick<
   Trip,
@@ -32,7 +32,7 @@ export async function getPublishedExpeditions() {
   "use cache";
   cacheLife("minutes");
   cacheTag("published-expeditions");
-  return (await readExpeditions<PublishedExpedition[]>()) ?? [];
+  return (await readExpeditions<PublicListingTrip[]>()) ?? [];
 }
 
 export async function getPublishedExpedition(slug: string) {

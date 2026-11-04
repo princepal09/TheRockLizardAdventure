@@ -41,7 +41,11 @@ export class TrekRepository implements ITrekRepository {
       omit: { createdBy: true },
       include: {
         months: { select: { month: true } },
-        seasons: { where: { season: { isActive: true } }, select: { seasonId: true } },
+        region: { select: { name: true } },
+        seasons: {
+          where: { season: { isActive: true } },
+          select: { seasonId: true, season: { select: { name: true } } },
+        },
       },
       orderBy: [{ publishedAt: 'desc' }, { id: 'asc' }],
     });

@@ -1,7 +1,7 @@
 import { cacheLife, cacheTag } from "next/cache";
 
 import type { ApiDataResponse } from "@/types/api";
-import type { Trip } from "@/types/trip";
+import type { PublicListingTrip, Trip } from "@/types/trip";
 
 export type TrekSearchItem = Pick<
   Trip,
@@ -16,7 +16,7 @@ export type TrekSearchItem = Pick<
   | "maxAltitudeMeters"
 >;
 
-export async function getPublishedTreks(): Promise<TrekSearchItem[]> {
+export async function getPublishedTreks(): Promise<PublicListingTrip[]> {
   "use cache";
 
   cacheLife("minutes");
@@ -28,7 +28,7 @@ export async function getPublishedTreks(): Promise<TrekSearchItem[]> {
   const response = await fetch(`${apiBase}/treks`);
   if (!response.ok) throw new Error("Could not load published treks");
 
-  const { data }: ApiDataResponse<TrekSearchItem[]> = await response.json();
+  const { data }: ApiDataResponse<PublicListingTrip[]> = await response.json();
   return data.map(
     ({
       id,
@@ -40,6 +40,14 @@ export async function getPublishedTreks(): Promise<TrekSearchItem[]> {
       difficulty,
       durationDays,
       maxAltitudeMeters,
+      regionId,
+      region,
+      seasons,
+      startingPoint,
+      endingPoint,
+      price,
+      discountPrice,
+      currency,
     }) => ({
       id,
       name,
@@ -50,6 +58,14 @@ export async function getPublishedTreks(): Promise<TrekSearchItem[]> {
       difficulty,
       durationDays,
       maxAltitudeMeters,
+      regionId,
+      region,
+      seasons,
+      startingPoint,
+      endingPoint,
+      price,
+      discountPrice,
+      currency,
     }),
   );
 }
