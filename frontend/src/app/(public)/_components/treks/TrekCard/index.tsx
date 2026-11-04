@@ -125,7 +125,7 @@ export default function TrekCard({
         <Link
           href={href}
           prefetch={false}
-          className="ml-auto inline-flex items-center gap-1 rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-xs font-bold hover:bg-slate-100 focus-visible:outline-2 focus-visible:outline-sky-700"
+          className="ml-auto inline-flex items-center gap-1 rounded-lg border bg-secondary text-[#ffffff] border-slate-200 px-2.5 py-1.5 text-xs font-bold hover:bg-orange-400 focus-visible:outline-2 focus-visible:outline-sky-700"
         >
           View Trail Details{" "}
           <ArrowRight aria-hidden="true" className="size-3" />

@@ -99,7 +99,11 @@ const SearchBar = () => {
                   <Link
                     href={`/treks/${encodeURIComponent(slug)}`}
                     prefetch={false}
-                    onNavigate={() => setOpen(false)}
+                    onNavigate={() => {
+                      setInput("");
+                      setTerm("");
+                      setOpen(false);
+                    }}
                     className="block rounded-md px-3 py-2 hover:bg-slate-800 focus-visible:bg-slate-800"
                   >
                     {name}

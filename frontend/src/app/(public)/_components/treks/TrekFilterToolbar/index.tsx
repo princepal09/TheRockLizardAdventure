@@ -116,7 +116,7 @@ export default function TrekFilterToolbar({
               size="sm"
               aria-pressed={filters.region === id}
               onClick={() => onChange({ ...filters, region: id })}
-              className="rounded-full border-slate-200 bg-white px-3 aria-pressed:border-orange-500 aria-pressed:bg-orange-500 aria-pressed:text-slate-950"
+              className="rounded-full border-slate-200 bg-white px-3 aria-pressed:border-orange-500 aria-pressed:bg-orange-500 aria-pressed:text-[#ffffff]"
             >
               {id && <Mountain aria-hidden="true" />}
               {label}

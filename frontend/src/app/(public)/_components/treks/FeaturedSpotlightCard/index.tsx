@@ -115,7 +115,7 @@ export default function FeaturedSpotlightCard({
           )}
           <Link
             href={`/${kind}/${encodeURIComponent(trip.slug)}`}
-            className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-orange-500 px-4 py-3 text-sm font-bold text-slate-950 hover:bg-orange-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-800"
+            className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-orange-500 px-4 py-3 text-sm font-bold text-[#ffffff] hover:bg-orange-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-800"
           >
             <CalendarDays aria-hidden="true" className="size-4" /> View{" "}
             {kind === "treks" ? "Trek" : "Expedition"} Details{" "}

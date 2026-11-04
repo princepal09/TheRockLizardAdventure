@@ -19,7 +19,14 @@ export interface ITrekRepository {
       seasons: { seasonId: string; season: Pick<Season, 'name'> }[];
     })[]
   >;
-  findPublishedTrekBySlug(slug: string): Promise<(Omit<Trek, 'createdBy'> & TrekDetails) | null>;
+  findPublishedTrekBySlug(slug: string): Promise<
+    | (Omit<Trek, 'createdBy'> &
+        TrekDetails & {
+          region: { name: string };
+          months: { month: number }[];
+        })
+    | null
+  >;
   updateTrek(
     id: string,
     data: UpdateTrekDTO & TrekCover,

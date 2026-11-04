@@ -5,47 +5,8 @@ import { getPublishedTreks } from "@/lib/api/published-treks";
 
 import RegionCarousel from "./RegionCarousel";
 
-const treks = [
-  {
-    id: "1",
-    name: "Pindari Glacier",
-    slug: "pindari-glacier",
-    coverImageUrl: "/image4.jpeg",
-  },
-  {
-    id: "2",
-    name: "Kafni Glacier",
-    slug: "kafni-glacier",
-    coverImageUrl: "/image2.jpeg",
-  },
-  {
-    id: "3",
-    name: "Kasar Devi",
-    slug: "kasar-devi",
-    coverImageUrl: "/image4.jpeg",
-  },
-  {
-    id: "4",
-    name: "Binsar Sanctuary",
-    slug: "binsar-sanctuary",
-    coverImageUrl: "/image2.jpeg",
-  },
-  {
-    id: "5",
-    name: "Milam Valley",
-    slug: "milam-valley",
-    coverImageUrl: "/image4.jpeg",
-  },
-  {
-    id: "6",
-    name: "Sunderdhunga Valley",
-    slug: "sunderdhunga-valley",
-    coverImageUrl: "/image2.jpeg",
-  },
-];
-
 async function GalleryContent() {
-  // const treks = await getPublishedTreks().catch(() => null);
+  const treks = await getPublishedTreks().catch(() => null);
   if (!treks)
     return (
       <p role="status" className="py-6 text-sm text-slate-600">

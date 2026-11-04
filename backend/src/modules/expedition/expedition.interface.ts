@@ -33,7 +33,9 @@ export interface IExpeditionRepository {
   >;
   findPublishedExpeditionBySlug(
     slug: string,
-  ): Promise<(Omit<Expedition, 'createdBy'> & ExpeditionDetails) | null>;
+  ): Promise<
+    (Omit<Expedition, 'createdBy'> & ExpeditionDetails & { region: { name: string } }) | null
+  >;
   updateExpedition(
     id: string,
     data: UpdateExpeditionDTO & ExpeditionCover,

@@ -31,7 +31,7 @@ export default function CustomInquiryBanner() {
           </h2>
           <p className="mt-2 text-sm leading-relaxed text-slate-300">
             Planning a university expedition, a private family trek, or a trip
-            across high passes? Talk to Vinod Kumar’s team at Dharanaula
+            across high passes? Talk to Vinod Bhatt team at Dharanaula
             Basecamp about an itinerary, acclimatization schedule, and trail
             logistics for your group.
           </p>

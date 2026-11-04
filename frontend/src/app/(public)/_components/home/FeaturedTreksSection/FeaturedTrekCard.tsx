@@ -58,7 +58,7 @@ export default function FeaturedTrekCard({
           className="absolute inset-0 bg-linear-to-t from-slate-950/70 to-transparent"
         />
         <span
-          className={`absolute top-2 left-2 inline-flex items-center gap-1 rounded-full px-2 py-1 font-mono text-[9px] font-semibold tracking-wide uppercase ${highlighted ? "bg-orange-500 text-slate-950" : "bg-slate-900/85 text-sky-100"}`}
+          className={`absolute top-2 left-2 inline-flex items-center gap-1 rounded-full px-2 py-1 font-mono text-[9px] font-semibold tracking-wide uppercase ${highlighted ? "bg-orange-500 text-[#ffffff]" : "bg-slate-900/85 text-sky-100"}`}
         >
           <Star aria-hidden="true" className="size-3" /> Featured trek
         </span>
@@ -75,7 +75,7 @@ export default function FeaturedTrekCard({
         <p className="flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-[11px] text-slate-600">
           <span
             className={`rounded px-1.5 py-0.5 font-semibold capitalize ${trek.difficulty === "EASY" ? "bg-emerald-50 text-emerald-800" : trek.difficulty === "MODERATE" ? "bg-sky-50 text-sky-800" : "bg-violet-50 text-violet-800"}`}
-          >
+          >z
             {level}
           </span>
           <span>
@@ -93,7 +93,7 @@ export default function FeaturedTrekCard({
       <CardFooter className="mt-auto border-0! bg-transparent! pt-0!">
         <Link
           href={href}
-          className={`inline-flex w-full items-center justify-center gap-1 rounded-lg px-3 py-2 text-xs font-bold focus-visible:outline-2 focus-visible:outline-offset-2 ${highlighted ? "bg-orange-500 text-slate-950 hover:bg-orange-400" : "bg-slate-100 text-slate-900 hover:bg-slate-200"}`}
+          className={`inline-flex w-full items-center justify-center gap-1 rounded-lg px-3 py-2 text-xs font-bold focus-visible:outline-2 focus-visible:outline-offset-2 ${highlighted ? "bg-orange-500 text-[#ffffff] hover:bg-orange-400" : "bg-slate-100 text-slate-900 hover:bg-slate-200"}`}
         >
           Explore Itinerary{" "}
           <ArrowRight aria-hidden="true" className="size-3.5" />

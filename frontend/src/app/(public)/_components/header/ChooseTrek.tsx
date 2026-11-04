@@ -4,7 +4,7 @@ import { Dialog } from "@base-ui/react/dialog";
 import { useQuery } from "@tanstack/react-query";
 import { ChevronDown, ChevronRight, Search, X } from "lucide-react";
 import Link from "next/link";
-import { useEffect, useMemo, useState, type ReactNode } from "react";
+import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 
 import { buttonVariants } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -230,10 +230,32 @@ export default function ChooseTrek({
   onNavigate?: () => void;
 }) {
   const [open, setOpen] = useState(false);
+  const hoverTimer = useRef<number | undefined>(undefined);
+
+  function cancelHover() {
+    window.clearTimeout(hoverTimer.current);
+    hoverTimer.current = undefined;
+  }
+
+  useEffect(() => {
+    return () => window.clearTimeout(hoverTimer.current);
+  }, []);
 
   return (
     <Dialog.Root open={open} onOpenChange={setOpen}>
-      <Dialog.Trigger className="flex items-center gap-2 rounded-lg bg-[#ff5722] px-4 py-2.5 text-sm font-semibold whitespace-nowrap text-white shadow-sm transition-colors hover:bg-[#f4511e] focus-visible:outline-2 focus-visible:outline-offset-2">
+      <Dialog.Trigger
+        onPointerMove={(event) => {
+          if (event.pointerType === "mouse" && !open && hoverTimer.current === undefined) {
+            hoverTimer.current = window.setTimeout(() => {
+              hoverTimer.current = undefined;
+              setOpen(true);
+            }, 200);
+          }
+        }}
+        onPointerLeave={cancelHover}
+        onClick={cancelHover}
+        className="flex items-center gap-2 rounded-lg bg-[#ff5722] px-4 py-2.5 text-sm font-semibold whitespace-nowrap text-white shadow-sm transition-colors hover:bg-[#f4511e] focus-visible:outline-2 focus-visible:outline-offset-2"
+      >
         Choose Trek <ChevronDown aria-hidden="true" className="size-4" />
       </Dialog.Trigger>
       <Dialog.Portal>

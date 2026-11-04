@@ -4,7 +4,7 @@ export function formatTripPrice({
   discountPrice,
   price,
   currency,
-}: PublicListingTrip) {
+}: Pick<PublicListingTrip, "discountPrice" | "price" | "currency">) {
   const amount = discountPrice ?? price;
   if (
     amount == null ||

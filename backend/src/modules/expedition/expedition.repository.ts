@@ -55,6 +55,7 @@ export class ExpeditionRepository implements IExpeditionRepository {
       where: { slug, status: ContentStatus.PUBLISHED },
       omit: { createdBy: true },
       include: {
+        region: { select: { name: true } },
         seasons: { where: { season: { isActive: true } }, include: { season: true } },
         itineraries: { orderBy: { dayNumber: 'asc' } },
         images: { orderBy: [{ sortOrder: 'asc' }, { createdAt: 'asc' }, { id: 'asc' }] },

@@ -56,6 +56,8 @@ export class TrekRepository implements ITrekRepository {
       where: { slug, status: ContentStatus.PUBLISHED },
       omit: { createdBy: true },
       include: {
+        region: { select: { name: true } },
+        months: { select: { month: true }, orderBy: { month: 'asc' } },
         seasons: { where: { season: { isActive: true } }, include: { season: true } },
         itineraries: { orderBy: { dayNumber: 'asc' } },
         images: { orderBy: [{ sortOrder: 'asc' }, { createdAt: 'asc' }, { id: 'asc' }] },
