@@ -3,7 +3,10 @@ import { cacheLife, cacheTag } from "next/cache";
 import type { ApiDataResponse } from "@/types/api";
 import type { Trip } from "@/types/trip";
 
-export type TrekSearchItem = Pick<Trip, "id" | "name" | "slug" | "summary">;
+export type TrekSearchItem = Pick<
+  Trip,
+  "id" | "name" | "slug" | "summary" | "coverImageUrl"
+>;
 
 export async function getPublishedTreks(): Promise<TrekSearchItem[]> {
   "use cache";
@@ -18,5 +21,11 @@ export async function getPublishedTreks(): Promise<TrekSearchItem[]> {
   if (!response.ok) throw new Error("Could not load published treks");
 
   const { data }: ApiDataResponse<TrekSearchItem[]> = await response.json();
-  return data.map(({ id, name, slug, summary }) => ({ id, name, slug, summary }));
+  return data.map(({ id, name, slug, summary, coverImageUrl }) => ({
+    id,
+    name,
+    slug,
+    summary,
+    coverImageUrl,
+  }));
 }
