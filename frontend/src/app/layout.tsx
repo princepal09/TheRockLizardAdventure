@@ -43,7 +43,12 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     >
       <body className="min-h-full flex flex-col">
         <AppProvider>{children}</AppProvider>
-        <Toaster position="top-right" theme="light" richColors className={styles.toaster} />
+        <Toaster
+          position="top-right"
+          theme="light"
+          richColors
+          className={styles.toaster}
+        />
       </body>
     </html>
   );
