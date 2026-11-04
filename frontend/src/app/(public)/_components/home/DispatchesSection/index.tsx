@@ -1,9 +1,12 @@
-import React from 'react'
+import DispatchFeed from "./DispatchFeed";
 
-const DispatchesSection = () => {
+export default function DispatchesSection() {
   return (
-    <div>DispatchesSection</div>
-  )
+    <section
+      aria-labelledby="dispatches-heading"
+      className="border-y border-stone-200 bg-[#f5f3ee] px-4 py-8 text-slate-900 sm:px-6 sm:py-10 xl:px-10"
+    >
+      <DispatchFeed />
+    </section>
+  );
 }
-
-export default DispatchesSection
