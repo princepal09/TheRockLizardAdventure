@@ -29,11 +29,13 @@ const defaults: ContactFormValues = {
 };
 const inputClass =
   "w-full rounded-lg border border-transparent bg-slate-100 px-3 py-2.5 text-sm text-slate-900 placeholder:text-slate-500 focus-visible:outline-2 focus-visible:outline-orange-600 aria-invalid:border-red-600";
+const travelTradeTopic = "Travel trade partnership";
 const topics = [
   "Booking and availability",
   "Custom itinerary",
   "Gear and preparation",
   "School or corporate group",
+  travelTradeTopic,
   "Other enquiry",
 ];
 
@@ -73,7 +75,14 @@ function Field({
   );
 }
 
-export default function ContactForm() {
+export default function ContactForm({
+  travelTrade = false,
+}: {
+  travelTrade?: boolean;
+}) {
+  const initialValues = travelTrade
+    ? { ...defaults, subject: travelTradeTopic }
+    : defaults;
   const {
     control,
     register,
@@ -84,7 +93,7 @@ export default function ContactForm() {
     formState: { errors, isSubmitting },
   } = useForm<ContactFormValues>({
     resolver: zodResolver(contactSchema),
-    defaultValues: defaults,
+    defaultValues: initialValues,
   });
   const category = useWatch({ control, name: "category" });
   const tripOptions = useQuery({
@@ -104,14 +113,17 @@ export default function ContactForm() {
     try {
       const result = await createEnquiry(toEnquiryInput(values));
       toast.success(result.message || "Your enquiry was received.");
-      reset(defaults);
+      reset(initialValues);
     } catch (error) {
       toast.error(getErrorMessage(error));
     }
   }
 
   return (
-    <Card className="gap-3 rounded-xl border border-stone-200 bg-[#fffefa] p-4 text-slate-900 ring-0! sm:p-6">
+    <Card
+      id="enquiry-form"
+      className="scroll-mt-6 gap-3 rounded-xl border border-stone-200 bg-[#fffefa] p-4 text-slate-900 ring-0! sm:p-6"
+    >
       <div className="flex flex-wrap items-center justify-between gap-2">
         <h2 className="section-heading-accent font-heading text-3xl font-bold tracking-tight">
           Dispatch an Inquiry

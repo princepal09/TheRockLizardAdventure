@@ -74,7 +74,7 @@ export default function SocialAndBrochureBar({
         className="inline-flex items-center gap-1.5 rounded-lg border border-slate-700 bg-slate-800 px-3 py-2 text-[10px] font-semibold text-slate-200 disabled:cursor-not-allowed"
       >
         <Download aria-hidden="true" className="size-3 text-sky-400" />
-        Download 2026 B2B Tariff &amp; Brochure
+        Download 2026 Travel Trade Tariff &amp; Brochure
       </button>
     </div>
   );

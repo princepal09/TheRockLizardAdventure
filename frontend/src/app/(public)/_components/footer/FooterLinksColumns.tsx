@@ -10,7 +10,7 @@ const columns = [
       { label: "Expeditions", href: "/expeditions" },
       { label: "Trail Gallery", href: "/gallery" },
       { label: "Rent A Gear Almora" },
-      { label: "B2B Partner Showcase" },
+      { label: "Travel Trade", href: "/travel-trade" },
       { label: "Contact Us", href: "/contact" },
     ],
   },

@@ -85,11 +85,11 @@ const HeroSection = async () => {
             <ArrowRight aria-hidden="true" className="size-3.5" />
           </Link>
           <Link
-            href="/contact"
+            href="/travel-trade"
             className="inline-flex items-center gap-2 rounded-lg border border-white/15 bg-white/10 px-4 py-2.5 text-xs font-semibold text-white transition-colors hover:bg-white/20 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
           >
             <UsersRound aria-hidden="true" className="size-3.5 text-sky-400" />{" "}
-            Partner for B2B / Schools
+            Travel Trade Partnerships
           </Link>
         </div>
       </HeroEntrance>
