@@ -8,6 +8,7 @@ const columns = [
       { label: "About Us", href: "/about" },
       { label: "Treks", href: "/treks" },
       { label: "Expeditions", href: "/expeditions" },
+      { label: "Trail Gallery", href: "/gallery" },
       { label: "Rent A Gear Almora" },
       { label: "B2B Partner Showcase" },
       { label: "Contact Us", href: "/contact" },
