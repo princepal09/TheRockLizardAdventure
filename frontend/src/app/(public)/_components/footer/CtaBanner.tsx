@@ -2,7 +2,8 @@ import { Phone } from "lucide-react";
 
 import { basecampPhone } from "../../../../types/basecamp";
 
-export default function CtaBanner() {
+export default function CtaBanner({ phone }: { phone?: string | null }) {
+  const contactPhone = phone ?? basecampPhone;
   return (
     <section className="border-b-2 border-sky-500 bg-[#101727]">
       <div className="flex w-full flex-col gap-3 px-4 py-10 sm:px-6 md:flex-row md:items-center md:justify-between xl:px-10">
@@ -19,11 +20,11 @@ export default function CtaBanner() {
           </p>
         </div>
         <a
-          href={`tel:${basecampPhone}`}
+          href={`tel:${contactPhone}`}
           className="inline-flex w-fit shrink-0 items-center gap-2 rounded-lg bg-orange-500 px-4 py-2.5 text-xs font-bold text-slate-950 hover:bg-orange-400 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-orange-400"
         >
           <Phone aria-hidden="true" className="size-3.5" />
-          Call Basecamp ({basecampPhone})
+          Call Basecamp ({contactPhone})
         </a>
       </div>
     </section>
