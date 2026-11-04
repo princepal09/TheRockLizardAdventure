@@ -5,7 +5,15 @@ import type { Trip } from "@/types/trip";
 
 export type TrekSearchItem = Pick<
   Trip,
-  "id" | "name" | "slug" | "summary" | "coverImageUrl"
+  | "id"
+  | "name"
+  | "slug"
+  | "summary"
+  | "coverImageUrl"
+  | "isFeatured"
+  | "difficulty"
+  | "durationDays"
+  | "maxAltitudeMeters"
 >;
 
 export async function getPublishedTreks(): Promise<TrekSearchItem[]> {
@@ -21,11 +29,27 @@ export async function getPublishedTreks(): Promise<TrekSearchItem[]> {
   if (!response.ok) throw new Error("Could not load published treks");
 
   const { data }: ApiDataResponse<TrekSearchItem[]> = await response.json();
-  return data.map(({ id, name, slug, summary, coverImageUrl }) => ({
-    id,
-    name,
-    slug,
-    summary,
-    coverImageUrl,
-  }));
+  return data.map(
+    ({
+      id,
+      name,
+      slug,
+      summary,
+      coverImageUrl,
+      isFeatured,
+      difficulty,
+      durationDays,
+      maxAltitudeMeters,
+    }) => ({
+      id,
+      name,
+      slug,
+      summary,
+      coverImageUrl,
+      isFeatured,
+      difficulty,
+      durationDays,
+      maxAltitudeMeters,
+    }),
+  );
 }

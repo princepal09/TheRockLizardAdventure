@@ -21,7 +21,7 @@ export default function CtaBanner({ phone }: { phone?: string | null }) {
         </div>
         <a
           href={`tel:${contactPhone}`}
-          className="inline-flex w-fit shrink-0 items-center gap-2 rounded-lg bg-orange-500 px-4 py-2.5 text-xs font-bold text-slate-950 hover:bg-orange-400 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-orange-400"
+          className="inline-flex w-fit shrink-0 items-center gap-2 rounded-lg bg-orange-500 px-4 py-2.5 text-xs font-bold text-[#ffffff] hover:bg-orange-400 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-orange-400"
         >
           <Phone aria-hidden="true" className="size-3.5" />
           Call Basecamp ({contactPhone})
