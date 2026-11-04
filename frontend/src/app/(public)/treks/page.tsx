@@ -1,9 +1,9 @@
 import React from 'react'
 
-const Trek = () => {
+const Treks = () => {
   return (
     <div>Treks</div>
   )
 }
 
-export default Trek
+export default Treks

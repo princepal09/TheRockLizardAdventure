@@ -12,7 +12,10 @@ export interface ITrekRepository {
   createTrek(data: CreateTrekRecord, adminId: string): Promise<Trek & TrekSeasons>;
   findTreks(): Promise<Trek[]>;
   findTrekById(id: string): Promise<(Trek & TrekDetails) | null>;
-  findPublishedTreks(): Promise<Omit<Trek, 'createdBy'>[]>;
+  findPublishedTreks(): Promise<(Omit<Trek, 'createdBy'> & {
+    months: { month: number }[];
+    seasons: { seasonId: string }[];
+  })[]>;
   findPublishedTrekBySlug(slug: string): Promise<(Omit<Trek, 'createdBy'> & TrekDetails) | null>;
   updateTrek(
     id: string,

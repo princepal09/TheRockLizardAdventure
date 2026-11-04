@@ -30,7 +30,7 @@ export default function MobileMenu() {
           </div>
           <NavLinks mobile onNavigate={() => setOpen(false)} />
           <div className="mt-4 border-t border-slate-800 pt-4">
-            <HeaderActions />
+            <HeaderActions onNavigate={() => setOpen(false)} />
           </div>
         </Dialog.Popup>
       </Dialog.Portal>

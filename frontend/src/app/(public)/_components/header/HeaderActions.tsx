@@ -1,17 +1,11 @@
-import { ChevronDown, Plane } from "lucide-react";
-import React from "react";
+import { Plane } from "lucide-react";
 
-const HeaderActions = () => {
+import ChooseTrek from "./ChooseTrek";
+
+const HeaderActions = ({ onNavigate }: { onNavigate?: () => void }) => {
   return (
     <div className="flex flex-wrap items-center gap-3">
-      {/* Primary CTA Button */}
-      <button
-        type="button"
-        className="flex items-center gap-2 whitespace-nowrap bg-[#ff5722] hover:bg-[#f4511e] text-white text-sm font-semibold px-4 py-2.5 rounded-lg transition-colors shadow-sm"
-      >
-        Choose Trek
-        <ChevronDown className="w-4 h-4" />
-      </button>
+      <ChooseTrek onNavigate={onNavigate} />
 
       {/* Secondary Action Button */}
       <button
