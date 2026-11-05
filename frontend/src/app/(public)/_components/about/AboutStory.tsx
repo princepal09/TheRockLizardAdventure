@@ -27,7 +27,7 @@ export default function AboutStory() {
     >
       <figure className="relative aspect-[4/3] overflow-hidden rounded-2xl bg-slate-800 shadow-sm lg:aspect-[1.1]">
         <Image
-          src="/image2.jpeg"
+          src='/trl_founder.jpeg'
           alt="Mountain landscape"
           fill
           sizes="(min-width: 1024px) 42vw, 100vw"
