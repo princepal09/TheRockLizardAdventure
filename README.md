@@ -47,6 +47,7 @@ DATABASE_URL="mysql://rocklizard_user:YOUR_DATABASE_PASSWORD@localhost:3306/rock
 PORT=5000
 NODE_ENV=development
 FRONTEND_URL=http://localhost:3000
+TRUST_PROXY_HOPS=0
 
 ACCESS_TOKEN_SECRET=REPLACE_WITH_A_RANDOM_SECRET_AT_LEAST_32_CHARACTERS
 REFRESH_TOKEN_SECRET=REPLACE_WITH_A_DIFFERENT_RANDOM_SECRET_AT_LEAST_32_CHARACTERS
@@ -152,6 +153,23 @@ Frontend lint is available with `npm --prefix frontend run lint`. Existing unrel
 Format frontend source files with `npm --prefix frontend run format`, or check formatting without changing files with `npm --prefix frontend run format:check`. These commands skip dependencies, generated output and static assets.
 
 ## Production configuration
+
+### API rate limits
+
+The backend uses `express-rate-limit` with separate in-memory stores; Redis is not required.
+
+| Endpoint | Limit |
+| --- | --- |
+| `POST /api/v1/auth/login` | 5 failed attempts per 15 minutes per IP + normalized email; successful logins do not count |
+| `POST /api/v1/auth/forgot-password` | 3 requests per hour per IP + normalized email |
+| `POST /api/v1/enquiries` | 5 submissions per 15 minutes per IP |
+| Public content reads | 120 requests per minute per IP, shared across treks (including slug details), expeditions (including slug details), gallery, team, regions, seasons and site settings |
+
+Exceeding a limit returns HTTP `429` with a JSON `message`, rate-limit headers and `Retry-After` in seconds. Failed validation counts toward the relevant limit. Protected dashboard routes, token refresh and health checks do not use the public-read quota.
+
+Counters reset when the backend restarts or redeploys. Run one backend process/replica for a consistent quota; multiple processes require a shared store. Next.js server-side requests share the frontend server's IP and therefore its public-read quota; cached public fetches help reduce these requests.
+
+`TRUST_PROXY_HOPS=0` is the safe default for local/direct connections. Before deploying behind Hostinger's reverse proxy, confirm its number of trusted proxy hops and set this value accordingly (`1` only for a verified single-proxy setup). The backend must not also be directly reachable through a shorter path, and the proxy must overwrite forwarded headers. Do not blindly trust all proxies: an incorrect setting can group all visitors together or let clients spoof their IP. Verify client IP separation on the deployed host before launch.
 
 Set `NODE_ENV=production` on the backend, use HTTPS origins, set `FRONTEND_URL` to the real frontend origin, and set the frontend's `NEXT_PUBLIC_SITE_URL` and `NEXT_PUBLIC_API_BASE_URL` to the production origins/API. Use production service credentials and a production database.
 

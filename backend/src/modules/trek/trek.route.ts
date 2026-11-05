@@ -1,4 +1,5 @@
 import express from 'express';
+import { publicReadLimiter } from '../../middlewares/rate-limit.middleware.js';
 import { bulkActionSchema } from '../../utils/common/bulk-action.schema.js';
 
 import { verifyUser } from '../../middlewares/auth.middleware.js';
@@ -12,8 +13,8 @@ import { createTrekSchema, updateTrekSchema } from './trek.schema.js';
 
 const router = express.Router();
 
-router.get('/', trekController.getPublishedTreksController);
-router.get('/slug/:slug', trekController.getPublishedTrekController);
+router.get('/', publicReadLimiter, trekController.getPublishedTreksController);
+router.get('/slug/:slug', publicReadLimiter, trekController.getPublishedTrekController);
 
 router.use(verifyUser(authService));
 router.patch('/bulk/publish', validate(bulkActionSchema), trekController.publishSelectedController);

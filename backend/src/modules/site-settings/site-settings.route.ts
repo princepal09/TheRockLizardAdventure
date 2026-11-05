@@ -1,4 +1,5 @@
 import express from 'express';
+import { publicReadLimiter } from '../../middlewares/rate-limit.middleware.js';
 
 import { verifyUser } from '../../middlewares/auth.middleware.js';
 import { upload } from '../../middlewares/muler.middleware.js';
@@ -9,7 +10,7 @@ import { updateSiteSettingsSchema } from './site-settings.schema.js';
 
 const router = express.Router();
 
-router.get('/', settingsController.getSettingsController);
+router.get('/', publicReadLimiter, settingsController.getSettingsController);
 router.patch(
   '/',
   verifyUser(authService),

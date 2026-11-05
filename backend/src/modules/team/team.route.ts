@@ -1,4 +1,5 @@
 import express from 'express';
+import { publicReadLimiter } from '../../middlewares/rate-limit.middleware.js';
 import { bulkActionSchema } from '../../utils/common/bulk-action.schema.js';
 import { verifyUser } from '../../middlewares/auth.middleware.js';
 import { upload } from '../../middlewares/muler.middleware.js';
@@ -9,7 +10,7 @@ import { createTeamMemberSchema, updateTeamMemberSchema } from './team.schema.js
 
 const router = express.Router();
 
-router.get('/', teamController.getActiveMembersController);
+router.get('/', publicReadLimiter, teamController.getActiveMembersController);
 
 router.use(verifyUser(authService));
 router.patch('/bulk/hide', validate(bulkActionSchema), teamController.hideSelectedController);

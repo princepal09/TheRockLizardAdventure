@@ -1,4 +1,5 @@
 import express from 'express';
+import { publicReadLimiter } from '../../middlewares/rate-limit.middleware.js';
 
 import { verifyUser } from '../../middlewares/auth.middleware.js';
 import { uploadGalleryImages } from '../../middlewares/muler.middleware.js';
@@ -9,7 +10,7 @@ import { updateSiteGalleryImageSchema } from './gallery.schema.js';
 
 const router = express.Router();
 
-router.get('/', galleryController.getActiveImagesController);
+router.get('/', publicReadLimiter, galleryController.getActiveImagesController);
 
 router.use(verifyUser(authService));
 

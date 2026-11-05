@@ -1,4 +1,5 @@
 import express from 'express';
+import { publicReadLimiter } from '../../middlewares/rate-limit.middleware.js';
 
 import { verifyUser } from '../../middlewares/auth.middleware.js';
 import { validate } from '../../middlewares/validate.middleware.js';
@@ -8,7 +9,7 @@ import { createSeasonSchema, updateSeasonSchema } from './season.schema.js';
 
 const router = express.Router();
 
-router.get('/', seasonController.getActiveSeasonsController);
+router.get('/', publicReadLimiter, seasonController.getActiveSeasonsController);
 
 router.use(verifyUser(authService));
 

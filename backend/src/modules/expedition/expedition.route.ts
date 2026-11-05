@@ -1,4 +1,5 @@
 import express from 'express';
+import { publicReadLimiter } from '../../middlewares/rate-limit.middleware.js';
 import { bulkActionSchema } from '../../utils/common/bulk-action.schema.js';
 
 import { verifyUser } from '../../middlewares/auth.middleware.js';
@@ -12,8 +13,8 @@ import { createExpeditionSchema, updateExpeditionSchema } from './expedition.sch
 
 const router = express.Router();
 
-router.get('/', expeditionController.getPublishedExpeditionsController);
-router.get('/slug/:slug', expeditionController.getPublishedExpeditionController);
+router.get('/', publicReadLimiter, expeditionController.getPublishedExpeditionsController);
+router.get('/slug/:slug', publicReadLimiter, expeditionController.getPublishedExpeditionController);
 
 router.use(verifyUser(authService));
 router.patch(

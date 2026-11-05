@@ -20,6 +20,8 @@ import { globalErrorHandler } from './middlewares/error.middleware.js';
 import { requestLogger } from './middlewares/request-logger.middleware.js';
 
 export const app = express();
+// Keep local/direct connections untrusted; configure verified proxy hops on the host.
+app.set('trust proxy', env.TRUST_PROXY_HOPS || false);
 
 app.use(helmet());
 app.use(requestLogger);

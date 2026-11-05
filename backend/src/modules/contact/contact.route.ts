@@ -1,4 +1,5 @@
 import express from 'express';
+import { enquiryLimiter } from '../../middlewares/rate-limit.middleware.js';
 import { bulkActionSchema } from '../../utils/common/bulk-action.schema.js';
 
 import { verifyUser } from '../../middlewares/auth.middleware.js';
@@ -9,7 +10,12 @@ import { createContactSchema, updateContactSchema } from './contact.schema.js';
 
 const router = express.Router();
 
-router.post('/', validate(createContactSchema), contactController.createContactController);
+router.post(
+  '/',
+  enquiryLimiter,
+  validate(createContactSchema),
+  contactController.createContactController,
+);
 
 router.use(verifyUser(authService));
 router.patch(

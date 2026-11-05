@@ -1,4 +1,5 @@
 import express from 'express';
+import { forgotPasswordLimiter, loginLimiter } from '../../middlewares/rate-limit.middleware.js';
 
 import { validate } from '../../middlewares/validate.middleware.js';
 import {
@@ -14,7 +15,7 @@ import { upload } from '../../middlewares/muler.middleware.js';
 
 const router = express.Router();
 
-router.post('/login', validate(loginUserSchema), authController.loginController);
+router.post('/login', loginLimiter, validate(loginUserSchema), authController.loginController);
 router.get('/me', verifyUser(authService), authController.loggedInUserController);
 router.post('/refresh', authController.refreshTokenController);
 router.post('/logout', verifyUser(authService), authController.logoutController);
@@ -27,6 +28,7 @@ router.patch(
 );
 router.post(
   '/forgot-password',
+  forgotPasswordLimiter,
   validate(forgotPasswordSchema),
   authController.forgotPasswordController,
 );
