@@ -2,6 +2,7 @@ import { z } from "zod";
 
 import { tripDifficulties, tripStatuses } from "@/types/trip";
 import { imageFileSchema } from "./image";
+import { normalizeSocialUrl } from "@/lib/social-url";
 
 const displayOrder = z.int32().nonnegative();
 const distance = z.number().nonnegative().max(999999.99).multipleOf(0.01).nullable();
@@ -9,6 +10,16 @@ const price = z.number().nonnegative().max(99999999.99).multipleOf(0.01).nullabl
 const optionalText = z.string().nullable();
 
 export const tripFormSchema = z.object({
+  departureDates: z.string().trim().max(2000).refine(
+    (value) => !value || value.split(/\r?\n/).filter(Boolean).every((date) => z.iso.date().safeParse(date.trim()).success),
+    "Use one confirmed departure date per line in YYYY-MM-DD format.",
+  ).nullable().optional(),
+  meetingPoint: z.string().trim().max(1000).nullable().optional(),
+  inclusions: z.string().trim().max(10000).nullable().optional(),
+  exclusions: z.string().trim().max(10000).nullable().optional(),
+  requiredGear: z.string().trim().max(10000).nullable().optional(),
+  cancellationPolicy: z.string().trim().max(10000).nullable().optional(),
+  refundPolicy: z.string().trim().max(10000).nullable().optional(),
   name: z.string().trim().min(1, "Enter a name.").max(200),
   regionId: z.uuid("Select a region."),
   seasonIds: z.array(z.uuid()),
@@ -80,7 +91,8 @@ export const enquiryStatusSchema = z.object({
   status: z.enum(["READ", "UNREAD"]),
 });
 
-const socialUrl = z.url().max(500).nullable();
+const socialUrl = z.string().trim().transform((value) => normalizeSocialUrl(value) ?? value)
+  .pipe(z.url().max(500).refine((value) => normalizeSocialUrl(value) !== null, "Enter a valid http:// or https:// profile link.")).nullable();
 export const siteDetailsSchema = z.object({
   contactEmail: z.email("Enter a valid email address.").max(255).nullable(),
   contactPhone: z.string().trim().min(1).max(30).nullable(),

@@ -38,7 +38,7 @@ export class TrekRepository implements ITrekRepository {
   async findPublishedTreks() {
     return prisma.trek.findMany({
       where: { status: ContentStatus.PUBLISHED },
-      omit: { createdBy: true },
+      omit: { createdBy: true, departureDates: true, meetingPoint: true, inclusions: true, exclusions: true, requiredGear: true, cancellationPolicy: true, refundPolicy: true },
       include: {
         months: { select: { month: true } },
         region: { select: { name: true } },

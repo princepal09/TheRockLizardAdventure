@@ -1,5 +1,7 @@
 "use client";
 
+import { canOptimizeImage, imageLoaderFor } from "@/lib/image-optimization";
+
 import Image from "next/image";
 import { useState } from "react";
 
@@ -25,7 +27,7 @@ export default function TeamPhoto({
           src={src}
           alt=""
           fill
-          unoptimized
+          loader={imageLoaderFor(src)} unoptimized={!canOptimizeImage(src)}
           sizes="(min-width: 768px) 50vw, 100vw"
           className="object-cover motion-safe:transition-transform motion-safe:duration-300 motion-safe:group-hover:scale-105"
           onError={() => setFailed(true)}

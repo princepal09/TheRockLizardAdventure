@@ -1,5 +1,7 @@
 "use client";
 
+import { canOptimizeImage, imageLoaderFor } from "@/lib/image-optimization";
+
 import Image from "next/image";
 import { useState } from "react";
 
@@ -20,7 +22,7 @@ export default function HeroBackground({
       fill
       priority
       sizes="100vw"
-      unoptimized={Boolean(remoteImage)}
+      loader={imageLoaderFor(remoteImage ?? fallbackImage)} unoptimized={!canOptimizeImage(remoteImage ?? fallbackImage)}
       onError={remoteImage ? () => setFailed(true) : undefined}
       className="object-cover object-center"
     />

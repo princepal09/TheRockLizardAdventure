@@ -2,13 +2,14 @@
 
 import { motion, useReducedMotion } from "motion/react";
 import { useState } from "react";
+import { basecampPhone } from "@/types/basecamp";
 
-const WhatsAppWidget = () => {
+const WhatsAppWidget = ({ phone = basecampPhone }: { phone?: string }) => {
   const reduceMotion = useReducedMotion();
   const [hovered, setHovered] = useState(false);
   const [focused, setFocused] = useState(false);
   const animate = reduceMotion === false;
-  const phoneNumber = "+917618486202"; // Cleaned up formatting for URL compatibility
+  const phoneNumber = phone.replace(/\D/g, "");
   const message = encodeURIComponent(
     "Hello! I want to know more about your treks and packages.",
   );

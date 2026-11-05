@@ -2,6 +2,7 @@ import Link from "next/link";
 import { privacyPolicy } from "@/lib/privacy-policy";
 import { medicalForm } from "@/lib/medical-form";
 import { declarationForm } from "@/lib/declaration-form";
+import { cancellationRefundPolicy, termsAndConditions } from "@/lib/booking-policies";
 
 type FooterItem = { label: string; href?: string; download?: string };
 
@@ -24,7 +25,8 @@ const columns: { title: string; items: FooterItem[] }[] = [
     items: [
       { label: "Disclaimer" },
       { label: "Privacy Policy", href: privacyPolicy.href, download: privacyPolicy.downloadName },
-      { label: "Terms & Condition" },
+      { label: termsAndConditions.title, href: termsAndConditions.href, download: termsAndConditions.downloadName },
+      { label: cancellationRefundPolicy.title, href: cancellationRefundPolicy.href, download: cancellationRefundPolicy.downloadName },
       { label: "Trek Insurance & Safety" },
       { label: "Medical Form", href: medicalForm.href, download: medicalForm.downloadName },
       { label: "Declaration Form (Indemnity Bond)", href: declarationForm.href, download: declarationForm.downloadName },

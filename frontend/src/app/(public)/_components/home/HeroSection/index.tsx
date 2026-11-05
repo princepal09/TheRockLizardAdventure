@@ -1,4 +1,4 @@
-import { ArrowRight, Mountain, Shield, UsersRound } from "lucide-react";
+import { ArrowRight, Mountain, UsersRound } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -93,9 +93,6 @@ const HeroSection = async () => {
           </Link>
         </div>
       </HeroEntrance>
-      <span className="absolute top-[44%] right-0 z-10 hidden items-center gap-1.5 rounded-b-sm bg-orange-500 px-1.5 py-2 font-mono text-[9px] font-bold tracking-wider text-[#ffffff] uppercase [writing-mode:vertical-rl] sm:inline-flex">
-        RLA Safety Protocol <Shield aria-hidden="true" className="size-3" />
-      </span>
     </section>
   );
 };

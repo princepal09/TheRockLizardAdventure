@@ -1,5 +1,12 @@
 import z from 'zod';
 
+const socialUrl = z.string().trim().transform((value) =>
+  /^[a-z][a-z\d+.-]*:/i.test(value) ? value : `https://${value}`,
+).pipe(z.url().max(500).refine((value) => {
+  const url = new URL(value);
+  return ['http:', 'https:'].includes(url.protocol) && !url.username && !url.password && url.hostname.includes('.');
+}, 'Enter a valid http:// or https:// profile link.')).nullable().optional();
+
 export const updateSiteSettingsSchema = z
   .object({
     logoUrl: z.url().max(1000).nullable().optional(),
@@ -13,9 +20,9 @@ export const updateSiteSettingsSchema = z
       .nullable()
       .optional(),
     address: z.string().trim().max(5000).nullable().optional(),
-    facebookUrl: z.url().max(500).nullable().optional(),
-    instagramUrl: z.url().max(500).nullable().optional(),
-    youtubeUrl: z.url().max(500).nullable().optional(),
+    facebookUrl: socialUrl,
+    instagramUrl: socialUrl,
+    youtubeUrl: socialUrl,
   })
   .strict();
 

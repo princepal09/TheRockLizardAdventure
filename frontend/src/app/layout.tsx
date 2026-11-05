@@ -8,6 +8,7 @@ import { Toaster } from "sonner";
 import "./globals.css";
 import styles from "./toaster.module.css";
 import AppProvider from "./providers/AppProvider";
+import { siteUrl } from "@/lib/site-url";
 
 const jakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
@@ -27,6 +28,7 @@ const jetbrains = JetBrains_Mono({
   display: "swap",
 });
 export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
   title: {
     default: "Rocklizard Adventure | Treks & Expeditions in Uttarakhand",
     template: "%s | Rocklizard Adventure",

@@ -1,3 +1,4 @@
+import type { TripPlanningField } from '../trip-planning/trip-planning.schema.js';
 import type {
   Expedition,
   ExpeditionImage,
@@ -26,7 +27,7 @@ export interface IExpeditionRepository {
   findExpeditions(): Promise<Expedition[]>;
   findExpeditionById(id: string): Promise<(Expedition & ExpeditionDetails) | null>;
   findPublishedExpeditions(): Promise<
-    (Omit<Expedition, 'createdBy'> & {
+    (Omit<Expedition, 'createdBy' | TripPlanningField> & {
       region: { name: string };
       seasons: { seasonId: string; season: Pick<Season, 'name'> }[];
     })[]

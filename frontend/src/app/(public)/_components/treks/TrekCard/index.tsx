@@ -1,3 +1,4 @@
+import { canOptimizeImage, imageLoaderFor } from "@/lib/image-optimization";
 import {
   ArrowRight,
   CalendarDays,
@@ -53,7 +54,7 @@ export default function TrekCard({
             src={image}
             alt=""
             fill
-            unoptimized
+            loader={imageLoaderFor(image)} unoptimized={!canOptimizeImage(image)} sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
             onError={() => setFailed(true)}
             className="object-cover motion-safe:transition-transform motion-safe:group-hover:scale-105"
           />

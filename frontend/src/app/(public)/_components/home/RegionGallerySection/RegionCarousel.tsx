@@ -1,5 +1,7 @@
 "use client";
 
+import { canOptimizeImage, imageLoaderFor } from "@/lib/image-optimization";
+
 import { Mountain, Pause, Play } from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
 import Image from "next/image";
@@ -41,7 +43,7 @@ function TrekCard({ trek }: { trek: GalleryTrek }) {
           src={imageUrl}
           alt=""
           fill
-          unoptimized
+          loader={imageLoaderFor(imageUrl)} unoptimized={!canOptimizeImage(imageUrl)} sizes="(min-width: 768px) 20vw, 50vw"
           onError={() => setFailed(true)}
           className="object-cover motion-safe:transition-transform motion-safe:duration-300 motion-safe:group-hover:scale-105"
         />

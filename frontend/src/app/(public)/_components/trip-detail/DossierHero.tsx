@@ -1,8 +1,8 @@
-import { Shield } from "lucide-react";
+import { tripEnquiryHref } from "@/lib/trip-enquiry";
+import type { TripKind } from "@/types/trip";
 import Link from "next/link";
 
 import type { PublishedTripDetail } from "@/lib/api/published-trip-detail";
-import type { TripKind } from "@/types/trip";
 
 import DossierIcon from "./DossierIcon";
 import DossierReveal from "./DossierReveal";
@@ -88,7 +88,7 @@ export default function DossierHero({
                 </a>
               )}
               <Link
-                href="/contact"
+                href={tripEnquiryHref(kind, trip.id)}
                 className="inline-flex items-center gap-2 rounded-lg bg-orange-600 px-3 py-2.5 text-xs font-bold text-white hover:bg-orange-700"
               >
                 <DossierIcon name="hero-3" /> Reserve Slot
@@ -97,12 +97,6 @@ export default function DossierHero({
           </div>
         </DossierReveal>
       </div>
-      <Link
-        href={`/${kind}#expedition-protocol-heading`}
-        className="absolute top-1/2 right-0 hidden -translate-y-1/2 items-center gap-2 rounded-tl-md rounded-bl-md bg-orange-600 px-1.5 py-2.5 font-mono text-[9px] font-bold tracking-widest text-white uppercase hover:bg-orange-700 [writing-mode:vertical-rl] lg:inline-flex"
-      >
-        RLA Safety Protocol <Shield aria-hidden="true" className="size-3" />
-      </Link>
     </section>
   );
 }

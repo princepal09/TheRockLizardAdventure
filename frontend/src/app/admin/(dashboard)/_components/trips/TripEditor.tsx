@@ -81,6 +81,13 @@ function TripForm({
     const form = new FormData(element);
     const publishedAt = tripText(form, "publishedAt");
     const input: TripInput = {
+      departureDates: tripText(form, "departureDates") || null,
+      meetingPoint: tripText(form, "meetingPoint") || null,
+      inclusions: tripText(form, "inclusions") || null,
+      exclusions: tripText(form, "exclusions") || null,
+      requiredGear: tripText(form, "requiredGear") || null,
+      cancellationPolicy: tripText(form, "cancellationPolicy") || null,
+      refundPolicy: tripText(form, "refundPolicy") || null,
       name: tripText(form, "name"),
       regionId: tripText(form, "regionId"),
       seasonIds: form.getAll("seasonIds").map(String),
@@ -343,6 +350,25 @@ function TripForm({
           />
           Featured {label.toLowerCase()}
         </label>
+        <section className="space-y-4 border-t border-slate-200 pt-5" aria-labelledby="trip-planning-editor-title">
+          <h3 id="trip-planning-editor-title" className="text-sm font-semibold text-primary">Departure details and booking terms</h3>
+          <p className="text-xs text-slate-600">Publish only confirmed client information. Leave unknown details blank; the public page will direct travellers to Basecamp.</p>
+          {([
+            { name: "departureDates", label: "Confirmed departure dates", hint: "One start date per line, YYYY-MM-DD. Past dates are not displayed as upcoming departures.", maxLength: 2000 },
+            { name: "meetingPoint", label: "Meeting point and reporting time", hint: "Exact address, landmark, reporting time and pickup instructions.", maxLength: 1000 },
+            { name: "inclusions", label: "Price includes", hint: "One inclusion per line.", maxLength: 10000 },
+            { name: "exclusions", label: "Price excludes", hint: "One exclusion per line.", maxLength: 10000 },
+            { name: "requiredGear", label: "Required gear", hint: "One item per line. Include rental details where relevant.", maxLength: 10000 },
+            { name: "cancellationPolicy", label: "Cancellation terms", hint: "Client-approved terms, deadlines and charges.", maxLength: 10000 },
+            { name: "refundPolicy", label: "Refund terms", hint: "Client-approved eligibility, process and timelines.", maxLength: 10000 },
+          ] as const).map(({ name, label, hint, maxLength }) => (
+            <label key={name} className="block space-y-1.5 text-sm font-medium">
+              <span>{label}</span>
+              <textarea name={name} rows={3} maxLength={maxLength} defaultValue={trip?.[name] ?? ""} className={tripInputClass} aria-describedby={`${name}-hint`} />
+              <span id={`${name}-hint`} className="block text-xs font-normal text-slate-600">{hint}</span>
+            </label>
+          ))}
+        </section>
         {!trip && <ImageUploadField label="Cover image" name="coverImage" />}
       </fieldset>
       {save.error && (

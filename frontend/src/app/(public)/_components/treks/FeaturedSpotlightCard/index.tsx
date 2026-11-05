@@ -1,3 +1,4 @@
+import { canOptimizeImage, imageLoaderFor } from "@/lib/image-optimization";
 import { ArrowRight, CalendarDays, MapPin, Mountain } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -57,7 +58,7 @@ export default function FeaturedSpotlightCard({
             src={image}
             alt=""
             fill
-            unoptimized
+            loader={imageLoaderFor(image)} unoptimized={!canOptimizeImage(image)} sizes="(min-width: 1024px) 50vw, 100vw"
             onError={() => setFailed(true)}
             className="object-cover"
           />

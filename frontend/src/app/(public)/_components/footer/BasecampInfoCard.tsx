@@ -11,7 +11,7 @@ export default function BasecampInfoCard({
 }) {
   const phone = settings?.contactPhone ?? basecampPhone;
   const email = settings?.contactEmail ?? basecampEmail;
-  const whatsapp = settings?.whatsappPhone ?? basecampPhone;
+  const whatsapp = settings?.whatsappPhone ?? settings?.contactPhone ?? basecampPhone;
   return (
     <section className="min-w-0 rounded-2xl border border-slate-700/70 bg-[#1b2636] p-3 shadow-lg shadow-slate-950/20 sm:p-4">
       <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-700/70 pb-2">

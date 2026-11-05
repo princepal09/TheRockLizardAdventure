@@ -1,3 +1,4 @@
+import { canOptimizeImage, imageLoaderFor } from "@/lib/image-optimization";
 import { ArrowRight, Mountain, Star } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -46,7 +47,7 @@ export default function FeaturedTrekCard({
             src={image}
             alt=""
             fill
-            unoptimized
+            loader={imageLoaderFor(image)} unoptimized={!canOptimizeImage(image)} sizes="(min-width: 768px) 33vw, 100vw"
             onError={() => setFailed(true)}
             className="object-cover"
           />

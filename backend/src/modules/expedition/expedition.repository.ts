@@ -38,7 +38,7 @@ export class ExpeditionRepository implements IExpeditionRepository {
   async findPublishedExpeditions() {
     return prisma.expedition.findMany({
       where: { status: ContentStatus.PUBLISHED },
-      omit: { createdBy: true },
+      omit: { createdBy: true, departureDates: true, meetingPoint: true, inclusions: true, exclusions: true, requiredGear: true, cancellationPolicy: true, refundPolicy: true },
       include: {
         region: { select: { name: true } },
         seasons: {

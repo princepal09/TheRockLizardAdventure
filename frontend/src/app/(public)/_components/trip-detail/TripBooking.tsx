@@ -1,3 +1,5 @@
+import { tripEnquiryHref } from "@/lib/trip-enquiry";
+import type { TripKind } from "@/types/trip";
 import DossierIcon from "./DossierIcon";
 import Link from "next/link";
 
@@ -8,16 +10,19 @@ import { basecampPhone } from "@/types/basecamp";
 import { formatTripPrice } from "@/types/format-trip-price";
 import MedicalFormDownload from "../MedicalFormDownload";
 import DeclarationFormDownload from "../DeclarationFormDownload";
+import BookingPolicyDownloads from "../BookingPolicyDownloads";
 
 export default function TripBooking({
   trip,
+  kind,
   settings,
 }: {
   trip: PublishedTripDetail;
+  kind: TripKind;
   settings: SiteSettings | null;
 }) {
   const phone = settings?.contactPhone ?? basecampPhone;
-  const whatsapp = (settings?.whatsappPhone ?? basecampPhone).replace(
+  const whatsapp = (settings?.whatsappPhone ?? settings?.contactPhone ?? basecampPhone).replace(
     /\D/g,
     "",
   );
@@ -61,7 +66,7 @@ export default function TripBooking({
       </div>
       <div className="flex flex-wrap gap-2">
         <Link
-          href="/contact"
+          href={tripEnquiryHref(kind, trip.id)}
           className="rounded-lg bg-orange-500 px-4 py-2.5 text-sm font-bold text-[#ffffff] hover:bg-orange-400"
         >
           Book Now
@@ -79,6 +84,7 @@ export default function TripBooking({
           <DossierIcon name="contact-1" /> Call Basecamp
         </a>
       </div>
+      <BookingPolicyDownloads />
       <MedicalFormDownload />
       <DeclarationFormDownload />
     </Card>

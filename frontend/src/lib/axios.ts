@@ -3,6 +3,9 @@ import axios, { type InternalAxiosRequestConfig } from "axios";
 import { useAuthStore } from "@/stores/auth.store";
 import type { ApiDataResponse } from "@/types/api";
 import type { RefreshResult } from "@/types/auth";
+import { refreshPublicContent } from "@/app/actions/refresh-public-content";
+import { publicContentScope } from "@/lib/public-content";
+import { toast } from "sonner";
 
 const options = {
   baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
@@ -74,7 +77,19 @@ api.interceptors.request.use((config: AuthRequest) => {
   return config;
 });
 
-api.interceptors.response.use(undefined, async (error: unknown) => {
+api.interceptors.response.use(async (response) => {
+  const method = response.config.method?.toLowerCase();
+  const scope = publicContentScope(response.config.url ?? "");
+  if (scope && method && ["post", "patch", "put", "delete"].includes(method)) {
+    const token = useAuthStore.getState().accessToken;
+    const refresh = () => refreshPublicContent(scope, useAuthStore.getState().accessToken ?? "");
+    const refreshed = token ? await refresh().catch(() => false) : false;
+    if (!refreshed) toast.warning("Saved, but public content could not refresh immediately.", {
+      action: { label: "Retry refresh", onClick: () => { void refresh().catch(() => false).then((success) => success ? toast.success("Public content refreshed") : toast.error("Could not refresh public content. Please try again.")); } },
+    });
+  }
+  return response;
+}, async (error: unknown) => {
   if (!axios.isAxiosError(error) || error.response?.status !== 401) {
     throw error;
   }

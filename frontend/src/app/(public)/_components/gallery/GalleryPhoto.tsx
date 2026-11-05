@@ -1,5 +1,7 @@
 "use client";
 
+import { canOptimizeImage, imageLoaderFor } from "@/lib/image-optimization";
+
 import { ImageOff } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
@@ -27,7 +29,7 @@ export default function GalleryPhoto({
           alt={altText ?? ""}
           fill
           sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-          unoptimized={!imageUrl.startsWith("/")}
+          loader={imageLoaderFor(imageUrl)} unoptimized={!canOptimizeImage(imageUrl)}
           onError={() => setFailed(true)}
           className="object-cover motion-safe:transition-transform motion-safe:duration-500 motion-safe:group-hover:scale-[1.035]"
         />

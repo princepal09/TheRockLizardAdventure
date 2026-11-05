@@ -166,6 +166,14 @@ model Trek {
   @@index([difficulty]) // filter
   @@index([createdBy])
   @@map("trek")
+  departureDates String? @map("departure_dates") @db.Text
+  meetingPoint String? @map("meeting_point") @db.Text
+  inclusions String? @map("inclusions") @db.Text
+  exclusions String? @map("exclusions") @db.Text
+  requiredGear String? @map("required_gear") @db.Text
+  cancellationPolicy String? @map("cancellation_policy") @db.Text
+  refundPolicy String? @map("refund_policy") @db.Text
+
 }
 
 model TrekSeason {
@@ -268,6 +276,14 @@ model Expedition {
   @@index([difficulty])
   @@index([createdBy])
   @@map("expedition")
+  departureDates String? @map("departure_dates") @db.Text
+  meetingPoint String? @map("meeting_point") @db.Text
+  inclusions String? @map("inclusions") @db.Text
+  exclusions String? @map("exclusions") @db.Text
+  requiredGear String? @map("required_gear") @db.Text
+  cancellationPolicy String? @map("cancellation_policy") @db.Text
+  refundPolicy String? @map("refund_policy") @db.Text
+
 }
 
 model ExpeditionSeason {

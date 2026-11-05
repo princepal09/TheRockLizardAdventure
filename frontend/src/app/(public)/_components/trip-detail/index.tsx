@@ -13,6 +13,7 @@ import TripGallery from "./TripGallery";
 import TripItinerary from "./TripItinerary";
 import TripProfile from "./TripProfile";
 import TripSpecifications from "./TripSpecifications";
+import TripPlanning from "./TripPlanning";
 
 type Props = { kind: TripKind; params: Promise<{ slug: string }> };
 
@@ -25,7 +26,7 @@ async function TripDossier({ kind, params }: Props) {
   if (trip === undefined)
     return (
       <p role="alert" className="p-8 text-slate-700">
-        Couldn’t load this route. Refresh to try again.
+        Couldnâ€™t load this route. Refresh to try again.
       </p>
     );
   if (!trip) notFound();
@@ -37,6 +38,7 @@ async function TripDossier({ kind, params }: Props) {
       ? [{ id: "trip-itinerary", label: "Acclimatization & Camps" }]
       : []),
     { id: "trip-booking", label: "Tariff & Booking" },
+    { id: "trip-planning", label: "Departure details" },
     ...(trip.images.length
       ? [{ id: "trip-gallery", label: "Photo Gallery" }]
       : []),
@@ -88,7 +90,12 @@ async function TripDossier({ kind, params }: Props) {
           </DossierReveal>
         )}
         <DossierReveal>
-          <TripBooking trip={trip} settings={settings} />
+          <Suspense fallback={<div role="status" className="min-h-96 rounded-xl border border-stone-200 bg-white p-5 sm:p-7"><span className="sr-only">Loading departure details…</span><Skeleton aria-hidden="true" className="h-80 bg-stone-200" /></div>}>
+            <TripPlanning trip={trip} kind={kind} />
+          </Suspense>
+        </DossierReveal>
+        <DossierReveal>
+          <TripBooking trip={trip} kind={kind} settings={settings} />
         </DossierReveal>
       </div>
     </>
@@ -98,7 +105,7 @@ async function TripDossier({ kind, params }: Props) {
 function DossierSkeleton() {
   return (
     <div role="status">
-      <span className="sr-only">Loading route dossier…</span>
+      <span className="sr-only">Loading route dossierâ€¦</span>
       <div aria-hidden="true">
         <div className="flex min-h-[clamp(25rem,38vw,34rem)] flex-col justify-center gap-4 bg-slate-900 px-4 py-8 sm:px-6 xl:px-10">
           <Skeleton className="h-16 w-full max-w-3xl bg-slate-700" />

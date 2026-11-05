@@ -6,7 +6,7 @@ import { basecampPhone } from "@/types/basecamp";
 
 export default async function TrekAdvisor() {
   const settings = await getPublicSiteSettings().catch(() => null);
-  const whatsapp = (settings?.whatsappPhone ?? basecampPhone).replace(
+  const whatsapp = (settings?.whatsappPhone ?? settings?.contactPhone ?? basecampPhone).replace(
     /\D/g,
     "",
   );

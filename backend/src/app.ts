@@ -29,6 +29,9 @@ app.use(
     credentials: true,
   }),
 );
+// Trip editors can contain several client-supplied policy/gear sections.
+// Keep the smaller limit for enquiries, authentication and other endpoints.
+app.use(['/api/v1/treks', '/api/v1/expeditions'], express.json({ limit: '256kb' }));
 app.use(express.json({ limit: '10kb' }));
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());

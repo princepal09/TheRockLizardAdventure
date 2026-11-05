@@ -12,7 +12,7 @@ export function ContactDetailsCard({
 }) {
   const phone = settings?.contactPhone ?? basecampPhone;
   const email = settings?.contactEmail ?? basecampEmail;
-  const whatsapp = settings?.whatsappPhone ?? basecampPhone;
+  const whatsapp = settings?.whatsappPhone ?? settings?.contactPhone ?? basecampPhone;
   const address =
     settings?.address ??
     "Rock Lizard Adventure, Near Bhairav Mandir, Dharanaula, Almora 263601, Uttarakhand, India";

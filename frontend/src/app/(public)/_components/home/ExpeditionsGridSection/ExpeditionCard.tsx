@@ -1,3 +1,6 @@
+"use client";
+
+import { canOptimizeImage, imageLoaderFor } from "@/lib/image-optimization";
 import { ArrowRight, MapPin, Mountain } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -40,7 +43,7 @@ export default function ExpeditionCard({
         className="relative grid aspect-[5/4] place-items-center overflow-hidden bg-slate-800 text-white focus-visible:outline-2 focus-visible:-outline-offset-4 focus-visible:outline-white"
       >
         {image && /^(?:https?:\/\/|\/(?!\/))/i.test(image) ? (
-          <Image src={image} alt="" fill unoptimized className="object-cover" />
+          <Image src={image} alt="" fill loader={imageLoaderFor(image)} unoptimized={!canOptimizeImage(image)} sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw" className="object-cover" />
         ) : (
           <Mountain aria-hidden="true" className="size-8 text-slate-400" />
         )}

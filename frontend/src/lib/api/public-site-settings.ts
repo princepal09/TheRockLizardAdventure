@@ -2,6 +2,7 @@ import { cacheLife, cacheTag } from "next/cache";
 
 import type { ApiDataResponse } from "@/types/api";
 import type { SiteSettings } from "@/types/site-settings";
+import { normalizeSocialUrl } from "@/lib/social-url";
 
 function webUrl(value: string | null) {
   if (!value) return null;
@@ -29,8 +30,8 @@ export async function getPublicSiteSettings(): Promise<SiteSettings | null> {
   return {
     ...data,
     heroImageUrl: webUrl(data.heroImageUrl),
-    facebookUrl: webUrl(data.facebookUrl),
-    instagramUrl: webUrl(data.instagramUrl),
-    youtubeUrl: webUrl(data.youtubeUrl),
+    facebookUrl: normalizeSocialUrl(data.facebookUrl),
+    instagramUrl: normalizeSocialUrl(data.instagramUrl),
+    youtubeUrl: normalizeSocialUrl(data.youtubeUrl),
   };
 }

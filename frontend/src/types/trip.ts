@@ -13,6 +13,14 @@ export type TripStatus = (typeof tripStatuses)[number];
 export type TripDifficulty = (typeof tripDifficulties)[number];
 
 export type TripInput = {
+  departureDates?: string | null;
+  meetingPoint?: string | null;
+  inclusions?: string | null;
+  exclusions?: string | null;
+  requiredGear?: string | null;
+  cancellationPolicy?: string | null;
+  refundPolicy?: string | null;
+
   name: string;
   regionId: string;
   seasonIds: string[];

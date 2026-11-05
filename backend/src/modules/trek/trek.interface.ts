@@ -1,3 +1,4 @@
+import type { TripPlanningField } from '../trip-planning/trip-planning.schema.js';
 import type { Trek, TrekImage, TrekItinerary, Season } from '../../../generated/prisma/client.js';
 import type { CreateGalleryImageDTO, UpdateGalleryImageDTO } from '../gallery/gallery.schema.js';
 import type { CreateItineraryDTO, UpdateItineraryDTO } from '../itinerary/itinerary.schema.js';
@@ -13,7 +14,7 @@ export interface ITrekRepository {
   findTreks(): Promise<Trek[]>;
   findTrekById(id: string): Promise<(Trek & TrekDetails) | null>;
   findPublishedTreks(): Promise<
-    (Omit<Trek, 'createdBy'> & {
+    (Omit<Trek, 'createdBy' | TripPlanningField> & {
       months: { month: number }[];
       region: { name: string };
       seasons: { seasonId: string; season: Pick<Season, 'name'> }[];

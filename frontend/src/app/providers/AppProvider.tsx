@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { MutationCache, QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
@@ -12,8 +12,11 @@ export default function AppProvider({
   children: React.ReactNode;
 }) {
   const [queryClient] = useState(
-    () =>
-      new QueryClient({
+    () => {
+      const client: QueryClient = new QueryClient({
+        mutationCache: new MutationCache({
+          onSuccess: () => client.invalidateQueries({ predicate: (query) => query.queryKey.includes("public") }),
+        }),
         defaultOptions: {
           queries: {
             staleTime: 1000 * 60 * 5,
@@ -25,7 +28,9 @@ export default function AppProvider({
             retry: 0,
           },
         },
-      }),
+      });
+      return client;
+    },
   );
 
   return (

@@ -181,13 +181,15 @@ function DetailsForm({ settings, pending, save }: EditorProps) {
 
       <fieldset disabled={pending} className="space-y-4 border-t border-slate-200 pt-4">
         <legend className="font-semibold text-primary">Social links</legend>
+        <p className="text-sm text-slate-600">Add your official profile links to show clickable icons in the footer. Links starting with www. are accepted; leave a field blank to hide that profile.</p>
         <div className="grid gap-4 sm:grid-cols-2">
           {socialFields.map(({ name, label }) => (
             <label key={name} className="block space-y-1.5 text-sm font-medium">
               <span>{label}</span>
               <input
                 name={name}
-                type="url"
+                type="text"
+                inputMode="url"
                 maxLength={500}
                 placeholder="https://"
                 value={draft[name] ?? settings?.[name] ?? ""}

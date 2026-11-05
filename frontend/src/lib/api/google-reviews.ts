@@ -26,16 +26,26 @@ export type GoogleReviewsData = z.infer<typeof responseSchema>;
 
 export async function getGoogleReviews(): Promise<GoogleReviewsData | null> {
   "use cache";
-  cacheLife("hours");
   cacheTag("google-reviews");
 
   const widgetId = process.env.NEXT_FEATURABLE_WIDGET_ID?.trim();
-  if (!widgetId) return null;
+  if (!widgetId) {
+    cacheLife("hours");
+    return null;
+  }
 
-  const response = await fetch(
-    `https://featurable.com/api/v1/widgets/${encodeURIComponent(widgetId)}`,
-    { signal: AbortSignal.timeout(10_000) },
-  );
-  if (!response.ok) throw new Error("Could not load Google reviews");
-  return responseSchema.parse(await response.json());
+  try {
+    const response = await fetch(
+      `https://featurable.com/api/v1/widgets/${encodeURIComponent(widgetId)}`,
+      { signal: AbortSignal.timeout(10_000) },
+    );
+    if (!response.ok) throw new Error("Could not load Google reviews");
+    const data = responseSchema.parse(await response.json());
+    cacheLife("hours");
+    return data;
+  } catch {
+    // Handle outages inside the cache boundary so prerendering can still finish.
+    cacheLife({ stale: 30, revalidate: 60, expire: 300 });
+    return null;
+  }
 }

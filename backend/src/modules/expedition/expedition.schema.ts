@@ -1,3 +1,4 @@
+import { tripPlanningFields } from '../trip-planning/trip-planning.schema.js';
 import z from 'zod';
 import { ContentStatus, DifficultyLevel } from '../../../generated/prisma/client.js';
 import { seasonIdsSchema } from '../season/season.schema.js';
@@ -21,6 +22,7 @@ export const expeditionSlugSchema = z
 
 export const createExpeditionSchema = z
   .object({
+    ...tripPlanningFields,
     name: z.string().trim().min(1).max(200),
     summary: z.string().max(500).nullable().optional(),
     description: z.string().nullable().optional(),

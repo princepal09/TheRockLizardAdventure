@@ -12,6 +12,7 @@ import { Card } from "@/components/ui/card";
 import { createEnquiry, getEnquiryTripOptions } from "@/lib/api/enquiries";
 import { getErrorMessage } from "@/utils/error";
 import { privacyPolicy } from "@/lib/privacy-policy";
+import BookingPolicyDownloads from "../BookingPolicyDownloads";
 
 import {
   contactSchema,
@@ -78,10 +79,14 @@ function Field({
 
 export default function ContactForm({
   travelTrade = false,
+  selectedTrip,
 }: {
   travelTrade?: boolean;
+  selectedTrip?: { value: string; name: string };
 }) {
-  const initialValues = travelTrade
+  const initialValues: ContactFormValues = selectedTrip
+    ? { ...defaults, category: "trip", trip: selectedTrip.value, subject: "Booking and availability" }
+    : travelTrade
     ? { ...defaults, subject: travelTradeTopic }
     : defaults;
   const {
@@ -97,6 +102,7 @@ export default function ContactForm({
     defaultValues: initialValues,
   });
   const category = useWatch({ control, name: "category" });
+  const tripValue = useWatch({ control, name: "trip" });
   const tripOptions = useQuery({
     queryKey: ["public", "enquiry-trip-options"],
     queryFn: ({ signal }) => getEnquiryTripOptions(signal),
@@ -176,6 +182,7 @@ export default function ContactForm({
                 id="contact-trip"
                 required
                 {...register("trip")}
+                value={tripValue}
                 aria-invalid={Boolean(errors.trip)}
                 aria-describedby={
                   errors.trip ? "contact-trip-error" : undefined
@@ -188,6 +195,9 @@ export default function ContactForm({
                     ? "Loading routes…"
                     : "Select a published route"}
                 </option>
+                {selectedTrip && !tripOptions.data?.some(({ kind, trips }) => trips.some(({ id }) => `${kind}:${id}` === selectedTrip.value)) && (
+                  <option value={selectedTrip.value}>{selectedTrip.name}</option>
+                )}
                 {tripOptions.data?.map(
                   ({ kind, trips }) =>
                     trips.length > 0 && (
@@ -330,6 +340,7 @@ export default function ContactForm({
               className={`${inputClass} resize-y`}
             />
           </Field>
+          <BookingPolicyDownloads />
           <p id="contact-privacy" className="text-xs leading-relaxed text-slate-600">
             We use the details you share to respond to your enquiry and coordinate
             the services you request. Our{" "}

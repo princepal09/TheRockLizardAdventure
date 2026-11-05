@@ -1,3 +1,4 @@
+import { pageMetadata } from "@/lib/page-metadata";
 import HeroSection from "./_components/home/HeroSection";
 import RegionGallerySection from "./_components/home/RegionGallerySection";
 import FeaturedTreksSection from "./_components/home/FeaturedTreksSection";
@@ -7,6 +8,8 @@ import WhyChooseUsSection from "./_components/home/WhyChooseUsSection";
 import TestimonialsSection from "./_components/home/TestimonialsSection";
 import DispatchesSection from "./_components/home/DispatchesSection";
 import FaqSection from "./_components/home/FaqSection";
+
+export const metadata = pageMetadata("Treks & Expeditions in Uttarakhand", "Explore guided treks and expeditions in Uttarakhand with Rocklizard Adventure. Browse itineraries, find the right trip, and send an enquiry.", "/");
 
 const Home = () => {
   return (

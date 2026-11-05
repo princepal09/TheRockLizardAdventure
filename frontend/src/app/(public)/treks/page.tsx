@@ -1,8 +1,11 @@
+import { pageMetadata } from "@/lib/page-metadata";
 import CustomInquiryBanner from "../_components/treks/CustomInquiryBanner";
 import ExpeditionProtocolSection from "../_components/treks/ExpeditionProtocolSection";
 import HeroBanner from "../_components/treks/HeroBanner";
 import SeasonalGuideSection from "../_components/treks/SeasonalGuideSection";
 import TripDiscovery from "../_components/treks/TripDiscovery";
+
+export const metadata = pageMetadata('Treks in Uttarakhand', 'Explore guided treks in Uttarakhand. Compare routes, difficulty, itineraries and preparation details with Rocklizard Adventure.', "/treks");
 
 export default function TreksPage({
   searchParams,

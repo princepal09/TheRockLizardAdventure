@@ -1,2 +1,17 @@
 .vscode
 node_modules
+
+# Local credentials (keep shareable setup templates)
+.env
+.env.*
+!.env.example
+
+# Temporary files and generated build output
+/tmp/
+/temp/
+**/.next/
+**/dist/
+**/coverage/
+*.tsbuildinfo
+*.log
+/backend/generated/
