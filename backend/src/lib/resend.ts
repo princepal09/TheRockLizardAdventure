@@ -1,4 +1,6 @@
 import { readFile } from 'node:fs/promises';
+import { existsSync } from 'node:fs';
+import path from 'node:path';
 import { env } from '../config/env.config.js';
 import { emailLogoId } from '../emails/templates/email-layout.js';
 
@@ -21,7 +23,10 @@ export const sendEmail = async ({
   html,
   replyTo,
 }: SendEmailOptions): Promise<void> => {
-  const logo = await readFile('assets/rocklizard-logo-transparent.png');
+  const logoPath = existsSync('assets/rocklizard-logo-transparent.png')
+    ? 'assets/rocklizard-logo-transparent.png'
+    : path.resolve(import.meta.dirname, '../../assets/rocklizard-logo-transparent.png');
+  const logo = await readFile(logoPath);
   const { error } = await resend.emails.send({
     from: env.MAIL_FROM,
     to,

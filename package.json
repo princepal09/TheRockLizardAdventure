@@ -4,7 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "concurrently --kill-others-on-fail --names frontend,backend \"npm --prefix frontend run dev\" \"npm --prefix backend run dev\""
+    "dev": "concurrently --kill-others-on-fail --names frontend,backend \"npm --prefix frontend run dev\" \"npm --prefix backend run dev\"",
+    "test": "npm --prefix backend test && npm --prefix frontend test",
+    "test:backend": "npm --prefix backend test",
+    "test:frontend": "npm --prefix frontend test"
   },
   "repository": {
     "type": "git",

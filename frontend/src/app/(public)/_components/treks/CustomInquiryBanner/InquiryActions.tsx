@@ -1,10 +1,9 @@
-import { CalendarDays, Phone } from "lucide-react";
+import { CalendarDays } from "lucide-react";
 import Link from "next/link";
 
 import { getPublicSiteSettings } from "@/lib/api/public-site-settings";
-import { basecampPhone } from "@/types/basecamp";
 
-export function InquiryLinks({ phone = basecampPhone }: { phone?: string }) {
+export function InquiryLinks(_props: { phone?: string }) {
   
   return (
     <div className="flex flex-wrap items-center gap-2 lg:shrink-0">
