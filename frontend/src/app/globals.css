@@ -4,6 +4,10 @@
 
 @custom-variant dark (&:is(.dark *));
 
+html {
+  scroll-padding-top: calc(var(--public-header-height, 0px) + 0.75rem);
+}
+
 @theme inline {
   --font-sans: var(--font-jakarta);
   --font-heading: var(--font-newsreader);

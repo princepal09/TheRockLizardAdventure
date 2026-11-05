@@ -114,12 +114,12 @@ npm run dev
 
 This starts both applications. Keep the terminal running; use `Ctrl+C` to stop them.
 
-| Page | Local URL |
-| --- | --- |
-| Public website | http://localhost:3000 |
-| Admin login | http://localhost:3000/admin/login |
+| Page                 | Local URL                          |
+| -------------------- | ---------------------------------- |
+| Public website       | http://localhost:3000              |
+| Admin login          | http://localhost:3000/admin/login  |
 | Backend health check | http://localhost:5000/health-check |
-| API base | http://localhost:5000/api/v1 |
+| API base             | http://localhost:5000/api/v1       |
 
 Sign in with the admin credentials configured before seeding. Add regions and seasons before creating trips, configure contact details in site settings, and publish trips when ready. Departure dates and policies should contain confirmed client information; blank fields display a prompt to contact Basecamp.
 
@@ -165,17 +165,17 @@ Keep the backend available during the frontend build because some public pages l
 
 ## Troubleshooting
 
-| Problem | What to check |
-| --- | --- |
-| `Invalid environment variables` | Complete `backend/.env`; secrets need at least 32 characters, the admin password needs at least 8, and `MAIL_FROM` must be an email address. |
-| Database connection fails | Start MySQL; check the database exists, user permissions and `DATABASE_URL`. |
-| Missing Prisma client or database columns | Run the migrate and generate commands from `backend` with `--config prisma7.config.ts`. |
-| Login fails on a fresh database | Run the seed command and use the seeded email/password. Editing `.env` afterwards does not reset an existing admin. |
-| Frontend cannot reach the API | Check the backend health URL, API port and `/api/v1` suffix. `FRONTEND_URL` must match the browser origin for CORS. |
-| Port 3000 or 5000 is occupied | Stop the conflicting process, or update the ports and matching environment URLs together. |
-| No trips or photos appear | A fresh database contains only the seeded admin. Add and publish content through admin. |
-| Images or email fail | Check Cloudinary credentials and Resend API key/sender verification. |
-| Google reviews are unavailable | Check the widget ID, review URL and provider availability. The section can show its fallback during an outage. |
+| Problem                                      | What to check                                                                                                                                  |
+| -------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| `Invalid environment variables`              | Complete `backend/.env`; secrets need at least 32 characters, the admin password needs at least 8, and `MAIL_FROM` must be an email address.   |
+| Database connection fails                    | Start MySQL; check the database exists, user permissions and `DATABASE_URL`.                                                                   |
+| Missing Prisma client or database columns    | Run the migrate and generate commands from `backend` with `--config prisma7.config.ts`.                                                        |
+| Login fails on a fresh database              | Run the seed command and use the seeded email/password. Editing `.env` afterwards does not reset an existing admin.                            |
+| Frontend cannot reach the API                | Check the backend health URL, API port and `/api/v1` suffix. `FRONTEND_URL` must match the browser origin for CORS.                            |
+| Port 3000 or 5000 is occupied                | Stop the conflicting process, or update the ports and matching environment URLs together.                                                      |
+| No trips or photos appear                    | A fresh database contains only the seeded admin. Add and publish content through admin.                                                        |
+| Images or email fail                         | Check Cloudinary credentials and Resend API key/sender verification.                                                                           |
+| Google reviews are unavailable               | Check the widget ID, review URL and provider availability. The section can show its fallback during an outage.                                 |
 | Turbopack reports a CSS-worker process crash | Check the Node version and terminal permissions, stop stale build processes and retry. This is separate from a page's date/prerendering error. |
 
 ## Project layout
