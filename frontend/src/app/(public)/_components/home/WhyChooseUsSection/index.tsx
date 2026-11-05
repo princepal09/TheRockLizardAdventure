@@ -10,7 +10,7 @@ export default function WhyChooseUsSection() {
     >
       <SectionReveal>
         <p className="font-mono text-[10px] font-bold tracking-widest text-sky-400 uppercase">
-          Local Kumaon foundation
+          Based in Almora · Exploring India
         </p>
         <h2
           id="mountaineering-standard"
@@ -19,8 +19,8 @@ export default function WhyChooseUsSection() {
           The Almora Mountaineering Standard
         </h2>
         <p className="mt-1.5 max-w-md text-sm leading-relaxed text-slate-300">
-          Over a decade of zero-incident Kumaon leadership rooted directly in
-          Dharanaula basecamp.
+          From our Almora Basecamp, we help you prepare for adventures across Uttarakhand, Kashmir
+          and Maharashtra.
         </p>
       </SectionReveal>
       <div className="mt-7 grid gap-4 md:grid-cols-[1.4fr_1fr] lg:gap-6">

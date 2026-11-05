@@ -16,7 +16,8 @@ export const tripKeys = {
   all: ["trips"] as const,
   session: (version: number) => [...tripKeys.all, version] as const,
   list: (version: number, kind: TripKind) => [...tripKeys.session(version), kind, "list"] as const,
-  detail: (version: number, kind: TripKind, id?: string) => [...tripKeys.session(version), kind, "detail", id] as const,
+  detail: (version: number, kind: TripKind, id?: string) =>
+    [...tripKeys.session(version), kind, "detail", id] as const,
   options: (version: number) => [...tripKeys.session(version), "options"] as const,
 };
 

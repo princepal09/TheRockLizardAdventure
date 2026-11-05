@@ -5,24 +5,14 @@ import type { TeamMember } from "@/types/team";
 
 import TeamPhoto from "./TeamPhoto";
 
-export default function TeamMemberCard({
-  member,
-  index,
-}: {
-  member: TeamMember;
-  index: number;
-}) {
+export default function TeamMemberCard({ member, index }: { member: TeamMember; index: number }) {
   const reverse = index % 2 === 1;
   const number = String(index + 1).padStart(2, "0");
 
   return (
     <Card className="group grid min-w-0 grid-cols-1 gap-0! overflow-hidden rounded-2xl border border-slate-200 bg-white py-0! text-slate-900 shadow-sm ring-0! md:grid-cols-2">
       <div className={`relative min-w-0 ${reverse ? "md:order-2" : ""}`}>
-        <TeamPhoto
-          key={member.photoUrl}
-          name={member.name}
-          src={member.photoUrl}
-        />
+        <TeamPhoto key={member.photoUrl} name={member.name} src={member.photoUrl} />
         <div
           aria-hidden="true"
           className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-linear-to-t from-slate-950/55 to-transparent"

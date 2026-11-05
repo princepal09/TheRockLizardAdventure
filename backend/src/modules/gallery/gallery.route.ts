@@ -15,6 +15,7 @@ router.use(verifyUser(authService));
 
 router.get('/admin', galleryController.getImagesController);
 router.post('/', uploadGalleryImages, galleryController.createImagesController);
+router.delete('/', galleryController.deleteAllImagesController);
 router.patch(
   '/:imageId',
   validate(updateSiteGalleryImageSchema),

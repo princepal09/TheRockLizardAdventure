@@ -16,8 +16,16 @@ type ConfirmationProps = {
 };
 
 export function DangerConfirmation({
-  label, title, description, disabled, onConfirm,
-  confirmLabel, pendingLabel, icon: Icon, filledTrigger, triggerClassName,
+  label,
+  title,
+  description,
+  disabled,
+  onConfirm,
+  confirmLabel,
+  pendingLabel,
+  icon: Icon,
+  filledTrigger,
+  triggerClassName,
 }: ConfirmationProps & {
   confirmLabel: string;
   pendingLabel: string;
@@ -45,14 +53,17 @@ export function DangerConfirmation({
   }
 
   return (
-    <AlertDialog.Root open={open} onOpenChange={(nextOpen, event) => {
-      if (pending) {
-        event.cancel();
-        return;
-      }
-      if (nextOpen) setError("");
-      setOpen(nextOpen);
-    }}>
+    <AlertDialog.Root
+      open={open}
+      onOpenChange={(nextOpen, event) => {
+        if (pending) {
+          event.cancel();
+          return;
+        }
+        if (nextOpen) setError("");
+        setOpen(nextOpen);
+      }}
+    >
       <AlertDialog.Trigger
         disabled={disabled}
         render={
@@ -81,7 +92,10 @@ export function DangerConfirmation({
             {description}
           </AlertDialog.Description>
           {error && (
-            <p role="alert" className="mt-4 rounded-lg bg-red-50 px-3 py-2 text-sm break-words text-red-800">
+            <p
+              role="alert"
+              className="mt-4 rounded-lg bg-red-50 px-3 py-2 text-sm break-words text-red-800"
+            >
               {error}
             </p>
           )}
@@ -109,5 +123,7 @@ export function DangerConfirmation({
 }
 
 export default function DeleteConfirmation(props: ConfirmationProps) {
-  return <DangerConfirmation {...props} confirmLabel="Delete" pendingLabel="Deleting…" icon={Trash2} />;
+  return (
+    <DangerConfirmation {...props} confirmLabel="Delete" pendingLabel="Deleting…" icon={Trash2} />
+  );
 }

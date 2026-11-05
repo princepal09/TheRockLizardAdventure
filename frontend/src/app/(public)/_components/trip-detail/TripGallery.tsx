@@ -4,11 +4,7 @@ import { Card } from "@/components/ui/card";
 
 import TripPhoto from "./TripPhoto";
 
-export default function TripGallery({
-  images,
-}: {
-  images: PublishedTripDetail["images"];
-}) {
+export default function TripGallery({ images }: { images: PublishedTripDetail["images"] }) {
   return (
     <Card
       id="trip-gallery"
@@ -31,11 +27,7 @@ export default function TripGallery({
             <div className="relative aspect-square overflow-hidden rounded-xl bg-slate-100">
               <TripPhoto src={imageUrl} alt={altText ?? ""} />
             </div>
-            {caption && (
-              <figcaption className="mt-1 text-xs text-slate-600">
-                {caption}
-              </figcaption>
-            )}
+            {caption && <figcaption className="mt-1 text-xs text-slate-600">{caption}</figcaption>}
           </figure>
         ))}
       </div>

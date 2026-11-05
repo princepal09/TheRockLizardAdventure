@@ -1,4 +1,5 @@
 import express from 'express';
+import { bulkActionSchema } from '../../utils/common/bulk-action.schema.js';
 
 import { verifyUser } from '../../middlewares/auth.middleware.js';
 import { upload, uploadGalleryImages } from '../../middlewares/muler.middleware.js';
@@ -15,6 +16,8 @@ router.get('/', trekController.getPublishedTreksController);
 router.get('/slug/:slug', trekController.getPublishedTrekController);
 
 router.use(verifyUser(authService));
+router.patch('/bulk/publish', validate(bulkActionSchema), trekController.publishSelectedController);
+router.delete('/bulk', validate(bulkActionSchema), trekController.deleteSelectedController);
 
 router.post(
   '/',

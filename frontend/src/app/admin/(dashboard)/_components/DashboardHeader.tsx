@@ -35,12 +35,8 @@ export default function DashboardHeader() {
               />
             </span>
             <span className="min-w-0">
-              <span className="block truncate text-sm font-semibold">
-                Rock Lizard
-              </span>
-              <span className="block truncate text-xs text-tertiary">
-                Basecamp Console
-              </span>
+              <span className="block truncate text-sm font-semibold">Rock Lizard</span>
+              <span className="block truncate text-xs text-tertiary">Basecamp Console</span>
             </span>
           </Link>
         </div>

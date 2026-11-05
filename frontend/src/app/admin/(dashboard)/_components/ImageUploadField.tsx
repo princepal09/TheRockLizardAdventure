@@ -87,8 +87,7 @@ export function ImageUploadField({
             {required && <RequiredMark />}
           </span>
           <span className="block text-xs text-slate-600">
-            JPEG, PNG, WebP, or GIF ·{" "}
-            {multiple ? "Up to 5 images, 5 MB each" : "Up to 5 MB"}
+            JPEG, PNG, WebP, or GIF · {multiple ? "Up to 5 images, 5 MB each" : "Up to 5 MB"}
           </span>
           <input
             ref={inputRef}
@@ -100,9 +99,7 @@ export function ImageUploadField({
             disabled={disabled}
             onChange={(event) => {
               const input = event.currentTarget;
-              const overLimit = Boolean(
-                multiple && (input.files?.length ?? 0) > 5,
-              );
+              const overLimit = Boolean(multiple && (input.files?.length ?? 0) > 5);
               if (overLimit) {
                 input.value = "";
               }
@@ -140,9 +137,7 @@ export function ImageUploadField({
               <button
                 type="button"
                 disabled={disabled}
-                aria-label={
-                  multiple ? `Remove ${preview.name} from selection` : undefined
-                }
+                aria-label={multiple ? `Remove ${preview.name} from selection` : undefined}
                 onClick={() => cancelSelection(index)}
                 className="inline-flex min-h-11 items-center gap-1.5 rounded-lg px-3 text-sm font-semibold text-primary hover:bg-slate-100 focus-visible:outline-2 focus-visible:outline-tertiary disabled:opacity-60"
               >

@@ -45,8 +45,8 @@ export default function ExpeditionProtocolSection() {
         The Rock Lizard Expedition Protocol
       </h2>
       <p className="mt-2 max-w-2xl text-sm leading-relaxed text-slate-600">
-        Plan for the trail with the Almora team, from guide arrangements and
-        camp meals to gear and route-specific safety preparations.
+        Plan for the trail with the Almora team, from guide arrangements and camp meals to gear and
+        route-specific safety preparations.
       </p>
       <div className="mt-5 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
         {protocols.map(({ Icon, title, description }) => (
@@ -55,9 +55,7 @@ export default function ExpeditionProtocolSection() {
               <Icon aria-hidden="true" className="size-4" />
             </span>
             <h3 className="mt-2 text-sm font-semibold">{title}</h3>
-            <p className="mt-1 text-xs leading-relaxed text-slate-600">
-              {description}
-            </p>
+            <p className="mt-1 text-xs leading-relaxed text-slate-600">{description}</p>
           </div>
         ))}
       </div>

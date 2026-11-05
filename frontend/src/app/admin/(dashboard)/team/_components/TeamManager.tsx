@@ -6,33 +6,23 @@ import Image from "next/image";
 import { useEffect, useRef, useState, type FormEvent } from "react";
 
 import { Button } from "@/components/ui/button";
-import {
-  useTeamMember,
-  useTeamMembers,
-  useTeamMutation,
-} from "@/hooks/team/useTeam";
+import { useTeamMember, useTeamMembers, useTeamMutation } from "@/hooks/team/useTeam";
 import { deleteTeamMember, saveTeamMember } from "@/lib/api/team";
 import type { TeamMember, TeamMemberInput } from "@/types/team";
 import { teamMemberFormSchema } from "@/lib/validation/admin";
 import { imageFileSchema } from "@/lib/validation/image";
 import { getErrorMessage } from "@/utils/error";
 import DeleteConfirmation from "../../_components/DeleteConfirmation";
-import {
-  ImageUploadField,
-  RequiredMark,
-} from "../../_components/ImageUploadField";
+import { ImageUploadField, RequiredMark } from "../../_components/ImageUploadField";
+import { useAdminBulkAction } from "@/hooks/useAdminBulkAction";
+import { useBulkSelection } from "@/hooks/useBulkSelection";
+import BulkActionToolbar, { SelectionCheckbox } from "../../_components/BulkActionToolbar";
 
 const panelClass = "rounded-xl border border-slate-200 bg-white shadow-sm";
 const inputClass =
   "block min-h-11 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-base focus-visible:outline-2 focus-visible:outline-tertiary";
 
-function TeamMemberForm({
-  member,
-  onClose,
-}: {
-  member?: TeamMember;
-  onClose: () => void;
-}) {
+function TeamMemberForm({ member, onClose }: { member?: TeamMember; onClose: () => void }) {
   const save = useTeamMutation(
     async ({ input, photo }: { input: TeamMemberInput; photo?: File }) =>
       saveTeamMember(
@@ -43,11 +33,7 @@ function TeamMemberForm({
     member ? "Team member updated" : "Team member created",
     member?.id,
   );
-  const remove = useTeamMutation(
-    deleteTeamMember,
-    "Team member deleted",
-    member?.id,
-  );
+  const remove = useTeamMutation(deleteTeamMember, "Team member deleted", member?.id);
   const busy = save.isPending || remove.isPending;
   const headingRef = useRef<HTMLHeadingElement>(null);
 
@@ -80,11 +66,7 @@ function TeamMemberForm({
   }
 
   return (
-    <form
-      noValidate
-      onSubmit={submit}
-      className={`${panelClass} space-y-4 p-5 sm:p-6`}
-    >
+    <form noValidate onSubmit={submit} className={`${panelClass} space-y-4 p-5 sm:p-6`}>
       <header className="border-b border-slate-200 pb-4">
         <h2
           ref={headingRef}
@@ -177,11 +159,7 @@ function TeamMemberForm({
             />
           </label>
           <label className="flex min-h-11 items-center gap-2 text-sm font-medium">
-            <input
-              type="checkbox"
-              name="isActive"
-              defaultChecked={member?.isActive ?? false}
-            />
+            <input type="checkbox" name="isActive" defaultChecked={member?.isActive ?? false} />
             Show on the public team page
           </label>
         </div>
@@ -193,18 +171,9 @@ function TeamMemberForm({
       )}
       <div className="flex flex-wrap gap-2 border-t border-slate-200 pt-4">
         <Button type="submit" variant="secondary" disabled={busy}>
-          {save.isPending
-            ? "Saving…"
-            : member
-              ? "Save changes"
-              : "Create team member"}
+          {save.isPending ? "Saving…" : member ? "Save changes" : "Create team member"}
         </Button>
-        <Button
-          type="button"
-          variant="outline"
-          onClick={onClose}
-          disabled={busy}
-        >
+        <Button type="button" variant="outline" onClick={onClose} disabled={busy}>
           Cancel
         </Button>
         {member && (
@@ -228,16 +197,17 @@ export default function TeamManager() {
   const [editor, setEditor] = useState<string>();
   const members = useTeamMembers();
   const detail = useTeamMember(editor === "new" ? undefined : editor);
-  const closeEditor = () =>
-    setEditor((current) => (current === editor ? undefined : current));
+  const closeEditor = () => setEditor((current) => (current === editor ? undefined : current));
+  const hide = useAdminBulkAction("team");
+  const eligibleIds =
+    members.data?.filter((member) => member.isActive).map((member) => member.id) ?? [];
+  const selection = useBulkSelection(eligibleIds);
 
   return (
     <section className="mx-auto max-w-6xl space-y-6">
       <header className="flex flex-wrap items-center justify-between gap-4">
         <div className="space-y-1">
-          <p className="text-xs font-semibold tracking-widest text-slate-600 uppercase">
-            Website
-          </p>
+          <p className="text-xs font-semibold tracking-widest text-slate-600 uppercase">Website</p>
           <h1 className="text-3xl font-bold text-primary">Team</h1>
           <p className="text-sm text-slate-600">
             Manage the people featured on your public team page.
@@ -247,16 +217,30 @@ export default function TeamManager() {
           type="button"
           variant="secondary"
           size="lg"
+          disabled={hide.isPending}
           onClick={() => setEditor("new")}
         >
           <Plus aria-hidden="true" />
           New team member
         </Button>
       </header>
+      {members.isSuccess && !editor && (
+        <BulkActionToolbar
+          selectedCount={selection.selectedIds.length}
+          eligibleCount={eligibleIds.length}
+          pending={hide.isPending}
+          actionLabel="Hide selected"
+          confirmation="Selected members will be hidden from the public team page. Their profiles and photos are kept, and you can make them visible again from their editors."
+          onSelectAll={selection.selectAll}
+          onClear={selection.clear}
+          onExecute={async () => {
+            await hide.mutateAsync(selection.selectedIds);
+            setEditor(undefined);
+          }}
+        />
+      )}
 
-      <div
-        className={editor ? "grid items-start gap-5 lg:grid-cols-2" : undefined}
-      >
+      <div className={editor ? "grid items-start gap-5 lg:grid-cols-2" : undefined}>
         {editor && (
           <div className="min-w-0 lg:order-last">
             {editor === "new" || detail.data ? (
@@ -310,12 +294,19 @@ export default function TeamManager() {
           ) : members.data.length ? (
             <ul className="divide-y divide-slate-200">
               {members.data.map((member) => (
-                <li key={member.id}>
+                <li key={member.id} className="flex items-center pl-2">
+                  <SelectionCheckbox
+                    label={`Select ${member.name}`}
+                    checked={selection.isSelected(member.id)}
+                    disabled={hide.isPending || !!editor || !member.isActive}
+                    onChange={() => selection.toggle(member.id)}
+                  />
                   <button
                     type="button"
                     aria-pressed={editor === member.id}
                     onClick={() => setEditor(member.id)}
-                    className="flex w-full items-center gap-3 rounded-lg px-4 py-3 text-left hover:bg-slate-50 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-tertiary aria-pressed:bg-tertiary/10 sm:px-5"
+                    disabled={hide.isPending}
+                    className="flex min-w-0 flex-1 items-center gap-3 rounded-lg px-4 py-3 text-left hover:bg-slate-50 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-tertiary aria-pressed:bg-tertiary/10 sm:px-5"
                   >
                     {member.photoUrl ? (
                       <Image

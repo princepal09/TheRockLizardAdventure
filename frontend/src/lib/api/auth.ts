@@ -26,10 +26,7 @@ const bearerAuth = (accessToken: string) => ({
 // ==========================================
 
 export async function login(input: LoginFormValues) {
-  const { data } = await publicApi.post<ApiDataResponse<LoginResult>>(
-    "/auth/login",
-    input,
-  );
+  const { data } = await publicApi.post<ApiDataResponse<LoginResult>>("/auth/login", input);
 
   return data.data;
 }
@@ -39,10 +36,7 @@ export async function login(input: LoginFormValues) {
 // ==========================================
 
 export async function getCurrentAdmin(accessToken: string) {
-  const { data } = await api.get<ApiDataResponse<Admin>>(
-    "/auth/me",
-    bearerAuth(accessToken),
-  );
+  const { data } = await api.get<ApiDataResponse<Admin>>("/auth/me", bearerAuth(accessToken));
 
   return data.data;
 }
@@ -52,11 +46,7 @@ export async function getCurrentAdmin(accessToken: string) {
 // ==========================================
 
 export async function logout(accessToken: string) {
-  const { data } = await api.post<ApiResponse>(
-    "/auth/logout",
-    undefined,
-    bearerAuth(accessToken),
-  );
+  const { data } = await api.post<ApiResponse>("/auth/logout", undefined, bearerAuth(accessToken));
 
   return data;
 }
@@ -79,10 +69,7 @@ export async function logoutAll(accessToken: string) {
 // CHANGE PASSWORD
 // ==========================================
 
-export async function changePassword(
-  input: ChangePasswordInput,
-  accessToken: string,
-) {
+export async function changePassword(input: ChangePasswordInput, accessToken: string) {
   const { data } = await api.patch<ApiResponse>(
     "/auth/change-password",
     input,
@@ -109,10 +96,7 @@ export async function forgotPassword(email: string) {
 // ==========================================
 
 export async function resetPassword(input: ResetPasswordInput) {
-  const { data } = await publicApi.post<ApiResponse>(
-    "/auth/reset-password",
-    input,
-  );
+  const { data } = await publicApi.post<ApiResponse>("/auth/reset-password", input);
 
   return data;
 }
@@ -121,10 +105,7 @@ export async function resetPassword(input: ResetPasswordInput) {
 // UPDATE PROFILE
 // ==========================================
 
-export async function updateProfile(
-  input: UpdateProfileInput,
-  accessToken: string,
-) {
+export async function updateProfile(input: UpdateProfileInput, accessToken: string) {
   const body = new FormData();
 
   if (input.name !== undefined) {

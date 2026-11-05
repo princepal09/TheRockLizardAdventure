@@ -7,20 +7,17 @@ import type { TripKind } from "@/types/trip";
 const copy = {
   treks: {
     label: "Curated Treks",
-    roster: "Uttarakhand Trek Roster",
+    roster: "India Trek Roster",
     image: "/image4.jpeg",
-    routes: "Guided Uttarakhand Treks",
+    routes: "Guided Treks Across India",
   },
   expeditions: {
     label: "Curated Expeditions",
-    roster: "Uttarakhand Expedition Roster",
+    roster: "India Expedition Roster",
     image: "/image2.jpeg",
     routes: "High-Altitude Routes",
   },
-} satisfies Record<
-  TripKind,
-  { label: string; roster: string; image: string; routes: string }
->;
+} satisfies Record<TripKind, { label: string; roster: string; image: string; routes: string }>;
 
 export default function HeroBanner({ kind }: { kind: TripKind }) {
   const { label, roster, image, routes } = copy[kind];
@@ -56,10 +53,7 @@ export default function HeroBanner({ kind }: { kind: TripKind }) {
         sizes="100vw"
         className="-z-20 object-cover object-center"
       />
-      <div
-        aria-hidden="true"
-        className="absolute inset-0 -z-10 bg-slate-950/30"
-      />
+      <div aria-hidden="true" className="absolute inset-0 -z-10 bg-slate-950/30" />
       <div className="mx-auto max-w-5xl text-center">
         <nav
           aria-label="Breadcrumb"
@@ -74,32 +68,23 @@ export default function HeroBanner({ kind }: { kind: TripKind }) {
           <span aria-current="page">{label}</span>
         </nav>
         <p className="inline-flex items-center gap-2 rounded-full bg-white/95 px-3 py-1.5 font-mono text-[10px] font-bold tracking-widest text-orange-900 uppercase shadow-sm">
-          <Mountain
-            aria-hidden="true"
-            className="size-3.5 shrink-0 text-orange-600"
-          />{" "}
-          {roster} · 2026 Season Departures
+          <Mountain aria-hidden="true" className="size-3.5 shrink-0 text-orange-600" /> {roster} ·
+          2026 Season Departures
         </p>
         <h1
           id="trip-listing-heading"
           className="mx-auto mt-4 max-w-4xl font-heading text-3xl leading-[1.05] font-semibold tracking-tight text-shadow-md text-shadow-black/90 sm:text-5xl lg:text-6xl"
         >
-          Traverse Ancient Glacial Valleys, High Bugyals, and Sacred Ridges
+          Find Your Next Trail, Summit, and Mountain Escape
         </h1>
         <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-white text-shadow-sm text-shadow-black/90 sm:text-base">
-          Curated Uttarakhand trails stewarded directly by Vinod Kumar&apos;s
-          native Almora mountain team. Plan your route with local guides and
-          unhurried acclimatization schedules in the Central Himalayas.
+          Explore Uttarakhand, Kashmir and Maharashtra with our Almora-based team. Choose an
+          itinerary that fits your experience, group and preferred destination.
         </p>
         <dl className="mx-auto mt-7 grid max-w-3xl grid-cols-2 gap-3 rounded-xl border border-white/80 bg-white/90 p-3 text-left text-slate-900 shadow-sm sm:mt-8 sm:grid-cols-4">
           {highlights.map(({ label: title, value, accent }) => (
-            <div
-              key={title}
-              className={`border-l-2 pl-2.5 font-mono ${accent}`}
-            >
-              <dt className="text-[9px] tracking-wide text-slate-600 uppercase">
-                {title}
-              </dt>
+            <div key={title} className={`border-l-2 pl-2.5 font-mono ${accent}`}>
+              <dt className="text-[9px] tracking-wide text-slate-600 uppercase">{title}</dt>
               <dd className="mt-0.5 text-xs font-semibold">{value}</dd>
             </div>
           ))}

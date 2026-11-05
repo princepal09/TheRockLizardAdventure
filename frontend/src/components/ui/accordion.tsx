@@ -13,11 +13,7 @@ function AccordionItem(props: Primitive.Item.Props) {
   return <Primitive.Item data-slot="accordion-item" {...props} />;
 }
 
-function AccordionTrigger({
-  className,
-  children,
-  ...props
-}: Primitive.Trigger.Props) {
+function AccordionTrigger({ className, children, ...props }: Primitive.Trigger.Props) {
   return (
     <Primitive.Header>
       <Primitive.Trigger

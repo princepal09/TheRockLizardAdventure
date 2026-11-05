@@ -3,8 +3,7 @@ export const faqCategories = [
     label: "Beginners Guide",
     items: [
       {
-        question:
-          "I am a beginner. Is Pindari Glacier suitable for my first Himalayan expedition?",
+        question: "I am a beginner. Is Pindari Glacier suitable for my first Himalayan expedition?",
         answer:
           "Pindari Glacier can be a first Himalayan trek for prepared beginners. The route through Khati and Dwali still involves consecutive days of hiking at altitude. Ask Basecamp whether the itinerary and pacing suit your fitness and trekking experience.",
       },
@@ -14,20 +13,17 @@ export const faqCategories = [
           "Contact Basecamp with your preferred dates to check solo availability and ask how the group, room sharing, and guide arrangements work for that departure.",
       },
       {
-        question:
-          "What kind of food and drinking water is served at high camps?",
+        question: "What kind of food and drinking water is served at high camps?",
         answer:
           "Ask Basecamp for the camp menu and drinking-water arrangements for your specific itinerary. Share any allergies or dietary requirements before booking so the team can confirm what it can accommodate.",
       },
       {
-        question:
-          "Can I rent technical gear (down jackets, crampons, poles) in Almora?",
+        question: "Can I rent technical gear (down jackets, crampons, poles) in Almora?",
         answer:
           "Send Basecamp your trek dates and gear list to check local rental options, available sizes, and which items your itinerary calls for.",
       },
       {
-        question:
-          "What emergency safety protocols exist for Acute Mountain Sickness (AMS)?",
+        question: "What emergency safety protocols exist for Acute Mountain Sickness (AMS)?",
         answer:
           "Before booking, ask the expedition team to explain the route’s acclimatization plan, communications, and emergency descent arrangements. If you feel unwell on a trek, tell your guide immediately.",
       },

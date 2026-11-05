@@ -68,8 +68,7 @@ function SidebarContents({ onNavigate }: { onNavigate?: () => void }) {
           </p>
           <ul className="space-y-0.5">
             {items.map(({ label, href, icon: Icon }) => {
-              const active =
-                href && (pathname === href || pathname.startsWith(`${href}/`));
+              const active = href && (pathname === href || pathname.startsWith(`${href}/`));
               const content = (
                 <>
                   <Icon aria-hidden="true" className="size-4 shrink-0" />

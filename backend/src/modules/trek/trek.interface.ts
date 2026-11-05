@@ -10,6 +10,8 @@ type TrekSeasons = { seasons: { seasonId: string; season: Season }[] };
 type TrekDetails = TrekSeasons & { itineraries: TrekItinerary[]; images: TrekImage[] };
 
 export interface ITrekRepository {
+  publishSelected(ids: string[]): Promise<{ updatedCount: number }>;
+  deleteSelected(ids: string[]): Promise<(Trek & { images: TrekImage[] })[]>;
   createTrek(data: CreateTrekRecord, adminId: string): Promise<Trek & TrekSeasons>;
   findTreks(): Promise<Trek[]>;
   findTrekById(id: string): Promise<(Trek & TrekDetails) | null>;

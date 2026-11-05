@@ -9,7 +9,11 @@ import TestimonialsSection from "./_components/home/TestimonialsSection";
 import DispatchesSection from "./_components/home/DispatchesSection";
 import FaqSection from "./_components/home/FaqSection";
 
-export const metadata = pageMetadata("Treks & Expeditions in Uttarakhand", "Explore guided treks and expeditions in Uttarakhand with Rocklizard Adventure. Browse itineraries, find the right trip, and send an enquiry.", "/");
+export const metadata = pageMetadata(
+  "Treks & Expeditions Across India",
+  "Explore guided treks and expeditions in Uttarakhand, Kashmir and Maharashtra with Rocklizard Adventure. Browse itineraries and plan your next adventure.",
+  "/",
+);
 
 const Home = () => {
   return (

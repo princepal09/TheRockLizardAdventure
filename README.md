@@ -139,6 +139,8 @@ Restart the appropriate application after changing its `.env` file.
 
 From the repository root:
 
+Build both applications with `npm run build`. Keep the backend API running in a separate terminal during the frontend build.
+
 ```sh
 npm --prefix backend run typecheck
 npm --prefix backend run build
@@ -147,11 +149,15 @@ npm --prefix frontend run build
 
 Frontend lint is available with `npm --prefix frontend run lint`. Existing unrelated lint issues may need separate cleanup.
 
+Format frontend source files with `npm --prefix frontend run format`, or check formatting without changing files with `npm --prefix frontend run format:check`. These commands skip dependencies, generated output and static assets.
+
 ## Production configuration
 
 Set `NODE_ENV=production` on the backend, use HTTPS origins, set `FRONTEND_URL` to the real frontend origin, and set the frontend's `NEXT_PUBLIC_SITE_URL` and `NEXT_PUBLIC_API_BASE_URL` to the production origins/API. Use production service credentials and a production database.
 
 Apply migrations and generate the Prisma client before building the backend. Build both applications using the commands above, then start them in separate processes:
+
+For a local production preview, run `npm start` from the repository root to launch both servers together. Stop development servers first to free their ports. This convenience command requires the root dependencies (including `concurrently`) installed with `npm ci`. For separate hosting services, use the individual commands below.
 
 ```sh
 npm --prefix backend start

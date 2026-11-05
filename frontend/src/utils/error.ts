@@ -11,9 +11,7 @@ function formatIssue(message: string, field: unknown) {
 export const getErrorMessage = (error: unknown): string => {
   if (error instanceof ZodError) {
     const issue = error.issues[0];
-    return issue
-      ? formatIssue(issue.message, issue.path[0])
-      : "Check the form and try again.";
+    return issue ? formatIssue(issue.message, issue.path[0]) : "Check the form and try again.";
   }
 
   if (axios.isAxiosError<{ message?: unknown; errors?: unknown }>(error)) {
@@ -21,8 +19,11 @@ export const getErrorMessage = (error: unknown): string => {
     if (Array.isArray(data?.errors)) {
       const issue = data.errors.find(
         (item: unknown): item is { message: string; path?: unknown } =>
-          typeof item === "object" && item !== null &&
-          "message" in item && typeof item.message === "string" && Boolean(item.message.trim()),
+          typeof item === "object" &&
+          item !== null &&
+          "message" in item &&
+          typeof item.message === "string" &&
+          Boolean(item.message.trim()),
       );
       if (issue) {
         return formatIssue(issue.message, Array.isArray(issue.path) ? issue.path[0] : undefined);

@@ -5,6 +5,10 @@ import type { IContactRepository } from './contact.interface.js';
 import type { CreateContactDTO, UpdateContactDTO } from './contact.schema.js';
 
 export class ContactService {
+  async markSelectedRead(ids: string[]) {
+    return this.contactRepo.markSelectedRead(ids);
+  }
+
   constructor(private readonly contactRepo: IContactRepository) {}
 
   async createContact(data: CreateContactDTO): Promise<void> {

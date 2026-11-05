@@ -14,6 +14,10 @@ function toTeamMemberResponse(member: TeamMember) {
 }
 
 export class TeamService {
+  async hideSelected(ids: string[]) {
+    return this.teamRepo.hideSelected(ids);
+  }
+
   constructor(private readonly teamRepo: ITeamRepository) {}
 
   async createMember(data: CreateTeamMemberDTO, file?: Express.Multer.File) {

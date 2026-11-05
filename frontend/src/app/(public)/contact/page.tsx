@@ -4,33 +4,47 @@ import { z } from "zod";
 import { getPublishedTreks } from "@/lib/api/published-treks";
 import { getPublishedExpeditions } from "@/lib/api/published-expeditions";
 
-import ContactDetails, {
-  ContactDetailsCard,
-} from "../_components/contact/ContactDetails";
+import ContactDetails, { ContactDetailsCard } from "../_components/contact/ContactDetails";
 import ContactForm from "../_components/contact/ContactForm";
 import ContactHero from "../_components/contact/ContactHero";
 
-export const metadata = pageMetadata('Contact Almora Basecamp', 'Contact the Rocklizard Adventure team in Almora for trek enquiries, expedition availability and private group planning.', "/contact");
+export const metadata = pageMetadata(
+  "Contact Almora Basecamp",
+  "Contact the Rocklizard Adventure team in Almora for trek enquiries, expedition availability and private group planning.",
+  "/contact",
+);
 
-type SearchParams = Promise<{ topic?: string | string[]; kind?: string | string[]; trip?: string | string[] }>;
+type SearchParams = Promise<{
+  topic?: string | string[];
+  kind?: string | string[];
+  trip?: string | string[];
+}>;
 
 async function EnquiryForm({ searchParams }: { searchParams: SearchParams }) {
   const { topic, kind, trip } = await searchParams;
   const travelTrade = topic === "travel-trade";
   let selectedTrip: { value: string; name: string } | undefined;
-  if ((kind === "treks" || kind === "expeditions") && typeof trip === "string" && z.uuid().safeParse(trip).success) {
-    const trips = await (kind === "treks" ? getPublishedTreks() : getPublishedExpeditions()).catch(() => []);
+  if (
+    (kind === "treks" || kind === "expeditions") &&
+    typeof trip === "string" &&
+    z.uuid().safeParse(trip).success
+  ) {
+    const trips = await (kind === "treks" ? getPublishedTreks() : getPublishedExpeditions()).catch(
+      () => [],
+    );
     const match = trips.find(({ id }) => id === trip);
     if (match) selectedTrip = { value: `${kind}:${match.id}`, name: match.name };
   }
-  return <ContactForm key={`${travelTrade}:${selectedTrip?.value ?? "general"}`} travelTrade={travelTrade} selectedTrip={selectedTrip} />;
+  return (
+    <ContactForm
+      key={`${travelTrade}:${selectedTrip?.value ?? "general"}`}
+      travelTrade={travelTrade}
+      selectedTrip={selectedTrip}
+    />
+  );
 }
 
-export default function ContactPage({
-  searchParams,
-}: {
-  searchParams: SearchParams;
-}) {
+export default function ContactPage({ searchParams }: { searchParams: SearchParams }) {
   return (
     <main className="bg-[#f5f3ee] px-4 py-8 text-slate-900 sm:px-6 sm:py-10 xl:px-10">
       <div className="mx-auto max-w-6xl space-y-6">

@@ -70,12 +70,8 @@ export default function PartnerShowcase() {
                     <Icon className="size-6" />
                   )}
                 </span>
-                <h3 className="font-heading text-2xl leading-tight font-bold">
-                  {name}
-                </h3>
-                <p className="text-sm leading-relaxed text-slate-600">
-                  {description}
-                </p>
+                <h3 className="font-heading text-2xl leading-tight font-bold">{name}</h3>
+                <p className="text-sm leading-relaxed text-slate-600">{description}</p>
                 {website ? (
                   <a
                     target="_blank"
@@ -83,8 +79,7 @@ export default function PartnerShowcase() {
                     aria-label={`${name} official website`}
                     className="mt-auto inline-flex w-fit items-center gap-1 text-xs font-bold text-sky-800 hover:underline"
                   >
-                    Official Website{" "}
-                    <ArrowUpRight aria-hidden="true" className="size-3.5" />
+                    Official Website <ArrowUpRight aria-hidden="true" className="size-3.5" />
                   </a>
                 ) : (
                   <span className="mt-auto text-xs text-slate-500">

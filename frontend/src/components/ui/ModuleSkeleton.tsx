@@ -51,7 +51,10 @@ function CardSkeleton({ withImage }: { withImage: boolean }) {
   );
 }
 
-export default function ModuleSkeleton({ label, variant = "list" }: {
+export default function ModuleSkeleton({
+  label,
+  variant = "list",
+}: {
   label: string;
   variant?: SkeletonVariant;
 }) {

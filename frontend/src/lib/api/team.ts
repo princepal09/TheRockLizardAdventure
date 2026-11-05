@@ -14,10 +14,9 @@ export async function getTeamMembers(signal: AbortSignal) {
 }
 
 export async function getTeamMember(id: string, signal: AbortSignal) {
-  const { data } = await api.get<ApiDataResponse<TeamMember>>(
-    `/team/${encodeURIComponent(id)}`,
-    { signal },
-  );
+  const { data } = await api.get<ApiDataResponse<TeamMember>>(`/team/${encodeURIComponent(id)}`, {
+    signal,
+  });
   return data.data;
 }
 

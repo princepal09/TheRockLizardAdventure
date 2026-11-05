@@ -4,11 +4,11 @@ import { Suspense } from "react";
 
 import { Skeleton } from "@/components/ui/skeleton";
 import { getPublishedExpeditions } from "@/lib/api/published-expeditions";
+import { homepageTripLimits, selectHomepageTrips } from "@/lib/homepage-trips";
 
 import ExpeditionCard from "./ExpeditionCard";
 
-const gridClass =
-  "grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 xl:gap-5";
+const gridClass = "grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 xl:gap-5";
 
 async function ExpeditionCards({ showAll }: { showAll: boolean }) {
   const expeditions = await getPublishedExpeditions().catch(() => null);
@@ -19,33 +19,21 @@ async function ExpeditionCards({ showAll }: { showAll: boolean }) {
       </p>
     );
   if (!expeditions.length)
-    return (
-      <p className="text-sm text-slate-600">
-        Published expeditions will appear here.
-      </p>
-    );
+    return <p className="text-sm text-slate-600">Published expeditions will appear here.</p>;
 
-  const sorted = expeditions.toSorted(
-    (a, b) => Number(b.isFeatured) - Number(a.isFeatured),
-  );
+  const sorted = expeditions.toSorted((a, b) => Number(b.isFeatured) - Number(a.isFeatured));
   return (
     <div className={gridClass}>
-      {(showAll ? sorted : sorted.slice(0, 4)).map((expedition, index) => (
-        <ExpeditionCard
-          key={expedition.id}
-          expedition={expedition}
-          primary={index === 0}
-        />
-      ))}
+      {(showAll ? sorted : selectHomepageTrips(expeditions, homepageTripLimits.expeditions)).map(
+        (expedition, index) => (
+          <ExpeditionCard key={expedition.id} expedition={expedition} primary={index === 0} />
+        ),
+      )}
     </div>
   );
 }
 
-export default function ExpeditionsGridSection({
-  showAll = false,
-}: {
-  showAll?: boolean;
-}) {
+export default function ExpeditionsGridSection({ showAll = false }: { showAll?: boolean }) {
   const Heading = showAll ? "h1" : "h2";
   return (
     <section
@@ -61,9 +49,7 @@ export default function ExpeditionsGridSection({
             id="expeditions-grid-heading"
             className="section-heading-accent mt-1 text-2xl font-extrabold tracking-tight sm:text-3xl"
           >
-            {showAll
-              ? "Himalayan Expeditions"
-              : "Flagship Himalayan Expeditions"}
+            {showAll ? "Expeditions Across India" : "Flagship Expeditions Across India"}
           </Heading>
         </div>
         {!showAll && (
@@ -71,8 +57,7 @@ export default function ExpeditionsGridSection({
             href="/expeditions"
             className="inline-flex items-center gap-1 text-xs font-bold text-sky-700 hover:underline"
           >
-            View All Scheduled Expeditions{" "}
-            <ArrowRight aria-hidden="true" className="size-3.5" />
+            View All Scheduled Expeditions <ArrowRight aria-hidden="true" className="size-3.5" />
           </Link>
         )}
       </div>
@@ -82,10 +67,7 @@ export default function ExpeditionsGridSection({
             <span className="sr-only">Loading expeditions…</span>
             <div aria-hidden="true" className={gridClass}>
               {Array.from({ length: 4 }, (_, index) => (
-                <Skeleton
-                  key={index}
-                  className="h-80 rounded-xl bg-stone-200"
-                />
+                <Skeleton key={index} className="h-80 rounded-xl bg-stone-200" />
               ))}
             </div>
           </div>

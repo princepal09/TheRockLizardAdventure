@@ -25,11 +25,23 @@ const columns: { title: string; items: FooterItem[] }[] = [
     items: [
       { label: "Disclaimer" },
       { label: "Privacy Policy", href: privacyPolicy.href, download: privacyPolicy.downloadName },
-      { label: termsAndConditions.title, href: termsAndConditions.href, download: termsAndConditions.downloadName },
-      { label: cancellationRefundPolicy.title, href: cancellationRefundPolicy.href, download: cancellationRefundPolicy.downloadName },
+      {
+        label: termsAndConditions.title,
+        href: termsAndConditions.href,
+        download: termsAndConditions.downloadName,
+      },
+      {
+        label: cancellationRefundPolicy.title,
+        href: cancellationRefundPolicy.href,
+        download: cancellationRefundPolicy.downloadName,
+      },
       { label: "Trek Insurance & Safety" },
       { label: "Medical Form", href: medicalForm.href, download: medicalForm.downloadName },
-      { label: "Declaration Form (Indemnity Bond)", href: declarationForm.href, download: declarationForm.downloadName },
+      {
+        label: "Declaration Form (Indemnity Bond)",
+        href: declarationForm.href,
+        download: declarationForm.downloadName,
+      },
       { label: "Responsible Tourism Policy" },
     ],
   },

@@ -8,11 +8,7 @@ import { normalizeSocialUrl } from "@/lib/social-url";
 const baseIconClass =
   "grid size-7 place-items-center rounded-full text-white transition-transform duration-300 hover:scale-110 hover:shadow-lg";
 
-export default function SocialAndBrochureBar({
-  settings,
-}: {
-  settings: SiteSettings | null;
-}) {
+export default function SocialAndBrochureBar({ settings }: { settings: SiteSettings | null }) {
   const socials = [
     {
       label: "Facebook",

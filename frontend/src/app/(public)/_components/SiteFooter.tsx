@@ -19,7 +19,10 @@ export default async function SiteFooter() {
         <SocialAndBrochureBar settings={settings} />
         <div className="grid gap-4 py-4 sm:gap-5 sm:py-5 md:grid-cols-2 md:items-start">
           <div className="flex min-w-0 flex-col items-start gap-4 lg:flex-row lg:gap-5 xl:gap-8">
-            <Link href="/" className="shrink-0 rounded-md focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-sky-400">
+            <Link
+              href="/"
+              className="shrink-0 rounded-md focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-sky-400"
+            >
               <Image
                 src="/rocklizard-logo.svg"
                 alt="Rock Lizard Adventure home"

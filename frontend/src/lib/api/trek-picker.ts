@@ -10,10 +10,7 @@ type PickerTrek = Pick<Trip, "id" | "name" | "regionId" | "slug"> & {
 };
 
 export async function getPublishedPickerTreks(signal: AbortSignal) {
-  const { data } = await publicApi.get<ApiDataResponse<PickerTrek[]>>(
-    "/treks",
-    { signal },
-  );
+  const { data } = await publicApi.get<ApiDataResponse<PickerTrek[]>>("/treks", { signal });
   return data.data;
 }
 

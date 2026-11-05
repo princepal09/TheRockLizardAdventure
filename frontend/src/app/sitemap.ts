@@ -4,24 +4,15 @@ import { getPublishedExpeditions } from "@/lib/api/published-expeditions";
 import { siteUrl } from "@/lib/site-url";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const [treks, expeditions] = await Promise.all([
-    getPublishedTreks(),
-    getPublishedExpeditions(),
-  ]);
+  const [treks, expeditions] = await Promise.all([getPublishedTreks(), getPublishedExpeditions()]);
   return [
-    ...[
-      "",
-      "/about",
-      "/treks",
-      "/expeditions",
-      "/gallery",
-      "/travel-trade",
-      "/contact",
-    ].map((path) => ({
-      url: `${siteUrl}${path}`,
-      changeFrequency: "weekly" as const,
-      priority: path ? 0.7 : 1,
-    })),
+    ...["", "/about", "/treks", "/expeditions", "/gallery", "/travel-trade", "/contact"].map(
+      (path) => ({
+        url: `${siteUrl}${path}`,
+        changeFrequency: "weekly" as const,
+        priority: path ? 0.7 : 1,
+      }),
+    ),
     ...treks.map(({ slug }) => ({
       url: `${siteUrl}/treks/${encodeURIComponent(slug)}`,
       changeFrequency: "weekly" as const,

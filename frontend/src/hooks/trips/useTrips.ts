@@ -52,8 +52,7 @@ export function useTripMutation<Input, Result>(
             queryKey: tripKeys.detail(version, kind, id),
           }),
       ]);
-      if (useAuthStore.getState().sessionVersion === version)
-        toast.success(message);
+      if (useAuthStore.getState().sessionVersion === version) toast.success(message);
     },
   });
 }

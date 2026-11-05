@@ -44,10 +44,7 @@ function OptionSkeletons({ count }: { count: number }) {
   return (
     <div aria-hidden="true" className="space-y-1">
       {Array.from({ length: count }, (_, index) => (
-        <div
-          key={index}
-          className="flex items-center justify-between gap-2 px-2.5 py-2"
-        >
+        <div key={index} className="flex items-center justify-between gap-2 px-2.5 py-2">
           <Skeleton className="h-4 w-2/3 bg-slate-200" />
           <Skeleton className="size-3 shrink-0 bg-slate-200" />
         </div>
@@ -73,10 +70,7 @@ function Option({
       className="flex w-full items-center justify-between gap-2 rounded-md px-2.5 py-2 text-left text-sm font-medium text-slate-700 hover:bg-slate-100 focus-visible:outline-2 focus-visible:outline-sky-600 aria-pressed:bg-sky-100 aria-pressed:text-sky-900"
     >
       <span>{label}</span>
-      <ChevronRight
-        aria-hidden="true"
-        className="size-4 shrink-0 text-slate-400"
-      />
+      <ChevronRight aria-hidden="true" className="size-4 shrink-0 text-slate-400" />
     </button>
   );
 }
@@ -93,10 +87,7 @@ function TrekPicker({ onNavigate }: { onNavigate: () => void }) {
   const { regions = [], seasons = [] } = data ?? {};
 
   useEffect(() => {
-    const timer = window.setTimeout(
-      () => setTerm(search.trim().toLowerCase()),
-      250,
-    );
+    const timer = window.setTimeout(() => setTerm(search.trim().toLowerCase()), 250);
     return () => window.clearTimeout(timer);
   }, [search]);
 
@@ -110,8 +101,7 @@ function TrekPicker({ onNavigate }: { onNavigate: () => void }) {
           return trek.seasons.some(({ seasonId }) => seasonId === filter.id);
 
         const month = Number(filter.id);
-        if (trek.months.length)
-          return trek.months.some((entry) => entry.month === month);
+        if (trek.months.length) return trek.months.some((entry) => entry.month === month);
         return data.seasons.some(
           (season) =>
             trek.seasons.some(({ seasonId }) => seasonId === season.id) &&
@@ -134,10 +124,7 @@ function TrekPicker({ onNavigate }: { onNavigate: () => void }) {
               placeholder="Search treks by name"
               className="min-w-0 flex-1 bg-transparent py-2 text-sm outline-none"
             />
-            <Search
-              aria-hidden="true"
-              className="size-4 shrink-0 text-slate-500"
-            />
+            <Search aria-hidden="true" className="size-4 shrink-0 text-slate-500" />
           </label>
           {filter && (
             <button
@@ -183,10 +170,7 @@ function TrekPicker({ onNavigate }: { onNavigate: () => void }) {
               className="flex w-full items-center justify-between gap-2 rounded-md px-2.5 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100 focus-visible:outline-2 focus-visible:outline-sky-600"
             >
               <span>{trek.name}</span>
-              <ChevronRight
-                aria-hidden="true"
-                className="size-4 shrink-0 text-slate-400"
-              />
+              <ChevronRight aria-hidden="true" className="size-4 shrink-0 text-slate-400" />
             </Link>
           ))}
         </Column>
@@ -198,13 +182,9 @@ function TrekPicker({ onNavigate }: { onNavigate: () => void }) {
           ] as const
         ).map(({ kind, title, options }) => (
           <Column key={kind} title={title}>
-            {query.isPending && kind !== "month" && (
-              <OptionSkeletons count={4} />
-            )}
+            {query.isPending && kind !== "month" && <OptionSkeletons count={4} />}
             {query.isSuccess && !options.length && (
-              <p className="px-2.5 text-sm text-slate-600">
-                No options available.
-              </p>
+              <p className="px-2.5 text-sm text-slate-600">No options available.</p>
             )}
             {options.map(({ id, name }) => {
               const selected = filter?.kind === kind && filter.id === id;
@@ -224,11 +204,7 @@ function TrekPicker({ onNavigate }: { onNavigate: () => void }) {
   );
 }
 
-export default function ChooseTrek({
-  onNavigate,
-}: {
-  onNavigate?: () => void;
-}) {
+export default function ChooseTrek({ onNavigate }: { onNavigate?: () => void }) {
   const [open, setOpen] = useState(false);
   const hoverTimer = useRef<number | undefined>(undefined);
 

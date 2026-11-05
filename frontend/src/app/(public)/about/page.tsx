@@ -5,7 +5,11 @@ import AboutStory from "../_components/about/AboutStory";
 import AboutTeam from "../_components/about/AboutTeam";
 import MountainStandard from "../_components/about/MountainStandard";
 
-export const metadata = pageMetadata('About Rocklizard Adventure', 'Meet the Almora team behind Rocklizard Adventure’s treks and expeditions in Uttarakhand.', "/about");
+export const metadata = pageMetadata(
+  "About Rocklizard Adventure",
+  "Meet founder Vinod Chandra Bhatt and the Almora team behind our adventures in Uttarakhand, Kashmir and Maharashtra.",
+  "/about",
+);
 
 export default function AboutPage() {
   return (

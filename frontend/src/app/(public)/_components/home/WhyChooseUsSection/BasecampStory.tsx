@@ -2,6 +2,7 @@ import { ArrowRight, Asterisk, ShieldCheck, Soup } from "lucide-react";
 import Link from "next/link";
 
 import { Card } from "@/components/ui/card";
+import { founderName, founderDesignation } from "@/types/founder";
 
 const features = [
   {
@@ -37,23 +38,18 @@ export default function BasecampStory() {
         Local mountain knowledge that cannot be outsourced.
       </h3>
       <p className="mt-2 text-sm leading-relaxed text-slate-300">
-        Rock Lizard Adventure is headquartered on Almora&apos;s Dharanaula
-        ridge. Vinod&apos;s crew of high-altitude leads grew up crossing
-        Pindari, Sunderdhunga, and Kafni passes.
+        Rock Lizard Adventure is based in Almora. Plan with {founderName} and the Basecamp team for
+        routes across Uttarakhand, Kashmir and Maharashtra.
       </p>
       <div className="mt-4 grid gap-4 border-t border-slate-700/70 pt-4 sm:grid-cols-2">
         {features.map(({ Icon, color, title, description }) => (
           <div key={title} className="flex items-start gap-2.5">
-            <span
-              className={`grid size-7 shrink-0 place-items-center rounded-lg ${color}`}
-            >
+            <span className={`grid size-7 shrink-0 place-items-center rounded-lg ${color}`}>
               <Icon aria-hidden="true" className="size-4" />
             </span>
             <div>
               <h4 className="text-xs font-bold text-slate-100">{title}</h4>
-              <p className="mt-0.5 text-xs leading-relaxed text-slate-400">
-                {description}
-              </p>
+              <p className="mt-0.5 text-xs leading-relaxed text-slate-400">{description}</p>
             </div>
           </div>
         ))}
@@ -65,15 +61,11 @@ export default function BasecampStory() {
               aria-hidden="true"
               className="grid size-8 shrink-0 place-items-center rounded-full bg-slate-700 font-mono text-xs font-bold text-sky-400"
             >
-              VK
+              VB
             </span>
             <div>
-              <p className="text-xs font-bold">
-                Vinod Chandra Bhatt &amp; Lead Expedition Crew
-              </p>
-              <p className="font-mono text-[10px] text-slate-400">
-                Chief Operations Officer · Almora Basecamp
-              </p>
+              <p className="text-xs font-bold">{founderName}</p>
+              <p className="font-mono text-[10px] text-slate-400">{founderDesignation}</p>
             </div>
           </div>
           <Link

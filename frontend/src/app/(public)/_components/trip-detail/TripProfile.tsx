@@ -45,9 +45,7 @@ export default function TripProfile({
     {
       label: "Route Distance",
       value:
-        trip.distanceKm == null
-          ? null
-          : `${Number(trip.distanceKm).toLocaleString("en-IN")} km`,
+        trip.distanceKm == null ? null : `${Number(trip.distanceKm).toLocaleString("en-IN")} km`,
       icon: "metric-4",
       detail: trip.endingPoint ? `Finish: ${trip.endingPoint}` : undefined,
     },
@@ -79,17 +77,12 @@ export default function TripProfile({
               Technical Profile Telemetry
             </h2>
             <p className="mt-1 text-xs text-slate-600">
-              {[trip.startingPoint, trip.endingPoint]
-                .filter(Boolean)
-                .join(" → ") || trip.name}
+              {[trip.startingPoint, trip.endingPoint].filter(Boolean).join(" → ") || trip.name}
             </p>
           </div>
           {trip.region?.name && (
             <span className="inline-flex items-center gap-1.5 rounded-md bg-slate-100 px-2 py-1 font-mono text-[10px] font-semibold text-slate-700 sm:ml-auto">
-              <span
-                aria-hidden="true"
-                className="size-1.5 shrink-0 rounded-full bg-emerald-500"
-              />
+              <span aria-hidden="true" className="size-1.5 shrink-0 rounded-full bg-emerald-500" />
               {trip.region.name}
             </span>
           )}

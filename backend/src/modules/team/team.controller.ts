@@ -6,6 +6,15 @@ import { teamMemberIdSchema } from './team.schema.js';
 import type { TeamService } from './team.service.js';
 
 export class TeamController {
+  hideSelectedController = catchAsync(async (req: Request, res: Response) => {
+    const updatedCount = await this.teamService.hideSelected(req.body.ids);
+    sendResponse(res, 200, {
+      success: true,
+      message: 'Selected team members hidden',
+      data: { updatedCount },
+    });
+  });
+
   constructor(private readonly teamService: TeamService) {}
 
   getActiveMembersController = catchAsync(async (_req: Request, res: Response) => {

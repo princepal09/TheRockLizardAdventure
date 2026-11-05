@@ -53,8 +53,7 @@ export default function AboutTeam() {
             Meet the Custodians of the Trail
           </h2>
           <p className="mt-2 max-w-xl text-sm leading-relaxed text-slate-600">
-            Get to know the crew behind route planning, departure logistics, and
-            time on the trail.
+            Get to know the crew behind route planning, departure logistics, and time on the trail.
           </p>
         </div>
         <Suspense

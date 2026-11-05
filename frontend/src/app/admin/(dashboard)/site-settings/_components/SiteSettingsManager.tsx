@@ -14,7 +14,8 @@ import DeleteConfirmation from "../../_components/DeleteConfirmation";
 import { ImageUploadField } from "../../_components/ImageUploadField";
 
 const panelClass = "space-y-4 rounded-xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6";
-const inputClass = "block min-h-11 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-base focus-visible:outline-2 focus-visible:outline-tertiary";
+const inputClass =
+  "block min-h-11 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-base focus-visible:outline-2 focus-visible:outline-tertiary";
 
 type EditorProps = {
   settings: SiteSettings | null;
@@ -82,7 +83,11 @@ function BrandingForm({ settings, pending, save }: EditorProps) {
               ) : (
                 <p className="text-sm text-slate-600">No {label.toLowerCase()} uploaded.</p>
               )}
-              <ImageUploadField label={image ? `Replace ${label.toLowerCase()}` : `Choose ${label.toLowerCase()}`} name={name} disabled={pending} />
+              <ImageUploadField
+                label={image ? `Replace ${label.toLowerCase()}` : `Choose ${label.toLowerCase()}`}
+                name={name}
+                disabled={pending}
+              />
               {image && (
                 <DeleteConfirmation
                   label={`Remove ${label.toLowerCase()}`}
@@ -96,8 +101,14 @@ function BrandingForm({ settings, pending, save }: EditorProps) {
           );
         })}
       </div>
-      {error && <p role="alert" className="text-sm text-red-800">{error}</p>}
-      <Button type="submit" variant="secondary" disabled={pending}>Save branding</Button>
+      {error && (
+        <p role="alert" className="text-sm text-red-800">
+          {error}
+        </p>
+      )}
+      <Button type="submit" variant="secondary" disabled={pending}>
+        Save branding
+      </Button>
     </form>
   );
 }
@@ -162,7 +173,11 @@ function DetailsForm({ settings, pending, save }: EditorProps) {
                 onChange={(event) => change(name, event.target.value)}
                 className={inputClass}
               />
-              {name === "whatsappPhone" && <span className="block text-xs text-slate-600">Use international format, such as +919876543210.</span>}
+              {name === "whatsappPhone" && (
+                <span className="block text-xs text-slate-600">
+                  Use international format, such as +919876543210.
+                </span>
+              )}
             </label>
           ))}
         </div>
@@ -181,7 +196,10 @@ function DetailsForm({ settings, pending, save }: EditorProps) {
 
       <fieldset disabled={pending} className="space-y-4 border-t border-slate-200 pt-4">
         <legend className="font-semibold text-primary">Social links</legend>
-        <p className="text-sm text-slate-600">Add your official profile links to show clickable icons in the footer. Links starting with www. are accepted; leave a field blank to hide that profile.</p>
+        <p className="text-sm text-slate-600">
+          Add your official profile links to show clickable icons in the footer. Links starting with
+          www. are accepted; leave a field blank to hide that profile.
+        </p>
         <div className="grid gap-4 sm:grid-cols-2">
           {socialFields.map(({ name, label }) => (
             <label key={name} className="block space-y-1.5 text-sm font-medium">
@@ -201,7 +219,11 @@ function DetailsForm({ settings, pending, save }: EditorProps) {
         </div>
       </fieldset>
 
-      {error && <p role="alert" className="text-sm text-red-800">{error}</p>}
+      {error && (
+        <p role="alert" className="text-sm text-red-800">
+          {error}
+        </p>
+      )}
       <Button type="submit" variant="secondary" disabled={pending || !Object.keys(changes).length}>
         Save contact and social details
       </Button>
@@ -218,7 +240,9 @@ export default function SiteSettingsManager() {
       <header className="space-y-1">
         <p className="text-xs font-semibold tracking-widest text-slate-600 uppercase">Website</p>
         <h1 className="text-3xl font-bold text-primary">Site Settings</h1>
-        <p className="text-sm text-slate-600">Manage your public branding, contact details, and social links.</p>
+        <p className="text-sm text-slate-600">
+          Manage your public branding, contact details, and social links.
+        </p>
       </header>
       {settings.data !== undefined ? (
         <>
@@ -227,8 +251,17 @@ export default function SiteSettingsManager() {
         </>
       ) : settings.isError ? (
         <div className={panelClass}>
-          <p role="alert" className="text-sm text-red-800">{getErrorMessage(settings.error)}</p>
-          <Button type="button" variant="outline" disabled={settings.isFetching} onClick={() => void settings.refetch()}>Retry</Button>
+          <p role="alert" className="text-sm text-red-800">
+            {getErrorMessage(settings.error)}
+          </p>
+          <Button
+            type="button"
+            variant="outline"
+            disabled={settings.isFetching}
+            onClick={() => void settings.refetch()}
+          >
+            Retry
+          </Button>
         </div>
       ) : (
         <ModuleSkeleton label="Loading site settings" variant="form" />

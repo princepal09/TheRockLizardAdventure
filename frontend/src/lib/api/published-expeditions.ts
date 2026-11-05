@@ -39,7 +39,5 @@ export async function getPublishedExpedition(slug: string) {
   "use cache";
   cacheLife("minutes");
   cacheTag("published-expeditions");
-  return readExpeditions<PublishedExpedition>(
-    `/slug/${encodeURIComponent(slug)}`,
-  );
+  return readExpeditions<PublishedExpedition>(`/slug/${encodeURIComponent(slug)}`);
 }

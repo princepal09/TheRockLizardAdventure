@@ -18,24 +18,26 @@ import {
   type ProfileFormValues,
 } from "@/types/auth";
 import { getErrorMessage } from "@/utils/error";
-import {
-  ImageUploadField,
-  RequiredMark,
-} from "../../_components/ImageUploadField";
+import { ImageUploadField, RequiredMark } from "../../_components/ImageUploadField";
 import { DangerConfirmation } from "../../_components/DeleteConfirmation";
 
-const panelClass =
-  "space-y-4 rounded-xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6";
+const panelClass = "space-y-4 rounded-xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6";
 const inputClass =
   "block min-h-11 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-base focus-visible:outline-2 focus-visible:outline-tertiary";
 
 function AccountForm({ admin }: { admin: Admin }) {
   const update = useUpdateProfile();
-  const { register, handleSubmit, setValue, setError, reset, formState: { errors, isSubmitting } } =
-    useForm<ProfileFormValues>({
-      resolver: zodResolver(profileSchema),
-      defaultValues: { name: admin.name },
-    });
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    setError,
+    reset,
+    formState: { errors, isSubmitting },
+  } = useForm<ProfileFormValues>({
+    resolver: zodResolver(profileSchema),
+    defaultValues: { name: admin.name },
+  });
 
   const submit = handleSubmit(async ({ name, profileImage }, event) => {
     if (name === admin.name && !profileImage) {
@@ -58,11 +60,7 @@ function AccountForm({ admin }: { admin: Admin }) {
   });
 
   return (
-    <form
-      noValidate
-      onSubmit={submit}
-      className={panelClass}
-    >
+    <form noValidate onSubmit={submit} className={panelClass}>
       <div className="flex items-center gap-3 border-b border-slate-200 pb-4">
         <span className="grid size-12 shrink-0 place-items-center overflow-hidden rounded-full bg-tertiary/20 text-tertiary-foreground">
           {admin.profileImage ? (
@@ -98,18 +96,24 @@ function AccountForm({ admin }: { admin: Admin }) {
             className={inputClass}
             {...register("name")}
           />
-          {errors.name && <span id="profile-name-error" role="alert" className="block text-sm text-red-800">{errors.name.message}</span>}
+          {errors.name && (
+            <span id="profile-name-error" role="alert" className="block text-sm text-red-800">
+              {errors.name.message}
+            </span>
+          )}
         </label>
         <ImageUploadField
-          label={
-            admin.profileImage
-              ? "Replace profile photo"
-              : "Choose a profile photo"
-          }
+          label={admin.profileImage ? "Replace profile photo" : "Choose a profile photo"}
           name="profileImage"
-          onFilesChange={(files) => setValue("profileImage", files?.[0], { shouldDirty: true, shouldValidate: true })}
+          onFilesChange={(files) =>
+            setValue("profileImage", files?.[0], { shouldDirty: true, shouldValidate: true })
+          }
         />
-        {errors.profileImage && <p role="alert" className="text-sm text-red-800">{errors.profileImage.message}</p>}
+        {errors.profileImage && (
+          <p role="alert" className="text-sm text-red-800">
+            {errors.profileImage.message}
+          </p>
+        )}
       </fieldset>
       {errors.root?.server?.message && (
         <p role="alert" className="text-sm text-red-800">
@@ -126,11 +130,16 @@ function AccountForm({ admin }: { admin: Admin }) {
 function PasswordForm() {
   const router = useRouter();
   const change = useChangePassword();
-  const { register, handleSubmit, setError, reset, formState: { errors, isSubmitting } } =
-    useForm<ChangePasswordFormValues>({
-      resolver: zodResolver(changePasswordSchema),
-      defaultValues: { currentPassword: "", newPassword: "", confirmPassword: "" },
-    });
+  const {
+    register,
+    handleSubmit,
+    setError,
+    reset,
+    formState: { errors, isSubmitting },
+  } = useForm<ChangePasswordFormValues>({
+    resolver: zodResolver(changePasswordSchema),
+    defaultValues: { currentPassword: "", newPassword: "", confirmPassword: "" },
+  });
 
   const submit = handleSubmit(async ({ currentPassword, newPassword }) => {
     try {
@@ -145,16 +154,9 @@ function PasswordForm() {
   });
 
   return (
-    <form
-      onSubmit={submit}
-      noValidate
-      className={panelClass}
-    >
+    <form onSubmit={submit} noValidate className={panelClass}>
       <div className="flex items-start gap-3 border-b border-slate-200 pb-4">
-        <KeyRound
-          aria-hidden="true"
-          className="mt-0.5 size-5 shrink-0 text-primary"
-        />
+        <KeyRound aria-hidden="true" className="mt-0.5 size-5 shrink-0 text-primary" />
         <div>
           <h2 className="font-semibold text-primary">Change password</h2>
           <p className="mt-1 text-sm text-slate-600">
@@ -177,7 +179,11 @@ function PasswordForm() {
             className={inputClass}
             {...register("currentPassword")}
           />
-          {errors.currentPassword && <span id="current-password-error" role="alert" className="block text-sm text-red-800">{errors.currentPassword.message}</span>}
+          {errors.currentPassword && (
+            <span id="current-password-error" role="alert" className="block text-sm text-red-800">
+              {errors.currentPassword.message}
+            </span>
+          )}
         </label>
         <label className="block space-y-1.5 text-sm font-medium">
           <span>
@@ -193,7 +199,11 @@ function PasswordForm() {
             className={inputClass}
             {...register("newPassword")}
           />
-          {errors.newPassword && <span id="new-password-error" role="alert" className="block text-sm text-red-800">{errors.newPassword.message}</span>}
+          {errors.newPassword && (
+            <span id="new-password-error" role="alert" className="block text-sm text-red-800">
+              {errors.newPassword.message}
+            </span>
+          )}
         </label>
         <label className="block space-y-1.5 text-sm font-medium">
           <span>
@@ -209,7 +219,11 @@ function PasswordForm() {
             className={inputClass}
             {...register("confirmPassword")}
           />
-          {errors.confirmPassword && <span id="confirm-password-error" role="alert" className="block text-sm text-red-800">{errors.confirmPassword.message}</span>}
+          {errors.confirmPassword && (
+            <span id="confirm-password-error" role="alert" className="block text-sm text-red-800">
+              {errors.confirmPassword.message}
+            </span>
+          )}
         </label>
       </fieldset>
       {errors.root?.server?.message && (
@@ -230,10 +244,7 @@ function SessionsPanel() {
   return (
     <section className={panelClass} aria-labelledby="sessions-heading">
       <div className="flex items-start gap-3">
-        <LogOut
-          aria-hidden="true"
-          className="mt-0.5 size-5 shrink-0 text-primary"
-        />
+        <LogOut aria-hidden="true" className="mt-0.5 size-5 shrink-0 text-primary" />
         <div>
           <h2 id="sessions-heading" className="font-semibold text-primary">
             Sessions
@@ -266,13 +277,9 @@ export default function ProfileManager() {
   return (
     <section className="mx-auto max-w-6xl space-y-6">
       <header className="space-y-1">
-        <p className="text-xs font-semibold tracking-widest text-slate-600 uppercase">
-          Account
-        </p>
+        <p className="text-xs font-semibold tracking-widest text-slate-600 uppercase">Account</p>
         <h1 className="text-3xl font-bold text-primary">My Profile</h1>
-        <p className="text-sm text-slate-600">
-          Manage your profile, password, and sessions.
-        </p>
+        <p className="text-sm text-slate-600">Manage your profile, password, and sessions.</p>
       </header>
       <div className="grid items-start gap-5 lg:grid-cols-2">
         <div className="space-y-5">

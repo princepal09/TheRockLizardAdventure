@@ -8,6 +8,20 @@ import { trekIdSchema, trekSlugSchema } from './trek.schema.js';
 import type { TrekService } from './trek.service.js';
 
 export class TrekController {
+  publishSelectedController = catchAsync(async (req: Request, res: Response) => {
+    const result = await this.trekService.publishSelected(req.body.ids);
+    sendResponse(res, 200, { success: true, message: 'Selected treks published', data: result });
+  });
+
+  deleteSelectedController = catchAsync(async (req: Request, res: Response) => {
+    const result = await this.trekService.deleteSelected(req.body.ids);
+    sendResponse(res, 200, {
+      success: true,
+      message: 'Selected treks deleted',
+      data: result,
+    });
+  });
+
   constructor(private readonly trekService: TrekService) {}
 
   createTrekController = catchAsync(async (req: Request, res: Response) => {

@@ -41,10 +41,11 @@ export function useTripOptionMutation<Input>(
       await Promise.all([
         queryClient.invalidateQueries({ queryKey: tripOptionKeys.list(version, kind) }),
         queryClient.invalidateQueries({ queryKey: tripKeys.options(version) }),
-        id && queryClient.invalidateQueries({
-          queryKey: tripOptionKeys.detail(version, kind, id),
-          refetchType: "none",
-        }),
+        id &&
+          queryClient.invalidateQueries({
+            queryKey: tripOptionKeys.detail(version, kind, id),
+            refetchType: "none",
+          }),
       ]);
       if (useAuthStore.getState().sessionVersion === version) toast.success(message);
     },

@@ -5,10 +5,7 @@ import { useState } from "react";
 import type { PublicListingTrip, TripKind } from "@/types/trip";
 
 import FeaturedSpotlightCard from "../FeaturedSpotlightCard";
-import TrekFilterToolbar, {
-  defaultFilters,
-  type TripFilters,
-} from "../TrekFilterToolbar";
+import TrekFilterToolbar, { defaultFilters, type TripFilters } from "../TrekFilterToolbar";
 import TripDirectory from "./TripDirectory";
 
 export default function TripDiscoveryResults({
@@ -29,8 +26,7 @@ export default function TripDiscoveryResults({
       (!filters.region || filters.region === trip.regionId) &&
       (!filters.grade || filters.grade === trip.difficulty) &&
       (!filters.duration || filters.duration === String(trip.durationDays)) &&
-      (!filters.season ||
-        trip.seasons?.some(({ seasonId }) => seasonId === filters.season)) &&
+      (!filters.season || trip.seasons?.some(({ seasonId }) => seasonId === filters.season)) &&
       (!filters.basecamp || filters.basecamp === trip.startingPoint),
   );
   matched.sort((a, b) => {
@@ -56,11 +52,7 @@ export default function TripDiscoveryResults({
       />
       {spotlight ? (
         <>
-          <FeaturedSpotlightCard
-            key={spotlight.id}
-            kind={kind}
-            trip={spotlight}
-          />
+          <FeaturedSpotlightCard key={spotlight.id} kind={kind} trip={spotlight} />
           {others.length > 0 && <TripDirectory kind={kind} trips={others} />}
         </>
       ) : (
@@ -68,9 +60,7 @@ export default function TripDiscoveryResults({
           role="status"
           className="rounded-xl border border-slate-200 bg-white p-5 text-sm text-slate-600"
         >
-          {trips.length
-            ? `No ${kind} match your filters.`
-            : `Published ${kind} will appear here.`}
+          {trips.length ? `No ${kind} match your filters.` : `Published ${kind} will appear here.`}
         </p>
       )}
     </div>

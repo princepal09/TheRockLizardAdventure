@@ -6,12 +6,10 @@ export default function MedicalFormDownload() {
   return (
     <div className="flex flex-wrap items-center justify-between gap-4 rounded-xl border border-slate-200 bg-slate-50 p-4">
       <div className="max-w-xl">
-        <h3 className="text-sm font-semibold text-slate-900">
-          Medical Fitness Certificate
-        </h3>
+        <h3 className="text-sm font-semibold text-slate-900">Medical Fitness Certificate</h3>
         <p className="mt-1 text-xs leading-relaxed text-slate-600">
-          Download the form for completion by an MBBS/MD/MS doctor. Confirm
-          submission requirements with Basecamp before your departure.
+          Download the form for completion by an MBBS/MD/MS doctor. Confirm submission requirements
+          with Basecamp before your departure.
         </p>
       </div>
       <a

@@ -63,10 +63,7 @@ type AuthRequest = InternalAxiosRequestConfig & {
 
 api.interceptors.request.use((config: AuthRequest) => {
   const { accessToken, sessionVersion } = useAuthStore.getState();
-  if (
-    config.sessionVersion !== undefined &&
-    config.sessionVersion !== sessionVersion
-  ) {
+  if (config.sessionVersion !== undefined && config.sessionVersion !== sessionVersion) {
     throw new axios.CanceledError("Session changed");
   }
 
@@ -77,47 +74,57 @@ api.interceptors.request.use((config: AuthRequest) => {
   return config;
 });
 
-api.interceptors.response.use(async (response) => {
-  const method = response.config.method?.toLowerCase();
-  const scope = publicContentScope(response.config.url ?? "");
-  if (scope && method && ["post", "patch", "put", "delete"].includes(method)) {
-    const token = useAuthStore.getState().accessToken;
-    const refresh = () => refreshPublicContent(scope, useAuthStore.getState().accessToken ?? "");
-    const refreshed = token ? await refresh().catch(() => false) : false;
-    if (!refreshed) toast.warning("Saved, but public content could not refresh immediately.", {
-      action: { label: "Retry refresh", onClick: () => { void refresh().catch(() => false).then((success) => success ? toast.success("Public content refreshed") : toast.error("Could not refresh public content. Please try again.")); } },
-    });
-  }
-  return response;
-}, async (error: unknown) => {
-  if (!axios.isAxiosError(error) || error.response?.status !== 401) {
-    throw error;
-  }
+api.interceptors.response.use(
+  async (response) => {
+    const method = response.config.method?.toLowerCase();
+    const scope = publicContentScope(response.config.url ?? "");
+    if (scope && method && ["post", "patch", "put", "delete"].includes(method)) {
+      const token = useAuthStore.getState().accessToken;
+      const refresh = () => refreshPublicContent(scope, useAuthStore.getState().accessToken ?? "");
+      const refreshed = token ? await refresh().catch(() => false) : false;
+      if (!refreshed)
+        toast.warning("Saved, but public content could not refresh immediately.", {
+          action: {
+            label: "Retry refresh",
+            onClick: () => {
+              void refresh()
+                .catch(() => false)
+                .then((success) =>
+                  success
+                    ? toast.success("Public content refreshed")
+                    : toast.error("Could not refresh public content. Please try again."),
+                );
+            },
+          },
+        });
+    }
+    return response;
+  },
+  async (error: unknown) => {
+    if (!axios.isAxiosError(error) || error.response?.status !== 401) {
+      throw error;
+    }
 
-  const request: AuthRequest | undefined = error.config;
-  if (
-    request?.url === "/auth/change-password" &&
-    error.response.data?.message === "Current password is incorrect"
-  ) {
-    throw error;
-  }
+    const request: AuthRequest | undefined = error.config;
+    if (
+      request?.url === "/auth/change-password" &&
+      error.response.data?.message === "Current password is incorrect"
+    ) {
+      throw error;
+    }
 
-  const { accessToken, sessionVersion } = useAuthStore.getState();
-  if (
-    !request ||
-    request.retried ||
-    !accessToken ||
-    request.sessionVersion !== sessionVersion
-  ) {
-    throw error;
-  }
+    const { accessToken, sessionVersion } = useAuthStore.getState();
+    if (!request || request.retried || !accessToken || request.sessionVersion !== sessionVersion) {
+      throw error;
+    }
 
-  request.retried = true;
-  if (request.headers.get("Authorization") === `Bearer ${accessToken}`) {
-    await refreshAccessToken();
-  }
+    request.retried = true;
+    if (request.headers.get("Authorization") === `Bearer ${accessToken}`) {
+      await refreshAccessToken();
+    }
 
-  return api.request(request);
-});
+    return api.request(request);
+  },
+);
 
 export default api;

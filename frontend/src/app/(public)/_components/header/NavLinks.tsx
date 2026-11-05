@@ -57,9 +57,7 @@ const NavLinks = ({
                 layoutId="activeIndicator"
                 className="absolute bottom-0 left-0 w-full h-[2px] bg-sky-400 rounded-full shadow-[0_0_8px_rgba(56,189,248,0.8)]"
                 transition={
-                  reduceMotion
-                    ? { duration: 0 }
-                    : { type: "spring", stiffness: 380, damping: 30 }
+                  reduceMotion ? { duration: 0 } : { type: "spring", stiffness: 380, damping: 30 }
                 }
               />
             )}

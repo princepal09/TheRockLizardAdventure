@@ -7,6 +7,39 @@ import type { CreateExpeditionRecord, IExpeditionRepository } from './expedition
 import type { UpdateExpeditionDTO } from './expedition.schema.js';
 
 export class ExpeditionRepository implements IExpeditionRepository {
+  async publishSelected(ids: string[]) {
+    return prisma.$transaction(async (transaction) => {
+      const where = {
+        id: { in: ids },
+        status: { in: [ContentStatus.DRAFT, ContentStatus.ARCHIVED] },
+      };
+      const existingDates = await transaction.expedition.updateMany({
+        where: { ...where, publishedAt: { not: null } },
+        data: { status: ContentStatus.PUBLISHED },
+      });
+      const firstPublished = await transaction.expedition.updateMany({
+        where: { ...where, publishedAt: null },
+        data: { status: ContentStatus.PUBLISHED, publishedAt: new Date() },
+      });
+      return { updatedCount: existingDates.count + firstPublished.count };
+    });
+  }
+
+  async deleteSelected(ids: string[]) {
+    return prisma.$transaction(async (transaction) => {
+      const trips = await transaction.expedition.findMany({
+        where: { id: { in: ids } },
+        include: { images: true },
+      });
+      if (trips.length) {
+        await transaction.expedition.deleteMany({
+          where: { id: { in: trips.map(({ id }) => id) } },
+        });
+      }
+      return trips;
+    });
+  }
+
   async createExpedition(data: CreateExpeditionRecord, adminId: string) {
     const { seasonIds, ...fields } = data;
     return prisma.expedition.create({
@@ -39,7 +72,16 @@ export class ExpeditionRepository implements IExpeditionRepository {
   async findPublishedExpeditions() {
     const trips = await prisma.expedition.findMany({
       where: { status: ContentStatus.PUBLISHED },
-      omit: { createdBy: true, departureDates: true, meetingPoint: true, inclusions: true, exclusions: true, requiredGear: true, cancellationPolicy: true, refundPolicy: true },
+      omit: {
+        createdBy: true,
+        departureDates: true,
+        meetingPoint: true,
+        inclusions: true,
+        exclusions: true,
+        requiredGear: true,
+        cancellationPolicy: true,
+        refundPolicy: true,
+      },
       include: {
         region: { select: { name: true } },
         seasons: {

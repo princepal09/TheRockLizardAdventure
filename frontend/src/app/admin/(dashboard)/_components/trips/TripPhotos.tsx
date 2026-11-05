@@ -39,11 +39,7 @@ function CoverForm({ kind, trip }: { kind: TripKind; trip: TripDetail }) {
   }
 
   return (
-    <form
-      noValidate
-      onSubmit={submit}
-      className="space-y-3 rounded-lg border border-slate-200 p-4"
-    >
+    <form noValidate onSubmit={submit} className="space-y-3 rounded-lg border border-slate-200 p-4">
       <h3 className="text-sm font-semibold text-primary">Cover image</h3>
       {trip.coverImageUrl && (
         <Image
@@ -56,11 +52,7 @@ function CoverForm({ kind, trip }: { kind: TripKind; trip: TripDetail }) {
         />
       )}
       <fieldset disabled={save.isPending} className="space-y-3">
-        <ImageUploadField
-          label="Choose a cover image"
-          name="coverImage"
-          required
-        />
+        <ImageUploadField label="Choose a cover image" name="coverImage" required />
       </fieldset>
       {save.error && (
         <p role="alert" className="text-sm text-red-800">
@@ -167,13 +159,7 @@ function PhotoForm({
   );
 }
 
-export default function TripPhotos({
-  kind,
-  trip,
-}: {
-  kind: TripKind;
-  trip: TripDetail;
-}) {
+export default function TripPhotos({ kind, trip }: { kind: TripKind; trip: TripDetail }) {
   const upload = useTripMutation(
     kind,
     (files: File[]) => uploadTripPhotos(kind, trip.id, files),
@@ -194,12 +180,7 @@ export default function TripPhotos({
       />
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
         {trip.images.map((photo) => (
-          <PhotoForm
-            key={photo.id}
-            kind={kind}
-            tripId={trip.id}
-            photo={photo}
-          />
+          <PhotoForm key={photo.id} kind={kind} tripId={trip.id} photo={photo} />
         ))}
       </div>
     </section>

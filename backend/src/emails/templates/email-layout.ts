@@ -1,5 +1,4 @@
 export const emailLogoId = 'rocklizard-logo';
-
 export const escapeHtml = (value: string): string =>
   value
     .replaceAll('&', '&amp;')

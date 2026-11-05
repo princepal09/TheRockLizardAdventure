@@ -7,10 +7,7 @@ export const contactSchema = z
     category: z.enum(["general", "trip"]),
     trip: z.string(),
     name: z.string().trim().min(1, "Enter your full name.").max(150),
-    email: z
-      .string()
-      .trim()
-      .pipe(z.email("Enter a valid email address.").max(255)),
+    email: z.string().trim().pipe(z.email("Enter a valid email address.").max(255)),
     phone: z.string().trim().max(30, "Use at most 30 characters."),
     subject: z.string().trim().min(1, "Select an enquiry topic.").max(255),
     message: z
@@ -35,9 +32,7 @@ export const contactSchema = z
       }
     }
 
-    const bytes = new TextEncoder().encode(
-      JSON.stringify(toEnquiryInput(values)),
-    ).byteLength;
+    const bytes = new TextEncoder().encode(JSON.stringify(toEnquiryInput(values))).byteLength;
     if (bytes > 10 * 1024) {
       ctx.addIssue({
         code: "custom",
@@ -61,7 +56,5 @@ export function toEnquiryInput({
   const input = { name, email, phone: phone || undefined, subject, message };
   if (category === "general") return input;
   const [kind, id] = trip.split(":");
-  return kind === "treks"
-    ? { ...input, trekId: id }
-    : { ...input, expeditionId: id };
+  return kind === "treks" ? { ...input, trekId: id } : { ...input, expeditionId: id };
 }

@@ -75,11 +75,7 @@ const documents = [
   },
 ];
 
-export default function SafetyProtocol({
-  phone = basecampPhone,
-}: {
-  phone?: string;
-}) {
+export default function SafetyProtocol({ phone = basecampPhone }: { phone?: string }) {
   const [open, setOpen] = useState(false);
   const reduceMotion = useReducedMotion();
 
@@ -105,7 +101,12 @@ export default function SafetyProtocol({
           className="grid size-5 shrink-0 place-items-center rounded-full border border-white/30 bg-white/10 sm:size-6"
           initial={false}
           animate={{ x: reduceMotion || open ? 0 : [0, -3, 0] }}
-          transition={{ duration: 1, repeat: reduceMotion || open ? 0 : Infinity, repeatDelay: 4, ease: "easeInOut" }}
+          transition={{
+            duration: 1,
+            repeat: reduceMotion || open ? 0 : Infinity,
+            repeatDelay: 4,
+            ease: "easeInOut",
+          }}
         >
           <ArrowLeft className="size-3 sm:size-3.5" />
         </motion.span>
@@ -126,9 +127,7 @@ export default function SafetyProtocol({
             className="pointer-events-auto flex max-h-[92dvh] w-full max-w-4xl flex-col overflow-hidden rounded-2xl border border-slate-700 bg-[#f5f3ee] text-slate-900 shadow-2xl sm:rounded-3xl"
             render={
               <motion.div
-                initial={
-                  reduceMotion ? false : { opacity: 0, y: 20, scale: 0.98 }
-                }
+                initial={reduceMotion ? false : { opacity: 0, y: 20, scale: 0.98 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 transition={{
                   duration: reduceMotion ? 0 : 0.25,
@@ -167,9 +166,9 @@ export default function SafetyProtocol({
                 Prepared before the first step.
               </h2>
               <Dialog.Description className="mt-3 max-w-2xl text-sm leading-relaxed text-slate-600">
-                A practical planning guide for your Rock Lizard Adventure
-                departure. Work through these points with the Almora team and
-                confirm the arrangements for your specific route.
+                A practical planning guide for your Rock Lizard Adventure departure. Work through
+                these points with the Almora team and confirm the arrangements for your specific
+                route.
               </Dialog.Description>
 
               <div className="mt-6 grid gap-3 sm:grid-cols-2">
@@ -182,51 +181,36 @@ export default function SafetyProtocol({
                       <span className="grid size-9 place-items-center rounded-xl bg-sky-50 text-sky-800">
                         <Icon aria-hidden="true" className="size-4" />
                       </span>
-                      <span
-                        aria-hidden="true"
-                        className="font-mono text-xs text-stone-400"
-                      >
+                      <span aria-hidden="true" className="font-mono text-xs text-stone-400">
                         0{index + 1}
                       </span>
                     </div>
-                    <h3 className="mt-3 text-sm font-bold text-slate-900">
-                      {title}
-                    </h3>
-                    <p className="mt-2 text-xs leading-relaxed text-slate-600">
-                      {description}
-                    </p>
+                    <h3 className="mt-3 text-sm font-bold text-slate-900">{title}</h3>
+                    <p className="mt-2 text-xs leading-relaxed text-slate-600">{description}</p>
                   </article>
                 ))}
               </div>
 
               <div className="mt-4 flex items-start gap-3 rounded-2xl border border-sky-100 bg-sky-50 p-4">
-                <Utensils
-                  aria-hidden="true"
-                  className="mt-0.5 size-4 shrink-0 text-sky-800"
-                />
+                <Utensils aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-sky-800" />
                 <div>
                   <h3 className="text-sm font-bold text-slate-900">
                     Food, water & personal requirements
                   </h3>
                   <p className="mt-1 text-xs leading-relaxed text-slate-600">
-                    Confirm camp meals and drinking-water arrangements. Share
-                    allergies, dietary requirements and relevant health
-                    information before booking so the team can discuss what it
-                    can accommodate.
+                    Confirm camp meals and drinking-water arrangements. Share allergies, dietary
+                    requirements and relevant health information before booking so the team can
+                    discuss what it can accommodate.
                   </p>
                 </div>
               </div>
 
-              <section
-                aria-labelledby="safety-documents-title"
-                className="mt-6"
-              >
+              <section aria-labelledby="safety-documents-title" className="mt-6">
                 <h3 id="safety-documents-title" className="text-sm font-bold">
                   Your departure documents
                 </h3>
                 <p className="mt-1 text-xs leading-relaxed text-slate-600">
-                  Download the original forms and confirm submission
-                  requirements with Basecamp.
+                  Download the original forms and confirm submission requirements with Basecamp.
                 </p>
                 <div className="mt-3 grid gap-3 sm:grid-cols-2">
                   {documents.map(({ title, description, document }) => (
@@ -237,9 +221,7 @@ export default function SafetyProtocol({
                       className="flex items-start justify-between gap-3 rounded-xl border border-orange-200 bg-orange-50 p-4 hover:bg-orange-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-800"
                     >
                       <div>
-                        <p className="text-xs font-bold text-orange-950">
-                          {title}
-                        </p>
+                        <p className="text-xs font-bold text-orange-950">{title}</p>
                         <p className="mt-1 text-[11px] leading-relaxed text-orange-900/80">
                           {description}
                         </p>
@@ -247,10 +229,7 @@ export default function SafetyProtocol({
                           Download PDF
                         </span>
                       </div>
-                      <Download
-                        aria-hidden="true"
-                        className="size-4 shrink-0 text-orange-800"
-                      />
+                      <Download aria-hidden="true" className="size-4 shrink-0 text-orange-800" />
                     </a>
                   ))}
                 </div>
@@ -269,8 +248,7 @@ export default function SafetyProtocol({
                   href={`tel:${phone.replace(/[^+\d]/g, "")}`}
                   className="inline-flex min-h-11 items-center gap-2 rounded-lg border border-stone-300 px-3 text-xs font-semibold hover:bg-stone-100"
                 >
-                  <Phone aria-hidden="true" className="size-3.5" /> Call
-                  Basecamp
+                  <Phone aria-hidden="true" className="size-3.5" /> Call Basecamp
                 </a>
                 <Link
                   href="/contact"

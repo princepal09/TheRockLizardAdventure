@@ -3,6 +3,14 @@ import type { ITeamRepository, TeamMemberPhoto } from './team.interface.js';
 import type { CreateTeamMemberDTO, UpdateTeamMemberDTO } from './team.schema.js';
 
 export class TeamRepository implements ITeamRepository {
+  async hideSelected(ids: string[]) {
+    const result = await prisma.teamMember.updateMany({
+      where: { id: { in: ids }, isActive: true },
+      data: { isActive: false },
+    });
+    return result.count;
+  }
+
   async createMember(data: CreateTeamMemberDTO & TeamMemberPhoto) {
     return prisma.teamMember.create({ data });
   }

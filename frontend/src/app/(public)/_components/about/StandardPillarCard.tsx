@@ -41,12 +41,8 @@ export default function StandardPillarCard({
         </p>
       </div>
       <div>
-        <h3 className="text-base font-bold tracking-tight sm:text-lg">
-          {title}
-        </h3>
-        <p className="mt-1.5 text-sm leading-relaxed text-slate-600">
-          {description}
-        </p>
+        <h3 className="text-base font-bold tracking-tight sm:text-lg">{title}</h3>
+        <p className="mt-1.5 text-sm leading-relaxed text-slate-600">{description}</p>
       </div>
       <ul className="mt-auto flex flex-wrap gap-1.5 pt-1">
         {tags.map((tag) => (

@@ -20,9 +20,7 @@ export type Enquiry = {
   expedition: EnquiryTrip | null;
 };
 
-export type UpdateEnquiryInput = Partial<
-  Pick<Enquiry, "status" | "adminNotes">
->;
+export type UpdateEnquiryInput = Partial<Pick<Enquiry, "status" | "adminNotes">>;
 
 export type CreateEnquiryInput = {
   name: string;

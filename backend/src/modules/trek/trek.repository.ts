@@ -7,6 +7,37 @@ import type { CreateTrekRecord, ITrekRepository } from './trek.interface.js';
 import type { UpdateTrekDTO } from './trek.schema.js';
 
 export class TrekRepository implements ITrekRepository {
+  async publishSelected(ids: string[]) {
+    return prisma.$transaction(async (transaction) => {
+      const where = {
+        id: { in: ids },
+        status: { in: [ContentStatus.DRAFT, ContentStatus.ARCHIVED] },
+      };
+      const existingDates = await transaction.trek.updateMany({
+        where: { ...where, publishedAt: { not: null } },
+        data: { status: ContentStatus.PUBLISHED },
+      });
+      const firstPublished = await transaction.trek.updateMany({
+        where: { ...where, publishedAt: null },
+        data: { status: ContentStatus.PUBLISHED, publishedAt: new Date() },
+      });
+      return { updatedCount: existingDates.count + firstPublished.count };
+    });
+  }
+
+  async deleteSelected(ids: string[]) {
+    return prisma.$transaction(async (transaction) => {
+      const trips = await transaction.trek.findMany({
+        where: { id: { in: ids } },
+        include: { images: true },
+      });
+      if (trips.length) {
+        await transaction.trek.deleteMany({ where: { id: { in: trips.map(({ id }) => id) } } });
+      }
+      return trips;
+    });
+  }
+
   async createTrek(data: CreateTrekRecord, adminId: string) {
     const { seasonIds, ...fields } = data;
     return prisma.trek.create({
@@ -39,7 +70,16 @@ export class TrekRepository implements ITrekRepository {
   async findPublishedTreks() {
     const trips = await prisma.trek.findMany({
       where: { status: ContentStatus.PUBLISHED },
-      omit: { createdBy: true, departureDates: true, meetingPoint: true, inclusions: true, exclusions: true, requiredGear: true, cancellationPolicy: true, refundPolicy: true },
+      omit: {
+        createdBy: true,
+        departureDates: true,
+        meetingPoint: true,
+        inclusions: true,
+        exclusions: true,
+        requiredGear: true,
+        cancellationPolicy: true,
+        refundPolicy: true,
+      },
       include: {
         months: { select: { month: true } },
         region: { select: { name: true } },

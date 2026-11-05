@@ -31,7 +31,8 @@ export function useUpdateEnquiry(id: string) {
 
   return useMutation({
     gcTime: 0,
-    mutationFn: async (input: UpdateEnquiryInput) => updateEnquiry(id, enquiryStatusSchema.parse(input)),
+    mutationFn: async (input: UpdateEnquiryInput) =>
+      updateEnquiry(id, enquiryStatusSchema.parse(input)),
     onSuccess: async (enquiry) => {
       const listKey = enquiryKeys.list(sessionVersion);
       const detailKey = enquiryKeys.detail(sessionVersion, id);
@@ -43,8 +44,8 @@ export function useUpdateEnquiry(id: string) {
       if (useAuthStore.getState().sessionVersion !== sessionVersion) return;
 
       queryClient.setQueryData(detailKey, enquiry);
-      queryClient.setQueryData<typeof enquiry[]>(listKey, (items) =>
-        items?.map((item) => item.id === id ? enquiry : item),
+      queryClient.setQueryData<(typeof enquiry)[]>(listKey, (items) =>
+        items?.map((item) => (item.id === id ? enquiry : item)),
       );
       void queryClient.invalidateQueries({ queryKey: dashboardKeys.summary(sessionVersion) });
       toast.success("Enquiry updated successfully");

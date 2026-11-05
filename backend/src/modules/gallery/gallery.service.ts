@@ -57,13 +57,28 @@ export class GalleryService {
     }
   }
 
-  private async cleanupImage(publicId?: string | null): Promise<void> {
-    if (!publicId) return;
+  async deleteAllImages() {
+    const images = await this.galleryRepo.deleteAllImages();
+    let cleanupFailures = 0;
+    // Bound storage requests rather than starting one request per photo at once.
+    for (let index = 0; index < images.length; index += 5) {
+      const results = await Promise.all(
+        images.slice(index, index + 5).map(({ imagePublicId }) => this.cleanupImage(imagePublicId)),
+      );
+      cleanupFailures += results.filter((success) => !success).length;
+    }
+    return { deletedCount: images.length, cleanupFailures };
+  }
+
+  private async cleanupImage(publicId?: string | null): Promise<boolean> {
+    if (!publicId) return true;
 
     try {
       await deleteFromCloudinary(publicId);
+      return true;
     } catch (error) {
       logger.warn({ err: error, publicId }, 'Failed to delete site gallery image from Cloudinary');
+      return false;
     }
   }
 

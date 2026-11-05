@@ -6,4 +6,5 @@ export interface IGalleryRepository {
   createImages(images: CreateGalleryImageDTO[]): Promise<Gallery[]>;
   updateImage(id: string, data: UpdateSiteGalleryImageDTO): Promise<Gallery>;
   deleteImage(id: string): Promise<Gallery>;
+  deleteAllImages(): Promise<Pick<Gallery, 'id' | 'imagePublicId'>[]>;
 }

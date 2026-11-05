@@ -9,10 +9,19 @@ import {
 import { AppError } from '../../utils/common/error/AppError.js';
 import { createWithSlug } from '../../utils/common/create-with-slug.js';
 import { withPublicationDate } from '../../utils/common/trip-publication.js';
+import { cleanupDeletedTrips } from '../../utils/common/cleanup-deleted-trips.js';
 import type { IExpeditionRepository } from './expedition.interface.js';
 import type { CreateExpeditionDTO, UpdateExpeditionDTO } from './expedition.schema.js';
 
 export class ExpeditionService {
+  async publishSelected(ids: string[]) {
+    return this.expeditionRepo.publishSelected(ids);
+  }
+
+  async deleteSelected(ids: string[]) {
+    return cleanupDeletedTrips(await this.expeditionRepo.deleteSelected(ids));
+  }
+
   constructor(private readonly expeditionRepo: IExpeditionRepository) {}
 
   async createExpedition(data: CreateExpeditionDTO, adminId: string, file?: Express.Multer.File) {
@@ -66,7 +75,9 @@ export class ExpeditionService {
     }
 
     const current =
-      file || data.coverImageUrl !== undefined || data.status === 'PUBLISHED' ? await this.getExpedition(id) : undefined;
+      file || data.coverImageUrl !== undefined || data.status === 'PUBLISHED'
+        ? await this.getExpedition(id)
+        : undefined;
     data = withPublicationDate(data, current);
     const image = file ? await uploadToCloudinary(file, 'rocklizard/expeditions') : undefined;
     const replacingImage = current && (image || data.coverImageUrl !== current.coverImageUrl);

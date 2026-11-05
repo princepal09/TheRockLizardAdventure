@@ -10,9 +10,7 @@ const WhatsAppWidget = ({ phone = basecampPhone }: { phone?: string }) => {
   const [focused, setFocused] = useState(false);
   const animate = reduceMotion === false;
   const phoneNumber = phone.replace(/\D/g, "");
-  const message = encodeURIComponent(
-    "Hello! I want to know more about your treks and packages.",
-  );
+  const message = encodeURIComponent("Hello! I want to know more about your treks and packages.");
   const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`;
 
   return (
@@ -30,7 +28,17 @@ const WhatsAppWidget = ({ phone = basecampPhone }: { phone?: string }) => {
           className="pointer-events-none absolute inset-0 rounded-full border border-[#25D366]/50 bg-[#25D366]/20"
           initial={{ scale: 1, opacity: 0 }}
           animate={animate ? { scale: [1, 1.8], opacity: [0.5, 0] } : { scale: 1, opacity: 0 }}
-          transition={animate ? { duration: 1.8, delay: ring * 0.9, repeat: Infinity, repeatDelay: 0.6, ease: "easeOut" } : { duration: 0 }}
+          transition={
+            animate
+              ? {
+                  duration: 1.8,
+                  delay: ring * 0.9,
+                  repeat: Infinity,
+                  repeatDelay: 0.6,
+                  ease: "easeOut",
+                }
+              : { duration: 0 }
+          }
         />
       ))}
       {/* Tooltip label that appears on hover */}

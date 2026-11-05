@@ -8,6 +8,24 @@ import { expeditionIdSchema, expeditionSlugSchema } from './expedition.schema.js
 import type { ExpeditionService } from './expedition.service.js';
 
 export class ExpeditionController {
+  publishSelectedController = catchAsync(async (req: Request, res: Response) => {
+    const result = await this.expeditionService.publishSelected(req.body.ids);
+    sendResponse(res, 200, {
+      success: true,
+      message: 'Selected expeditions published',
+      data: result,
+    });
+  });
+
+  deleteSelectedController = catchAsync(async (req: Request, res: Response) => {
+    const result = await this.expeditionService.deleteSelected(req.body.ids);
+    sendResponse(res, 200, {
+      success: true,
+      message: 'Selected expeditions deleted',
+      data: result,
+    });
+  });
+
   constructor(private readonly expeditionService: ExpeditionService) {}
 
   createExpeditionController = catchAsync(async (req: Request, res: Response) => {

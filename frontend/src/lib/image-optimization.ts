@@ -5,12 +5,20 @@ import type { ImageLoader } from "next/image";
 export function canOptimizeImage(src: string) {
   if (src.startsWith("/") && !src.startsWith("//")) return true;
   const url = URL.parse(src);
-  return url?.protocol === "https:" && url.hostname === "res.cloudinary.com" && /^\/[^/]+\/image\/upload\//.test(url.pathname) && !url.pathname.includes("/image/upload/s--");
+  return (
+    url?.protocol === "https:" &&
+    url.hostname === "res.cloudinary.com" &&
+    /^\/[^/]+\/image\/upload\//.test(url.pathname) &&
+    !url.pathname.includes("/image/upload/s--")
+  );
 }
 
 const cloudinaryLoader: ImageLoader = ({ src, width, quality }) => {
   const url = new URL(src);
-  url.pathname = url.pathname.replace("/image/upload/", `/image/upload/f_auto,q_${quality ?? 75},c_limit,w_${width}/`);
+  url.pathname = url.pathname.replace(
+    "/image/upload/",
+    `/image/upload/f_auto,q_${quality ?? 75},c_limit,w_${width}/`,
+  );
   return url.href;
 };
 

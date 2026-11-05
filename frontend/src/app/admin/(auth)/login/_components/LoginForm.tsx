@@ -81,10 +81,7 @@ function LoginFields() {
       onSubmit={submitForm}
     >
       <div className="space-y-1.5">
-        <label
-          htmlFor="email"
-          className="block text-[13px] leading-[18px] font-semibold"
-        >
+        <label htmlFor="email" className="block text-[13px] leading-[18px] font-semibold">
           Email Address
         </label>
         <div className="relative">
@@ -102,11 +99,7 @@ function LoginFields() {
           />
         </div>
         {errors.email && (
-          <p
-            id="login-email-error"
-            role="alert"
-            className="text-sm text-red-700"
-          >
+          <p id="login-email-error" role="alert" className="text-sm text-red-700">
             {errors.email.message}
           </p>
         )}
@@ -133,9 +126,7 @@ function LoginFields() {
             placeholder="Enter your password"
             required
             aria-invalid={Boolean(errors.password)}
-            aria-describedby={
-              errors.password ? "login-password-error" : undefined
-            }
+            aria-describedby={errors.password ? "login-password-error" : undefined}
             className={`${inputClassName} pr-[45px]`}
             {...register("password")}
           />
@@ -151,11 +142,7 @@ function LoginFields() {
           </button>
         </div>
         {errors.password && (
-          <p
-            id="login-password-error"
-            role="alert"
-            className="text-sm text-red-700"
-          >
+          <p id="login-password-error" role="alert" className="text-sm text-red-700">
             {errors.password.message}
           </p>
         )}

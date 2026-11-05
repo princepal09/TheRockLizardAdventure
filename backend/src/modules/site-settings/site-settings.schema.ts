@@ -1,11 +1,25 @@
 import z from 'zod';
 
-const socialUrl = z.string().trim().transform((value) =>
-  /^[a-z][a-z\d+.-]*:/i.test(value) ? value : `https://${value}`,
-).pipe(z.url().max(500).refine((value) => {
-  const url = new URL(value);
-  return ['http:', 'https:'].includes(url.protocol) && !url.username && !url.password && url.hostname.includes('.');
-}, 'Enter a valid http:// or https:// profile link.')).nullable().optional();
+const socialUrl = z
+  .string()
+  .trim()
+  .transform((value) => (/^[a-z][a-z\d+.-]*:/i.test(value) ? value : `https://${value}`))
+  .pipe(
+    z
+      .url()
+      .max(500)
+      .refine((value) => {
+        const url = new URL(value);
+        return (
+          ['http:', 'https:'].includes(url.protocol) &&
+          !url.username &&
+          !url.password &&
+          url.hostname.includes('.')
+        );
+      }, 'Enter a valid http:// or https:// profile link.'),
+  )
+  .nullable()
+  .optional();
 
 export const updateSiteSettingsSchema = z
   .object({

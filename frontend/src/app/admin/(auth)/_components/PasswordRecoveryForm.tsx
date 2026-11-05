@@ -1,13 +1,7 @@
 "use client";
 
 import { useMutation } from "@tanstack/react-query";
-import {
-  ArrowLeft,
-  ArrowRight,
-  CircleCheck,
-  KeyRound,
-  Mail,
-} from "lucide-react";
+import { ArrowLeft, ArrowRight, CircleCheck, KeyRound, Mail } from "lucide-react";
 import Link from "next/link";
 import { useState, type FormEvent } from "react";
 import { toast } from "sonner";
@@ -58,10 +52,7 @@ export default function PasswordRecoveryForm({ token }: { token?: string }) {
           <KeyRound aria-hidden="true" className="size-5" />
         </span>
         <div className="space-y-1.5">
-          <h1
-            id="recovery-heading"
-            className="text-2xl leading-tight font-bold tracking-tight"
-          >
+          <h1 id="recovery-heading" className="text-2xl leading-tight font-bold tracking-tight">
             {isReset ? "Reset password" : "Forgot your password?"}
           </h1>
           <p className="text-sm leading-6 text-[#45464d]">
@@ -79,9 +70,7 @@ export default function PasswordRecoveryForm({ token }: { token?: string }) {
         >
           <CircleCheck aria-hidden="true" className="mt-0.5 size-5 shrink-0" />
           <div>
-            <p className="font-semibold">
-              {isReset ? "Password updated" : "Check your inbox"}
-            </p>
+            <p className="font-semibold">{isReset ? "Password updated" : "Check your inbox"}</p>
             <p>{message}</p>
           </div>
         </div>
@@ -91,10 +80,7 @@ export default function PasswordRecoveryForm({ token }: { token?: string }) {
           className="rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-950"
         >
           This reset link is missing its token.{" "}
-          <Link
-            className="font-semibold underline"
-            href="/admin/forgot-password"
-          >
+          <Link className="font-semibold underline" href="/admin/forgot-password">
             Request a new link
           </Link>
           .
@@ -102,10 +88,7 @@ export default function PasswordRecoveryForm({ token }: { token?: string }) {
       ) : (
         <form className="space-y-4" noValidate onSubmit={submit}>
           <div className="space-y-2">
-            <label
-              htmlFor="recovery-value"
-              className="block text-sm font-semibold"
-            >
+            <label htmlFor="recovery-value" className="block text-sm font-semibold">
               {isReset ? "New password" : "Email address"}
             </label>
             <div className="relative">
@@ -126,9 +109,7 @@ export default function PasswordRecoveryForm({ token }: { token?: string }) {
                 name="value"
                 type={isReset ? "password" : "email"}
                 autoComplete={isReset ? "new-password" : "username"}
-                placeholder={
-                  isReset ? "Enter a new password" : "Enter your email"
-                }
+                placeholder={isReset ? "Enter a new password" : "Enter your email"}
                 minLength={isReset ? 8 : undefined}
                 maxLength={isReset ? 100 : undefined}
                 required
@@ -148,11 +129,7 @@ export default function PasswordRecoveryForm({ token }: { token?: string }) {
             disabled={recovery.isPending}
             className="h-[50px] w-full rounded-lg bg-[#a64200] text-sm font-semibold text-white hover:bg-[#843400]"
           >
-            {recovery.isPending
-              ? "Submitting…"
-              : isReset
-                ? "Reset password"
-                : "Send reset link"}
+            {recovery.isPending ? "Submitting…" : isReset ? "Reset password" : "Send reset link"}
             <ArrowRight aria-hidden="true" className="size-4" />
           </Button>
         </form>

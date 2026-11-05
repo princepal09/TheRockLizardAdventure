@@ -5,7 +5,11 @@ import HeroBanner from "../_components/treks/HeroBanner";
 import SeasonalGuideSection from "../_components/treks/SeasonalGuideSection";
 import TripDiscovery from "../_components/treks/TripDiscovery";
 
-export const metadata = pageMetadata('Himalayan Expeditions', 'Plan a Himalayan expedition with Rocklizard Adventure. Explore itineraries, departure details and preparation information.', "/expeditions");
+export const metadata = pageMetadata(
+  "Himalayan Expeditions",
+  "Plan a Himalayan expedition with Rocklizard Adventure. Explore itineraries, departure details and preparation information.",
+  "/expeditions",
+);
 
 export default function ExpeditionsPage({
   searchParams,

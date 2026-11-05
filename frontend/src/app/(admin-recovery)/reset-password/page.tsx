@@ -16,22 +16,14 @@ type ResetPasswordPageProps = {
 async function ResetPasswordForm({ searchParams }: ResetPasswordPageProps) {
   const { token } = await searchParams;
 
-  return (
-    <PasswordRecoveryForm token={typeof token === "string" ? token : ""} />
-  );
+  return <PasswordRecoveryForm token={typeof token === "string" ? token : ""} />;
 }
 
-export default function ResetPasswordPage({
-  searchParams,
-}: ResetPasswordPageProps) {
+export default function ResetPasswordPage({ searchParams }: ResetPasswordPageProps) {
   return (
     <main className="flex min-h-dvh flex-col">
       <PasswordRecoveryLayout>
-        <Suspense
-          fallback={
-            <ModuleSkeleton label="Loading reset form" variant="form" />
-          }
-        >
+        <Suspense fallback={<ModuleSkeleton label="Loading reset form" variant="form" />}>
           <ResetPasswordForm searchParams={searchParams} />
         </Suspense>
       </PasswordRecoveryLayout>

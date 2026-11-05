@@ -1,13 +1,6 @@
 "use client";
 
-import {
-  ChevronDown,
-  ChevronLeft,
-  ChevronRight,
-  ChevronUp,
-  Pause,
-  Play,
-} from "lucide-react";
+import { ChevronDown, ChevronLeft, ChevronRight, ChevronUp, Pause, Play } from "lucide-react";
 import {
   AnimatePresence,
   motion,
@@ -58,23 +51,21 @@ type ReviewCarouselProps = {
   renderReview: (review: ReactGoogleReview, index: number) => ReactNode;
 };
 
-const ReviewSlide = forwardRef<HTMLDivElement, {
-  children: ReactNode;
-  page: number;
-  count: number;
-  direction: number;
-  horizontal: boolean;
-  reduceMotion: boolean;
-  layout?: boolean;
-}>(function ReviewSlide({
-  children,
-  page,
-  count,
-  direction,
-  horizontal,
-  reduceMotion,
-  layout = false,
-}, ref) {
+const ReviewSlide = forwardRef<
+  HTMLDivElement,
+  {
+    children: ReactNode;
+    page: number;
+    count: number;
+    direction: number;
+    horizontal: boolean;
+    reduceMotion: boolean;
+    layout?: boolean;
+  }
+>(function ReviewSlide(
+  { children, page, count, direction, horizontal, reduceMotion, layout = false },
+  ref,
+) {
   const isPresent = useIsPresent();
   return (
     <motion.div
@@ -98,15 +89,8 @@ const ReviewSlide = forwardRef<HTMLDivElement, {
   );
 });
 
-export default function ReviewCarousel({
-  reviews,
-  renderReview,
-}: ReviewCarouselProps) {
-  const mobile = useSyncExternalStore(
-    subscribeToMobile,
-    getMobileSnapshot,
-    getServerSnapshot,
-  );
+export default function ReviewCarousel({ reviews, renderReview }: ReviewCarouselProps) {
+  const mobile = useSyncExternalStore(subscribeToMobile, getMobileSnapshot, getServerSnapshot);
   return (
     <ResponsiveReviewCarousel
       key={String(mobile)}
@@ -136,8 +120,9 @@ function ResponsiveReviewCarousel({
   const selected = pageCount ? page % pageCount : 0;
   const visibleCount = horizontal ? 1 : Math.min(3, pageCount);
   // Reverse the visible window so advancing adds one card at the top.
-  const visibleIndices = Array.from({ length: visibleCount }, (_, index) =>
-    (selected + visibleCount - 1 - index) % pageCount,
+  const visibleIndices = Array.from(
+    { length: visibleCount },
+    (_, index) => (selected + visibleCount - 1 - index) % pageCount,
   );
   const playing = !paused && !hovered && !focused && reduceMotion === false;
 
@@ -174,8 +159,7 @@ function ResponsiveReviewCarousel({
       onMouseLeave={() => setHovered(false)}
       onFocusCapture={() => setFocused(true)}
       onBlurCapture={(event) => {
-        if (!event.currentTarget.contains(event.relatedTarget))
-          setFocused(false);
+        if (!event.currentTarget.contains(event.relatedTarget)) setFocused(false);
       }}
     >
       <div
@@ -195,24 +179,26 @@ function ResponsiveReviewCarousel({
           }
         }}
       >
-        {horizontal ? <AnimatePresence
-          initial={false}
-          mode="wait"
-          custom={{ direction, horizontal }}
-        >
-          <ReviewSlide
-            key={selected}
-            page={selected}
-            count={pageCount}
-            direction={direction}
-            horizontal={horizontal}
-            reduceMotion={reduceMotion !== false}
-          >
-            {renderReview(reviews[selected], selected)}
-          </ReviewSlide>
-        </AnimatePresence> : (
+        {horizontal ? (
+          <AnimatePresence initial={false} mode="wait" custom={{ direction, horizontal }}>
+            <ReviewSlide
+              key={selected}
+              page={selected}
+              count={pageCount}
+              direction={direction}
+              horizontal={horizontal}
+              reduceMotion={reduceMotion !== false}
+            >
+              {renderReview(reviews[selected], selected)}
+            </ReviewSlide>
+          </AnimatePresence>
+        ) : (
           <div className="relative space-y-3">
-            <AnimatePresence initial={false} mode="popLayout" custom={{ direction, horizontal: false }}>
+            <AnimatePresence
+              initial={false}
+              mode="popLayout"
+              custom={{ direction, horizontal: false }}
+            >
               {visibleIndices.map((index) => (
                 <ReviewSlide
                   key={reviews[index].reviewId ?? index}
@@ -258,9 +244,7 @@ function ResponsiveReviewCarousel({
             {reduceMotion === false && (
               <button
                 type="button"
-                aria-label={
-                  paused ? "Play review carousel" : "Pause review carousel"
-                }
+                aria-label={paused ? "Play review carousel" : "Pause review carousel"}
                 onClick={() => setPaused(!paused)}
                 className={controlClass}
               >

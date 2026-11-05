@@ -11,6 +11,8 @@ export const publicContentTags = {
 export type PublicContentScope = keyof typeof publicContentTags;
 
 export function publicContentScope(url: string): PublicContentScope | undefined {
-  const match = /^\/?(treks|expeditions|regions|seasons|gallery|team|site-settings)(?:\/|$)/.exec(url);
+  const match = /^\/?(treks|expeditions|regions|seasons|gallery|team|site-settings)(?:\/|$)/.exec(
+    url,
+  );
   return match?.[1] as PublicContentScope | undefined;
 }

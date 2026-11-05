@@ -31,9 +31,7 @@ export default function TripBooking({
   );
   const price = formatTripPrice(trip);
   const standardPrice =
-    trip.discountPrice != null
-      ? formatTripPrice({ ...trip, discountPrice: null })
-      : null;
+    trip.discountPrice != null ? formatTripPrice({ ...trip, discountPrice: null }) : null;
 
   return (
     <Card
@@ -49,17 +47,14 @@ export default function TripBooking({
             Plan Your Departure with Almora HQ
           </h2>
           <p className="mt-2 max-w-xl text-sm text-slate-600">
-            Contact Basecamp to confirm dates, availability, and trip
-            requirements.
+            Contact Basecamp to confirm dates, availability, and trip requirements.
           </p>
         </div>
         {price && (
           <p className="font-mono text-xl font-bold">
             {price}
             {standardPrice && standardPrice !== price && (
-              <del className="ml-2 text-sm font-normal text-slate-600">
-                {standardPrice}
-              </del>
+              <del className="ml-2 text-sm font-normal text-slate-600">{standardPrice}</del>
             )}
           </p>
         )}

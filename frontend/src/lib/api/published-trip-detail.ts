@@ -19,9 +19,7 @@ export async function getPublishedTripDetail(kind: TripKind, slug: string) {
   const base = process.env.NEXT_PUBLIC_API_BASE_URL?.replace(/\/$/, "");
   if (!base) throw new Error("Missing API base URL");
 
-  const response = await fetch(
-    `${base}/${kind}/slug/${encodeURIComponent(slug)}`,
-  );
+  const response = await fetch(`${base}/${kind}/slug/${encodeURIComponent(slug)}`);
   if (response.status === 404 || response.status === 400) return null;
   if (!response.ok) throw new Error("Could not load published trip");
 

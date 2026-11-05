@@ -5,13 +5,7 @@ import { canOptimizeImage, imageLoaderFor } from "@/lib/image-optimization";
 import Image from "next/image";
 import { useState } from "react";
 
-export default function TeamPhoto({
-  name,
-  src,
-}: {
-  name: string;
-  src: string | null;
-}) {
+export default function TeamPhoto({ name, src }: { name: string; src: string | null }) {
   const [failed, setFailed] = useState(false);
   const initials = name
     .trim()
@@ -27,7 +21,8 @@ export default function TeamPhoto({
           src={src}
           alt=""
           fill
-          loader={imageLoaderFor(src)} unoptimized={!canOptimizeImage(src)}
+          loader={imageLoaderFor(src)}
+          unoptimized={!canOptimizeImage(src)}
           sizes="(min-width: 768px) 50vw, 100vw"
           className="object-cover motion-safe:transition-transform motion-safe:duration-300 motion-safe:group-hover:scale-105"
           onError={() => setFailed(true)}

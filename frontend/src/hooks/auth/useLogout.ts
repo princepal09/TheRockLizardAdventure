@@ -26,8 +26,7 @@ export function useEndAdminSession<Input>(
     gcTime: 0,
     mutationFn: async (input: Input) => {
       const { accessToken, sessionVersion } = useAuthStore.getState();
-      if (!accessToken)
-        throw new Error("Your session has expired. Please sign in again.");
+      if (!accessToken) throw new Error("Your session has expired. Please sign in again.");
       await endSession(input, accessToken);
       return sessionVersion;
     },
@@ -52,8 +51,7 @@ export function useEndAdminSession<Input>(
 
 export function useLogout(scope: "current" | "all" = "current") {
   return useEndAdminSession(
-    (_input: void, token) =>
-      scope === "all" ? logoutAll(token) : logout(token),
+    (_input: void, token) => (scope === "all" ? logoutAll(token) : logout(token)),
     scope === "all" ? "Signed out on all devices" : "Signed out successfully",
   );
 }

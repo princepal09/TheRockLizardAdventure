@@ -29,7 +29,8 @@ function ItineraryForm({
 }) {
   const save = useTripMutation(
     kind,
-    async (input: ItineraryInput) => saveTripItinerary(kind, tripId, itineraryFormSchema.parse(input), day?.id),
+    async (input: ItineraryInput) =>
+      saveTripItinerary(kind, tripId, itineraryFormSchema.parse(input), day?.id),
     day ? "Itinerary day updated" : "Itinerary day added",
     tripId,
   );
@@ -63,11 +64,7 @@ function ItineraryForm({
   }
 
   return (
-    <form
-      noValidate
-      onSubmit={submit}
-      className="space-y-3 rounded-lg border border-slate-200 p-4"
-    >
+    <form noValidate onSubmit={submit} className="space-y-3 rounded-lg border border-slate-200 p-4">
       <h3 className="text-sm font-semibold text-primary">
         {day ? `Day ${day.dayNumber}` : "Add an itinerary day"}
       </h3>
@@ -140,18 +137,9 @@ function ItineraryForm({
   );
 }
 
-export default function TripItineraries({
-  kind,
-  trip,
-}: {
-  kind: TripKind;
-  trip: TripDetail;
-}) {
+export default function TripItineraries({ kind, trip }: { kind: TripKind; trip: TripDetail }) {
   return (
-    <section
-      className={tripPanelClass}
-      aria-labelledby="trip-itinerary-heading"
-    >
+    <section className={tripPanelClass} aria-labelledby="trip-itinerary-heading">
       <h2 id="trip-itinerary-heading" className="font-semibold text-primary">
         Itinerary
       </h2>

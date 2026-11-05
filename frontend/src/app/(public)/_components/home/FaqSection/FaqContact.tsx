@@ -17,9 +17,7 @@ export function FaqContactPanel({
           <Headphones aria-hidden="true" className="size-4" />
         </span>
         <div>
-          <p className="text-sm font-bold">
-            Have a custom route or unanswered question?
-          </p>
+          <p className="text-sm font-bold">Have a custom route or unanswered question?</p>
           <p className="mt-0.5 text-xs text-slate-600">
             Speak directly with the Almora Basecamp team for trail advice.
           </p>
@@ -30,15 +28,13 @@ export function FaqContactPanel({
           href={`https://wa.me/${whatsapp.replace(/\D/g, "")}`}
           className="inline-flex items-center gap-1.5 rounded-lg bg-orange-500 px-3 py-2 text-xs font-bold text-[#ffffff] hover:bg-orange-400"
         >
-          <MessageSquare aria-hidden="true" className="size-3.5" /> Contact
-          Basecamp
+          <MessageSquare aria-hidden="true" className="size-3.5" /> Contact Basecamp
         </a>
         <a
           href={`tel:${phone.replace(/[^+\d]/g, "")}`}
           className="inline-flex items-center gap-1.5 rounded-lg bg-slate-100 px-3 py-2 text-xs font-semibold hover:bg-slate-200"
         >
-          <Phone aria-hidden="true" className="size-3.5 text-orange-700" />{" "}
-          {phone}
+          <Phone aria-hidden="true" className="size-3.5 text-orange-700" /> {phone}
         </a>
       </div>
     </div>

@@ -14,11 +14,7 @@ import { getErrorMessage } from "@/utils/error";
 import { privacyPolicy } from "@/lib/privacy-policy";
 import BookingPolicyDownloads from "../BookingPolicyDownloads";
 
-import {
-  contactSchema,
-  toEnquiryInput,
-  type ContactFormValues,
-} from "@/types/contact-schema";
+import { contactSchema, toEnquiryInput, type ContactFormValues } from "@/types/contact-schema";
 
 const defaults: ContactFormValues = {
   category: "general",
@@ -56,10 +52,7 @@ function Field({
 }) {
   return (
     <div className="min-w-0 space-y-1.5">
-      <label
-        htmlFor={id}
-        className="block text-xs font-semibold text-slate-800"
-      >
+      <label htmlFor={id} className="block text-xs font-semibold text-slate-800">
         {label}
         {required && (
           <span aria-hidden="true" className="ml-0.5 text-orange-700">
@@ -85,10 +78,15 @@ export default function ContactForm({
   selectedTrip?: { value: string; name: string };
 }) {
   const initialValues: ContactFormValues = selectedTrip
-    ? { ...defaults, category: "trip", trip: selectedTrip.value, subject: "Booking and availability" }
+    ? {
+        ...defaults,
+        category: "trip",
+        trip: selectedTrip.value,
+        subject: "Booking and availability",
+      }
     : travelTrade
-    ? { ...defaults, subject: travelTradeTopic }
-    : defaults;
+      ? { ...defaults, subject: travelTradeTopic }
+      : defaults;
   const {
     control,
     register,
@@ -142,14 +140,15 @@ export default function ContactForm({
       <p className="text-sm text-slate-600">
         Send your trip or general enquiry to the Almora team.
       </p>
-      <form noValidate onSubmit={handleSubmit(submit)} aria-busy={isSubmitting} aria-describedby="contact-privacy">
+      <form
+        noValidate
+        onSubmit={handleSubmit(submit)}
+        aria-busy={isSubmitting}
+        aria-describedby="contact-privacy"
+      >
         <fieldset disabled={isSubmitting} className="min-w-0 space-y-4">
           <legend className="sr-only">Enquiry details</legend>
-          <div
-            role="group"
-            aria-label="Enquiry type"
-            className="flex flex-wrap gap-2"
-          >
+          <div role="group" aria-label="Enquiry type" className="flex flex-wrap gap-2">
             <Button
               type="button"
               variant="outline"
@@ -184,27 +183,21 @@ export default function ContactForm({
                 {...register("trip")}
                 value={tripValue}
                 aria-invalid={Boolean(errors.trip)}
-                aria-describedby={
-                  errors.trip ? "contact-trip-error" : undefined
-                }
+                aria-describedby={errors.trip ? "contact-trip-error" : undefined}
                 disabled={tripOptions.isPending || tripOptions.isError}
                 className={inputClass}
               >
                 <option value="">
-                  {tripOptions.isPending
-                    ? "Loading routes…"
-                    : "Select a published route"}
+                  {tripOptions.isPending ? "Loading routes…" : "Select a published route"}
                 </option>
-                {selectedTrip && !tripOptions.data?.some(({ kind, trips }) => trips.some(({ id }) => `${kind}:${id}` === selectedTrip.value)) && (
-                  <option value={selectedTrip.value}>{selectedTrip.name}</option>
-                )}
+                {selectedTrip &&
+                  !tripOptions.data?.some(({ kind, trips }) =>
+                    trips.some(({ id }) => `${kind}:${id}` === selectedTrip.value),
+                  ) && <option value={selectedTrip.value}>{selectedTrip.name}</option>}
                 {tripOptions.data?.map(
                   ({ kind, trips }) =>
                     trips.length > 0 && (
-                      <optgroup
-                        key={kind}
-                        label={kind === "treks" ? "Treks" : "Expeditions"}
-                      >
+                      <optgroup key={kind} label={kind === "treks" ? "Treks" : "Expeditions"}>
                         {trips.map(({ id, name }) => (
                           <option key={id} value={`${kind}:${id}`}>
                             {name}
@@ -227,22 +220,15 @@ export default function ContactForm({
                   </button>
                 </p>
               )}
-              {tripOptions.isSuccess &&
-                tripOptions.data.every(({ trips }) => !trips.length) && (
-                  <p className="text-xs text-slate-600">
-                    No published routes are available. You can send a general
-                    enquiry.
-                  </p>
-                )}
+              {tripOptions.isSuccess && tripOptions.data.every(({ trips }) => !trips.length) && (
+                <p className="text-xs text-slate-600">
+                  No published routes are available. You can send a general enquiry.
+                </p>
+              )}
             </Field>
           )}
           <div className="grid gap-4 sm:grid-cols-2">
-            <Field
-              id="contact-name"
-              label="Full Name"
-              required
-              error={errors.name?.message}
-            >
+            <Field id="contact-name" label="Full Name" required error={errors.name?.message}>
               <input
                 id="contact-name"
                 autoComplete="name"
@@ -251,18 +237,11 @@ export default function ContactForm({
                 required
                 {...register("name")}
                 aria-invalid={Boolean(errors.name)}
-                aria-describedby={
-                  errors.name ? "contact-name-error" : undefined
-                }
+                aria-describedby={errors.name ? "contact-name-error" : undefined}
                 className={inputClass}
               />
             </Field>
-            <Field
-              id="contact-email"
-              label="Email Address"
-              required
-              error={errors.email?.message}
-            >
+            <Field id="contact-email" label="Email Address" required error={errors.email?.message}>
               <input
                 id="contact-email"
                 type="email"
@@ -272,9 +251,7 @@ export default function ContactForm({
                 required
                 {...register("email")}
                 aria-invalid={Boolean(errors.email)}
-                aria-describedby={
-                  errors.email ? "contact-email-error" : undefined
-                }
+                aria-describedby={errors.email ? "contact-email-error" : undefined}
                 className={inputClass}
               />
             </Field>
@@ -292,9 +269,7 @@ export default function ContactForm({
               placeholder="+91 98765 43210"
               {...register("phone")}
               aria-invalid={Boolean(errors.phone)}
-              aria-describedby={
-                errors.phone ? "contact-phone-error" : undefined
-              }
+              aria-describedby={errors.phone ? "contact-phone-error" : undefined}
               className={inputClass}
             />
           </Field>
@@ -309,9 +284,7 @@ export default function ContactForm({
               required
               {...register("subject")}
               aria-invalid={Boolean(errors.subject)}
-              aria-describedby={
-                errors.subject ? "contact-subject-error" : undefined
-              }
+              aria-describedby={errors.subject ? "contact-subject-error" : undefined}
               className={inputClass}
             >
               <option value="">Select your enquiry topic</option>
@@ -334,16 +307,14 @@ export default function ContactForm({
               required
               {...register("message")}
               aria-invalid={Boolean(errors.message)}
-              aria-describedby={
-                errors.message ? "contact-message-error" : undefined
-              }
+              aria-describedby={errors.message ? "contact-message-error" : undefined}
               className={`${inputClass} resize-y`}
             />
           </Field>
           <BookingPolicyDownloads />
           <p id="contact-privacy" className="text-xs leading-relaxed text-slate-600">
-            We use the details you share to respond to your enquiry and coordinate
-            the services you request. Our{" "}
+            We use the details you share to respond to your enquiry and coordinate the services you
+            request. Our{" "}
             <a
               href={privacyPolicy.href}
               download={privacyPolicy.downloadName}
@@ -351,11 +322,15 @@ export default function ContactForm({
             >
               Privacy Policy (PDF download)
             </a>{" "}
-            explains how we handle your information and your privacy rights.
-            For privacy-related requests, email{" "}
-            <a href="mailto:rocklizardalmora@gmail.com" className="break-all font-medium underline underline-offset-4">
+            explains how we handle your information and your privacy rights. For privacy-related
+            requests, email{" "}
+            <a
+              href="mailto:rocklizardalmora@gmail.com"
+              className="break-all font-medium underline underline-offset-4"
+            >
               rocklizardalmora@gmail.com
-            </a>.
+            </a>
+            .
           </p>
           <Button
             type="submit"
@@ -364,11 +339,7 @@ export default function ContactForm({
           >
             {isSubmitting ? (
               <>
-                <LoaderCircle
-                  aria-hidden="true"
-                  className="motion-safe:animate-spin"
-                />{" "}
-                Sending…
+                <LoaderCircle aria-hidden="true" className="motion-safe:animate-spin" /> Sending…
               </>
             ) : (
               <>

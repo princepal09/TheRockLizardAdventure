@@ -8,25 +8,14 @@ import DossierIcon from "./DossierIcon";
 import DossierReveal from "./DossierReveal";
 import TripPhoto from "./TripPhoto";
 
-export default function DossierHero({
-  trip,
-  kind,
-}: {
-  trip: PublishedTripDetail;
-  kind: TripKind;
-}) {
+export default function DossierHero({ trip, kind }: { trip: PublishedTripDetail; kind: TripKind }) {
   const facts = [
     [
       "Elevation",
-      trip.maxAltitudeMeters == null
-        ? null
-        : `${trip.maxAltitudeMeters.toLocaleString("en-IN")} m`,
+      trip.maxAltitudeMeters == null ? null : `${trip.maxAltitudeMeters.toLocaleString("en-IN")} m`,
     ],
     ["Grade", trip.difficulty.replaceAll("_", " ").toLowerCase()],
-    [
-      "Duration",
-      `${trip.durationDays} ${trip.durationDays === 1 ? "day" : "days"}`,
-    ],
+    ["Duration", `${trip.durationDays} ${trip.durationDays === 1 ? "day" : "days"}`],
     ["Season", trip.seasons.map(({ season }) => season.name).join(", ")],
   ];
 
@@ -36,11 +25,7 @@ export default function DossierHero({
       className="relative isolate flex min-h-[clamp(25rem,38vw,34rem)] items-center overflow-hidden bg-slate-900 text-white"
     >
       <div className="absolute inset-0 -z-20">
-        <TripPhoto
-          src={trip.coverImageUrl ?? trip.images[0]?.imageUrl}
-          alt=""
-          hero
-        />
+        <TripPhoto src={trip.coverImageUrl ?? trip.images[0]?.imageUrl} alt="" hero />
       </div>
       <div
         aria-hidden="true"
@@ -68,12 +53,8 @@ export default function DossierHero({
                     key={label}
                     className="min-w-24 rounded-lg border border-slate-700/70 bg-[#111a2c]/95 px-3 py-2.5"
                   >
-                    <dt className="font-mono text-[10px] text-slate-400 uppercase">
-                      {label}
-                    </dt>
-                    <dd className="mt-1 font-mono text-sm font-bold capitalize">
-                      {value}
-                    </dd>
+                    <dt className="font-mono text-[10px] text-slate-400 uppercase">{label}</dt>
+                    <dd className="mt-1 font-mono text-sm font-bold capitalize">{value}</dd>
                   </div>
                 ))}
             </dl>
@@ -83,8 +64,7 @@ export default function DossierHero({
                   href="#trip-gallery"
                   className="inline-flex items-center gap-2 rounded-lg border border-white/20 bg-white/10 px-3 py-2.5 text-xs font-semibold hover:bg-white/20"
                 >
-                  <DossierIcon name="hero-2" /> Show All {trip.images.length}{" "}
-                  Photos
+                  <DossierIcon name="hero-2" /> Show All {trip.images.length} Photos
                 </a>
               )}
               <Link

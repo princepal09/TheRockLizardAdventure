@@ -7,11 +7,7 @@ import { useState } from "react";
 
 const fallbackImage = "/image4.jpeg";
 
-export default function HeroBackground({
-  imageUrl,
-}: {
-  imageUrl?: string | null;
-}) {
+export default function HeroBackground({ imageUrl }: { imageUrl?: string | null }) {
   const [failed, setFailed] = useState(false);
   const remoteImage = failed ? null : imageUrl;
 
@@ -22,7 +18,8 @@ export default function HeroBackground({
       fill
       priority
       sizes="100vw"
-      loader={imageLoaderFor(remoteImage ?? fallbackImage)} unoptimized={!canOptimizeImage(remoteImage ?? fallbackImage)}
+      loader={imageLoaderFor(remoteImage ?? fallbackImage)}
+      unoptimized={!canOptimizeImage(remoteImage ?? fallbackImage)}
       onError={remoteImage ? () => setFailed(true) : undefined}
       className="object-cover object-center"
     />

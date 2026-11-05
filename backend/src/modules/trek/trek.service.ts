@@ -9,10 +9,19 @@ import {
 import { AppError } from '../../utils/common/error/AppError.js';
 import { createWithSlug } from '../../utils/common/create-with-slug.js';
 import { withPublicationDate } from '../../utils/common/trip-publication.js';
+import { cleanupDeletedTrips } from '../../utils/common/cleanup-deleted-trips.js';
 import type { ITrekRepository } from './trek.interface.js';
 import type { CreateTrekDTO, UpdateTrekDTO } from './trek.schema.js';
 
 export class TrekService {
+  async publishSelected(ids: string[]) {
+    return this.trekRepo.publishSelected(ids);
+  }
+
+  async deleteSelected(ids: string[]) {
+    return cleanupDeletedTrips(await this.trekRepo.deleteSelected(ids));
+  }
+
   constructor(private readonly trekRepo: ITrekRepository) {}
 
   async createTrek(data: CreateTrekDTO, adminId: string, file?: Express.Multer.File) {
@@ -65,7 +74,10 @@ export class TrekService {
       throw new AppError('Provide at least one field to update', 400);
     }
 
-    const current = file || data.coverImageUrl !== undefined || data.status === 'PUBLISHED' ? await this.getTrek(id) : undefined;
+    const current =
+      file || data.coverImageUrl !== undefined || data.status === 'PUBLISHED'
+        ? await this.getTrek(id)
+        : undefined;
     data = withPublicationDate(data, current);
     const image = file ? await uploadToCloudinary(file, 'rocklizard/treks') : undefined;
     const replacingImage = current && (image || data.coverImageUrl !== current.coverImageUrl);

@@ -1,11 +1,5 @@
 import { canOptimizeImage, imageLoaderFor } from "@/lib/image-optimization";
-import {
-  ArrowRight,
-  CalendarDays,
-  Clock,
-  MapPin,
-  Mountain,
-} from "lucide-react";
+import { ArrowRight, CalendarDays, Clock, MapPin, Mountain } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
@@ -22,13 +16,7 @@ import type { PublicListingTrip, TripKind } from "@/types/trip";
 
 import { formatTripPrice } from "../../../../../types/format-trip-price";
 
-export default function TrekCard({
-  trip,
-  kind,
-}: {
-  trip: PublicListingTrip;
-  kind: TripKind;
-}) {
+export default function TrekCard({ trip, kind }: { trip: PublicListingTrip; kind: TripKind }) {
   const [failed, setFailed] = useState(false);
   const href = `/${kind}/${encodeURIComponent(trip.slug)}`;
   const image =
@@ -54,7 +42,9 @@ export default function TrekCard({
             src={image}
             alt=""
             fill
-            loader={imageLoaderFor(image)} unoptimized={!canOptimizeImage(image)} sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+            loader={imageLoaderFor(image)}
+            unoptimized={!canOptimizeImage(image)}
+            sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
             onError={() => setFailed(true)}
             className="object-cover motion-safe:transition-transform motion-safe:group-hover:scale-105"
           />
@@ -89,25 +79,17 @@ export default function TrekCard({
             </span>
           )}
         </div>
-        {(trip.startingPoint ||
-          trip.region?.name ||
-          trip.maxAltitudeMeters != null) && (
+        {(trip.startingPoint || trip.region?.name || trip.maxAltitudeMeters != null) && (
           <ul className="space-y-1 border-t border-slate-100 pt-2 text-xs text-slate-600">
             {(trip.startingPoint || trip.region?.name) && (
               <li className="flex items-center gap-1.5">
-                <MapPin
-                  aria-hidden="true"
-                  className="size-3.5 shrink-0 text-orange-700"
-                />
+                <MapPin aria-hidden="true" className="size-3.5 shrink-0 text-orange-700" />
                 {trip.startingPoint || trip.region?.name}
               </li>
             )}
             {trip.maxAltitudeMeters != null && (
               <li className="flex items-center gap-1.5">
-                <Mountain
-                  aria-hidden="true"
-                  className="size-3.5 shrink-0 text-orange-700"
-                />
+                <Mountain aria-hidden="true" className="size-3.5 shrink-0 text-orange-700" />
                 {trip.maxAltitudeMeters.toLocaleString("en-IN")} m max elevation
               </li>
             )}
@@ -128,8 +110,7 @@ export default function TrekCard({
           prefetch={false}
           className="ml-auto inline-flex items-center gap-1 rounded-lg border bg-secondary text-[#ffffff] border-slate-200 px-2.5 py-1.5 text-xs font-bold hover:bg-orange-400 focus-visible:outline-2 focus-visible:outline-sky-700"
         >
-          View Trail Details{" "}
-          <ArrowRight aria-hidden="true" className="size-3" />
+          View Trail Details <ArrowRight aria-hidden="true" className="size-3" />
         </Link>
       </CardFooter>
     </Card>

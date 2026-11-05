@@ -1,9 +1,5 @@
 import type { Metadata } from "next";
-import {
-  JetBrains_Mono,
-  Newsreader,
-  Plus_Jakarta_Sans,
-} from "next/font/google";
+import { JetBrains_Mono, Newsreader, Plus_Jakarta_Sans } from "next/font/google";
 import { Toaster } from "sonner";
 import "./globals.css";
 import styles from "./toaster.module.css";
@@ -30,11 +26,11 @@ const jetbrains = JetBrains_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "Rocklizard Adventure | Treks & Expeditions in Uttarakhand",
+    default: "Rocklizard Adventure | Treks & Expeditions Across India",
     template: "%s | Rocklizard Adventure",
   },
   description:
-    "Explore guided treks and expeditions in Uttarakhand with Rocklizard Adventure. Browse itineraries, find the right trip, and send an enquiry.",
+    "Explore guided treks and expeditions in Uttarakhand, Kashmir and Maharashtra with Rocklizard Adventure. Browse itineraries and plan your next adventure.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
@@ -45,12 +41,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     >
       <body className="min-h-full flex flex-col">
         <AppProvider>{children}</AppProvider>
-        <Toaster
-          position="top-right"
-          theme="light"
-          richColors
-          className={styles.toaster}
-        />
+        <Toaster position="top-right" theme="light" richColors className={styles.toaster} />
       </body>
     </html>
   );

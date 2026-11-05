@@ -6,24 +6,14 @@ const monthFormat = new Intl.DateTimeFormat("en-IN", {
   timeZone: "UTC",
 });
 
-export default function TripSpecifications({
-  trip,
-}: {
-  trip: PublishedTripDetail;
-}) {
-  const monthName = (month: number) =>
-    monthFormat.format(new Date(Date.UTC(2026, month - 1, 1)));
+export default function TripSpecifications({ trip }: { trip: PublishedTripDetail }) {
+  const monthName = (month: number) => monthFormat.format(new Date(Date.UTC(2026, month - 1, 1)));
   const windows = trip.seasons
     .map(({ season }) => {
       const months = [...new Set([season.startMonth, season.endMonth])]
-        .filter(
-          (month): month is number =>
-            month != null && month >= 1 && month <= 12,
-        )
+        .filter((month): month is number => month != null && month >= 1 && month <= 12)
         .map(monthName);
-      return months.length
-        ? `${season.name} (${months.join("–")})`
-        : season.name;
+      return months.length ? `${season.name} (${months.join("–")})` : season.name;
     })
     .join(", ");
   const months = trip.months?.map(({ month }) => monthName(month)).join(", ");

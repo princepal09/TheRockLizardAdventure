@@ -62,4 +62,13 @@ export class GalleryController {
 
     return result.data;
   }
+
+  deleteAllImagesController = catchAsync(async (_req: Request, res: Response) => {
+    const result = await this.galleryService.deleteAllImages();
+    sendResponse(res, 200, {
+      success: true,
+      message: 'All site gallery photos removed',
+      data: result,
+    });
+  });
 }

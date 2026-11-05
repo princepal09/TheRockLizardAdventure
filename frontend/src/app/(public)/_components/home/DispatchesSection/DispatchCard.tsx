@@ -23,11 +23,7 @@ export default function DispatchCard({
     <Card
       className={`gap-0 border border-stone-200 bg-[#fffefa] py-0! text-slate-900 ring-0! ${featured ? "rounded-2xl" : "rounded-xl"}`}
     >
-      <article
-        className={
-          featured ? "flex h-full flex-col" : "flex items-start gap-3 p-3"
-        }
-      >
+      <article className={featured ? "flex h-full flex-col" : "flex items-start gap-3 p-3"}>
         <div
           className={`relative shrink-0 overflow-hidden bg-slate-800 ${featured ? "aspect-[2.35]" : "size-16 rounded-lg sm:size-20"}`}
         >
@@ -50,11 +46,7 @@ export default function DispatchCard({
             </>
           )}
         </div>
-        <div
-          className={
-            featured ? "flex flex-1 flex-col p-4 sm:p-5" : "min-w-0 self-center"
-          }
-        >
+        <div className={featured ? "flex flex-1 flex-col p-4 sm:p-5" : "min-w-0 self-center"}>
           {!featured && (
             <p className="mb-1 font-mono text-[10px] tracking-wide text-slate-500 uppercase">
               {dispatch.category}
@@ -66,9 +58,7 @@ export default function DispatchCard({
             {dispatch.title}
           </h3>
           {dispatch.summary && (
-            <p className="mt-2 text-sm leading-relaxed text-slate-600">
-              {dispatch.summary}
-            </p>
+            <p className="mt-2 text-sm leading-relaxed text-slate-600">{dispatch.summary}</p>
           )}
           <div className={featured ? "mt-auto pt-4" : "mt-1"}>
             {featured && (
@@ -83,9 +73,7 @@ export default function DispatchCard({
                 {dispatch.action}
                 <ArrowRight aria-hidden="true" className="size-3" />
               </summary>
-              <p className="mt-2 text-xs leading-relaxed text-slate-600">
-                {dispatch.detail}
-              </p>
+              <p className="mt-2 text-xs leading-relaxed text-slate-600">{dispatch.detail}</p>
             </details>
           </div>
         </div>

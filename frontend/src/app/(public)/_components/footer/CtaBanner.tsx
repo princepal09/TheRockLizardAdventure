@@ -12,11 +12,11 @@ export default function CtaBanner({ phone }: { phone?: string | null }) {
             Custom expeditions &amp; school camps
           </p>
           <h2 className="mt-1 max-w-sm text-xl leading-tight font-extrabold tracking-tight text-white sm:text-2xl">
-            Ready to explore the authentic Uttarakhand Himalayas?
+            Ready to explore your next trail in India?
           </h2>
           <p className="mt-1.5 max-w-sm text-xs leading-relaxed text-slate-300">
-            Speak directly with Vinod&apos;s expedition operations desk in
-            Almora to tailor your high-altitude itinerary.
+            Plan your next adventure in Uttarakhand, Kashmir or Maharashtra with our Almora Basecamp
+            team.
           </p>
         </div>
         <a

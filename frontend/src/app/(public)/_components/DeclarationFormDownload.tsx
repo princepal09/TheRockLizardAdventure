@@ -6,13 +6,10 @@ export default function DeclarationFormDownload() {
   return (
     <div className="flex flex-wrap items-center justify-between gap-4 rounded-xl border border-slate-200 bg-slate-50 p-4">
       <div className="max-w-xl">
-        <h3 className="text-sm font-semibold text-slate-900">
-          Declaration Form (Indemnity Bond)
-        </h3>
+        <h3 className="text-sm font-semibold text-slate-900">Declaration Form (Indemnity Bond)</h3>
         <p className="mt-1 text-xs leading-relaxed text-slate-600">
-          Read the indemnity bond and complete the participant details,
-          emergency contact, signature and date fields. Confirm submission
-          requirements with Basecamp before your departure.
+          Read the indemnity bond and complete the participant details, emergency contact, signature
+          and date fields. Confirm submission requirements with Basecamp before your departure.
         </p>
       </div>
       <a

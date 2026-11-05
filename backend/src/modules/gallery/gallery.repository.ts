@@ -21,4 +21,19 @@ export class GalleryRepository implements IGalleryRepository {
   async deleteImage(id: string) {
     return prisma.gallery.delete({ where: { id } });
   }
+
+  async deleteAllImages() {
+    return prisma.$transaction(async (transaction) => {
+      const images = await transaction.gallery.findMany({
+        select: { id: true, imagePublicId: true },
+      });
+      if (images.length) {
+        // Delete this snapshot only, preserving uploads made concurrently.
+        await transaction.gallery.deleteMany({
+          where: { id: { in: images.map(({ id }) => id) } },
+        });
+      }
+      return images;
+    });
+  }
 }

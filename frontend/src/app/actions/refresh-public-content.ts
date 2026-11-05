@@ -1,10 +1,7 @@
 "use server";
 
 import { updateTag } from "next/cache";
-import {
-  publicContentTags,
-  type PublicContentScope,
-} from "@/lib/public-content";
+import { publicContentTags, type PublicContentScope } from "@/lib/public-content";
 
 export async function refreshPublicContent(
   scope: PublicContentScope,

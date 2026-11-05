@@ -27,8 +27,7 @@ export default function FeaturedTreksSection() {
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
           <p className="flex items-center gap-1.5 font-mono text-[10px] font-bold tracking-widest text-orange-700 uppercase">
-            <Compass aria-hidden="true" className="size-3.5" /> Tailored
-            recommendations
+            <Compass aria-hidden="true" className="size-3.5" /> Tailored recommendations
           </p>
           <h2
             id="featured-treks-title"
@@ -37,16 +36,12 @@ export default function FeaturedTreksSection() {
             Suggested Treks for Every Experience Level
           </h2>
           <p className="mt-2 max-w-xl text-sm leading-relaxed text-slate-600">
-            Explore handpicked routes for first-time Himalayan trekkers, family
-            wilderness seekers, and seasoned high-altitude explorers.
+            Explore handpicked routes for first-time Himalayan trekkers, family wilderness seekers,
+            and seasoned high-altitude explorers.
           </p>
         </div>
         <p className="inline-flex items-center gap-2 rounded-xl border border-stone-200 bg-white/80 px-3 py-2 font-mono text-[10px] font-semibold tracking-wide text-slate-600">
-          <SlidersHorizontal
-            aria-hidden="true"
-            className="size-3 text-sky-700"
-          />{" "}
-          VIBE MATCH{" "}
+          <SlidersHorizontal aria-hidden="true" className="size-3 text-sky-700" /> VIBE MATCH{" "}
           <span className="rounded bg-emerald-50 px-1.5 py-0.5 text-emerald-800">
             Choose your level
           </span>
@@ -59,10 +54,7 @@ export default function FeaturedTreksSection() {
             <Skeleton className="mb-5 h-8 w-full max-w-md bg-stone-200" />
             <div aria-hidden="true" className="grid gap-4 md:grid-cols-3">
               {Array.from({ length: 3 }, (_, index) => (
-                <Skeleton
-                  key={index}
-                  className="h-80 rounded-xl bg-stone-200"
-                />
+                <Skeleton key={index} className="h-80 rounded-xl bg-stone-200" />
               ))}
             </div>
           </div>

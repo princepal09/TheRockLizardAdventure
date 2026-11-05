@@ -28,9 +28,7 @@ export default function FeaturedTrekCard({
       ? trek.coverImageUrl
       : null;
   const elevation =
-    trek.maxAltitudeMeters === null
-      ? null
-      : `${trek.maxAltitudeMeters.toLocaleString("en-IN")} m`;
+    trek.maxAltitudeMeters === null ? null : `${trek.maxAltitudeMeters.toLocaleString("en-IN")} m`;
   const level = trek.difficulty.toLowerCase().replaceAll("_", " ");
 
   return (
@@ -47,7 +45,9 @@ export default function FeaturedTrekCard({
             src={image}
             alt=""
             fill
-            loader={imageLoaderFor(image)} unoptimized={!canOptimizeImage(image)} sizes="(min-width: 768px) 33vw, 100vw"
+            loader={imageLoaderFor(image)}
+            unoptimized={!canOptimizeImage(image)}
+            sizes="(min-width: 768px) 33vw, 100vw"
             onError={() => setFailed(true)}
             className="object-cover"
           />
@@ -76,8 +76,8 @@ export default function FeaturedTrekCard({
         <p className="flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-[11px] text-slate-600">
           <span
             className={`rounded px-1.5 py-0.5 font-semibold capitalize ${trek.difficulty === "EASY" ? "bg-emerald-50 text-emerald-800" : trek.difficulty === "MODERATE" ? "bg-sky-50 text-sky-800" : "bg-violet-50 text-violet-800"}`}
-          >z
-            {level}
+          >
+            z{level}
           </span>
           <span>
             {trek.durationDays} {trek.durationDays === 1 ? "day" : "days"}
@@ -96,8 +96,7 @@ export default function FeaturedTrekCard({
           href={href}
           className={`inline-flex w-full items-center justify-center gap-1 rounded-lg px-3 py-2 text-xs font-bold focus-visible:outline-2 focus-visible:outline-offset-2 ${highlighted ? "bg-orange-500 text-[#ffffff] hover:bg-orange-400" : "bg-slate-100 text-slate-900 hover:bg-slate-200"}`}
         >
-          Explore Itinerary{" "}
-          <ArrowRight aria-hidden="true" className="size-3.5" />
+          Explore Itinerary <ArrowRight aria-hidden="true" className="size-3.5" />
         </Link>
       </CardFooter>
     </Card>

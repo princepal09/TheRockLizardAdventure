@@ -5,7 +5,11 @@ import HeroBanner from "../_components/treks/HeroBanner";
 import SeasonalGuideSection from "../_components/treks/SeasonalGuideSection";
 import TripDiscovery from "../_components/treks/TripDiscovery";
 
-export const metadata = pageMetadata('Treks in Uttarakhand', 'Explore guided treks in Uttarakhand. Compare routes, difficulty, itineraries and preparation details with Rocklizard Adventure.', "/treks");
+export const metadata = pageMetadata(
+  "Treks Across India",
+  "Explore guided treks in Uttarakhand, Kashmir and Maharashtra. Compare routes, difficulty, itineraries and preparation details with Rocklizard Adventure.",
+  "/treks",
+);
 
 export default function TreksPage({
   searchParams,

@@ -1,10 +1,4 @@
-import {
-  BriefcaseMedical,
-  Handshake,
-  Leaf,
-  ShieldCheck,
-  Utensils,
-} from "lucide-react";
+import { BriefcaseMedical, Handshake, Leaf, ShieldCheck, Utensils } from "lucide-react";
 
 import StandardPillarCard from "./StandardPillarCard";
 
@@ -42,14 +36,10 @@ const pillars = [
   {
     Icon: Leaf,
     label: "Conservation",
-    title: "Leave No Trace in Uttarakhand",
+    title: "Leave No Trace on Every Trail",
     description:
       "Pack out waste, choose reusable gear where practical, and leave campsites and water sources as you found them. Small decisions on each departure help protect the routes we share.",
-    tags: [
-      "Pack out waste",
-      "Reduce single-use plastics",
-      "Protect water sources",
-    ],
+    tags: ["Pack out waste", "Reduce single-use plastics", "Protect water sources"],
     tone: "orange",
     wide: true,
   },
@@ -64,8 +54,7 @@ export default function MountainStandard() {
       <div className="mx-auto max-w-7xl">
         <div className="mx-auto mb-7 max-w-xl text-center sm:mb-9">
           <p className="inline-flex items-center gap-1.5 font-mono text-[10px] font-bold tracking-widest text-orange-800 uppercase">
-            <ShieldCheck aria-hidden="true" className="size-3.5" /> Our
-            operating principles
+            <ShieldCheck aria-hidden="true" className="size-3.5" /> Our operating principles
           </p>
           <h2
             id="mountain-standard-heading"
@@ -74,8 +63,8 @@ export default function MountainStandard() {
             The Rock Lizard Mountain Standard
           </h2>
           <p className="mt-3 text-sm leading-relaxed text-slate-600">
-            Four priorities guide how we plan trips in the Himalayas, from the
-            first route briefing to the last campsite.
+            Four priorities guide how we plan trips across India, from the first route briefing to
+            the last campsite.
           </p>
         </div>
         <div className="grid gap-4 md:grid-cols-12">

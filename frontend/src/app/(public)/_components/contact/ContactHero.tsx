@@ -12,7 +12,7 @@ export default function ContactHero() {
     <section aria-labelledby="contact-heading" className="space-y-5">
       <div className="space-y-3">
         <p className="inline-flex rounded-full bg-slate-200/70 px-3 py-1 font-mono text-[10px] font-bold tracking-widest text-slate-700 uppercase">
-           Almora Basecamp
+          Almora Basecamp
         </p>
         <h1
           id="contact-heading"
@@ -21,16 +21,13 @@ export default function ContactHero() {
           Talk Directly with Almora’s Mountain Desk
         </h1>
         <p className="max-w-xl text-sm leading-relaxed text-slate-600 sm:text-base">
-          Get in touch about a trek, a high-altitude expedition, or a private
-          group itinerary. Our Almora team can help you plan the next step.
+          Get in touch about a trek, a high-altitude expedition, or a private group itinerary. Our
+          Almora team can help you plan the next step.
         </p>
       </div>
       <dl className="grid grid-cols-2 gap-2 rounded-xl border border-stone-200 bg-white p-3 sm:grid-cols-4">
         {highlights.map(({ Icon, label, value }) => (
-          <div
-            key={label}
-            className="flex min-w-0 items-center gap-2 rounded-lg bg-slate-50 p-2.5"
-          >
+          <div key={label} className="flex min-w-0 items-center gap-2 rounded-lg bg-slate-50 p-2.5">
             <span className="grid size-7 shrink-0 place-items-center rounded-md bg-sky-50 text-sky-700">
               <Icon aria-hidden="true" className="size-4" />
             </span>

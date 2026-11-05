@@ -14,7 +14,7 @@ export function useAuthInit() {
     retry: false,
     queryFn: async () => {
       try {
-        const token = useAuthStore.getState().accessToken ?? await refreshAccessToken();
+        const token = useAuthStore.getState().accessToken ?? (await refreshAccessToken());
         return await getCurrentAdmin(token);
       } catch (error) {
         if (axios.isAxiosError(error) && error.response?.status === 401) {

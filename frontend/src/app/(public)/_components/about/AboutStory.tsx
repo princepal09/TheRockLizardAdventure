@@ -1,5 +1,6 @@
 import { Compass, Mountain, UsersRound } from "lucide-react";
 import Image from "next/image";
+import { founderName, founderDesignation } from "@/types/founder";
 
 const principles = [
   {
@@ -27,14 +28,17 @@ export default function AboutStory() {
     >
       <figure className="relative aspect-[4/3] overflow-hidden rounded-2xl bg-slate-800 shadow-sm lg:aspect-[1.1]">
         <Image
-          src='/trl_founder.jpeg'
-          alt="Mountain landscape"
+          src="/trl_founder.jpeg"
+          alt={`${founderName}, founder of Rock Lizard Adventure`}
           fill
           sizes="(min-width: 1024px) 42vw, 100vw"
           className="object-cover"
         />
-        <figcaption className="absolute inset-x-0 bottom-0 bg-linear-to-t from-slate-950/85 to-transparent px-5 pt-8 pb-4 font-mono text-[10px] font-bold tracking-widest text-white uppercase">
-          The Himalayan landscape
+        <figcaption className="absolute inset-x-0 bottom-0 bg-linear-to-t from-slate-950/95 to-transparent px-5 pt-12 pb-5 text-white">
+          <p className="text-lg font-bold sm:text-xl">{founderName}</p>
+          <p className="mt-1 font-mono text-[10px] font-semibold tracking-wide text-orange-200">
+            {founderDesignation}
+          </p>
         </figcaption>
       </figure>
       <div>
@@ -48,26 +52,21 @@ export default function AboutStory() {
           Built around the people who know these mountains
         </h2>
         <p className="mt-3 max-w-xl text-sm leading-relaxed text-slate-600 sm:text-base">
-          Rock Lizard Adventure is based in Almora, Uttarakhand. Our work starts
-          with a conversation about your group, your experience, and the kind of
-          route you want to explore.
+          Founded by {founderName}, Rock Lizard Adventure is based in Almora, Uttarakhand. Our work
+          starts with a conversation about your group, your experience, and the kind of route you
+          want to explore.
         </p>
         <p className="mt-3 max-w-xl text-sm leading-relaxed text-slate-600 sm:text-base">
-          The Basecamp team brings together route planning, guest coordination,
-          and departure logistics, from short walks to longer Himalayan
-          expeditions.
+          The Basecamp team brings together route planning, guest coordination, and departure
+          logistics for adventures across Uttarakhand, Kashmir and Maharashtra, from short walks to
+          longer expeditions.
         </p>
         <div className="mt-6 grid gap-2.5 sm:grid-cols-3">
           {principles.map(({ Icon, title, description }) => (
-            <div
-              key={title}
-              className="rounded-xl border border-stone-200 bg-white/85 p-3.5"
-            >
+            <div key={title} className="rounded-xl border border-stone-200 bg-white/85 p-3.5">
               <Icon aria-hidden="true" className="size-4 text-orange-700" />
               <h3 className="mt-2 text-xs font-bold">{title}</h3>
-              <p className="mt-1 text-xs leading-relaxed text-slate-600">
-                {description}
-              </p>
+              <p className="mt-1 text-xs leading-relaxed text-slate-600">{description}</p>
             </div>
           ))}
         </div>

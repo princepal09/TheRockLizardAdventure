@@ -25,27 +25,22 @@ export default function SeasonCard({
   routes: Pick<PublicListingTrip, "id" | "name" | "slug">[];
   kind: TripKind;
 }) {
-  const { Icon, color } = accents.find(({ match }) =>
-    match.test(season.name),
-  ) ?? { Icon: CalendarDays, color: "text-sky-700" };
+  const { Icon, color } = accents.find(({ match }) => match.test(season.name)) ?? {
+    Icon: CalendarDays,
+    color: "text-sky-700",
+  };
   const months = [...new Set([season.startMonth, season.endMonth])]
-    .filter(
-      (month): month is number => month !== null && month >= 1 && month <= 12,
-    )
+    .filter((month): month is number => month !== null && month >= 1 && month <= 12)
     .map((month) => monthFormat.format(new Date(Date.UTC(2000, month - 1, 1))));
 
   return (
     <Card className="gap-2 rounded-xl border border-stone-200 bg-[#fffefa] p-4 text-slate-900 ring-0!">
-      <span
-        className={`grid size-9 place-items-center rounded-lg bg-slate-100 ${color}`}
-      >
+      <span className={`grid size-9 place-items-center rounded-lg bg-slate-100 ${color}`}>
         <Icon aria-hidden="true" className="size-4" />
       </span>
       <div>
         {months.length > 0 && (
-          <p
-            className={`font-mono text-[10px] font-bold tracking-widest uppercase ${color}`}
-          >
+          <p className={`font-mono text-[10px] font-bold tracking-widest uppercase ${color}`}>
             {months.join(" – ")}
           </p>
         )}

@@ -29,12 +29,11 @@ export default function TripDirectory({
             id="trip-directory-title"
             className="section-heading-accent mt-1 font-heading text-3xl font-semibold tracking-tight sm:text-4xl"
           >
-            Curated Uttarakhand Itineraries
+            Curated Itineraries Across India
           </h3>
         </div>
         <p className="max-w-xs text-xs leading-relaxed text-slate-600">
-          Compare route grades, duration, and seasons to find an itinerary that
-          fits your plans.
+          Compare route grades, duration, and seasons to find an itinerary that fits your plans.
         </p>
       </div>
       <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -46,8 +45,8 @@ export default function TripDirectory({
       </ul>
       <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-slate-200 bg-sky-50 px-4 py-3">
         <p className="text-xs text-slate-700">
-          <strong>Need a custom alpine departure?</strong> Ask Basecamp about
-          private routes for your group.
+          <strong>Need a custom alpine departure?</strong> Ask Basecamp about private routes for
+          your group.
         </p>
         {!showAll && trips.length > initialCount && (
           <Button type="button" onClick={() => setShowAll(true)}>

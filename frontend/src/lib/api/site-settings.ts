@@ -4,7 +4,9 @@ import type { SiteSettings, SiteSettingsUpdate } from "@/types/site-settings";
 import api, { publicApi } from "../axios";
 
 export async function getSiteSettings(signal: AbortSignal) {
-  const { data } = await publicApi.get<ApiDataResponse<SiteSettings | null>>("/site-settings", { signal });
+  const { data } = await publicApi.get<ApiDataResponse<SiteSettings | null>>("/site-settings", {
+    signal,
+  });
   return data.data;
 }
 

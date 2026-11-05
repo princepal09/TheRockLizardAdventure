@@ -21,3 +21,11 @@ export async function updateGalleryImage(id: string, input: GalleryImageInput) {
 export async function deleteGalleryImage(id: string) {
   await api.delete(`/gallery/${encodeURIComponent(id)}`);
 }
+
+export async function deleteAllGalleryImages() {
+  const { data } =
+    await api.delete<ApiDataResponse<{ deletedCount: number; cleanupFailures: number }>>(
+      "/gallery",
+    );
+  return data.data;
+}

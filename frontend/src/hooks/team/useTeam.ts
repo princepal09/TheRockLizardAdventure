@@ -45,10 +45,11 @@ export function useTeamMutation<Input>(
       await Promise.all([
         queryClient.invalidateQueries({ queryKey: teamKeys.list(version) }),
         queryClient.invalidateQueries({ queryKey: teamKeys.public }),
-        id && queryClient.invalidateQueries({
-          queryKey: teamKeys.detail(version, id),
-          refetchType: "none",
-        }),
+        id &&
+          queryClient.invalidateQueries({
+            queryKey: teamKeys.detail(version, id),
+            refetchType: "none",
+          }),
       ]);
       if (useAuthStore.getState().sessionVersion === version) toast.success(message);
     },

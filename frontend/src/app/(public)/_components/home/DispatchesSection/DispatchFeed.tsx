@@ -10,8 +10,7 @@ import { featuredDispatch, trekkingArticles } from "@/types/dispatches";
 const filters = ["Latest Updates", "Trekking Articles"] as const;
 
 export default function DispatchFeed() {
-  const [filter, setFilter] =
-    useState<(typeof filters)[number]>("Latest Updates");
+  const [filter, setFilter] = useState<(typeof filters)[number]>("Latest Updates");
 
   return (
     <>
@@ -27,11 +26,7 @@ export default function DispatchFeed() {
             Dispatches from the Ridgeline
           </h2>
         </div>
-        <div
-          role="group"
-          aria-label="Filter dispatches"
-          className="flex flex-wrap gap-1.5"
-        >
+        <div role="group" aria-label="Filter dispatches" className="flex flex-wrap gap-1.5">
           {filters.map((label) => (
             <Button
               key={label}
@@ -49,14 +44,10 @@ export default function DispatchFeed() {
       </div>
       <div
         className={
-          filter === "Latest Updates"
-            ? "grid gap-4 md:grid-cols-[1.4fr_1fr] lg:gap-6"
-            : undefined
+          filter === "Latest Updates" ? "grid gap-4 md:grid-cols-[1.4fr_1fr] lg:gap-6" : undefined
         }
       >
-        {filter === "Latest Updates" && (
-          <DispatchCard dispatch={featuredDispatch} featured />
-        )}
+        {filter === "Latest Updates" && <DispatchCard dispatch={featuredDispatch} featured />}
         <div
           className={
             filter === "Latest Updates"

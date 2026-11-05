@@ -39,9 +39,7 @@ async function TripDossier({ kind, params }: Props) {
       : []),
     { id: "trip-booking", label: "Tariff & Booking" },
     { id: "trip-planning", label: "Departure details" },
-    ...(trip.images.length
-      ? [{ id: "trip-gallery", label: "Photo Gallery" }]
-      : []),
+    ...(trip.images.length ? [{ id: "trip-gallery", label: "Photo Gallery" }] : []),
   ];
 
   return (
@@ -90,7 +88,17 @@ async function TripDossier({ kind, params }: Props) {
           </DossierReveal>
         )}
         <DossierReveal>
-          <Suspense fallback={<div role="status" className="min-h-96 rounded-xl border border-stone-200 bg-white p-5 sm:p-7"><span className="sr-only">Loading departure details…</span><Skeleton aria-hidden="true" className="h-80 bg-stone-200" /></div>}>
+          <Suspense
+            fallback={
+              <div
+                role="status"
+                className="min-h-96 rounded-xl border border-stone-200 bg-white p-5 sm:p-7"
+              >
+                <span className="sr-only">Loading departure details…</span>
+                <Skeleton aria-hidden="true" className="h-80 bg-stone-200" />
+              </div>
+            }
+          >
             <TripPlanning trip={trip} kind={kind} />
           </Suspense>
         </DossierReveal>

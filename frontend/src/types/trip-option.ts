@@ -14,7 +14,8 @@ export type Season = TripOptionFields & {
   endMonth: number | null;
 };
 
-export type TripOptionInput = TripOptionFields & (
-  | { kind: "regions"; image?: File }
-  | { kind: "seasons"; startMonth: number | null; endMonth: number | null }
-);
+export type TripOptionInput = TripOptionFields &
+  (
+    | { kind: "regions"; image?: File }
+    | { kind: "seasons"; startMonth: number | null; endMonth: number | null }
+  );

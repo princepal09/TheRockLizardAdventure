@@ -9,11 +9,7 @@ import DossierIcon from "./DossierIcon";
 const contactClass =
   "flex min-w-0 items-center gap-2.5 rounded-lg border border-white/5 bg-white/8 px-3 py-2.5 hover:bg-white/12 focus-visible:outline-2 focus-visible:outline-sky-300";
 
-export default function CommandDesk({
-  settings,
-}: {
-  settings: SiteSettings | null;
-}) {
+export default function CommandDesk({ settings }: { settings: SiteSettings | null }) {
   const phone = settings?.contactPhone ?? basecampPhone;
   const email = settings?.contactEmail ?? basecampEmail;
 
@@ -28,32 +24,22 @@ export default function CommandDesk({
           Almora Operations Command
         </h2>
         <p className="mt-1.5 text-xs leading-relaxed text-slate-300">
-          Speak directly with the Basecamp team about this route and departure
-          availability.
+          Speak directly with the Basecamp team about this route and departure availability.
         </p>
       </div>
       <div className="space-y-2">
-        <a
-          href={`tel:${phone.replace(/[^+\d]/g, "")}`}
-          className={contactClass}
-        >
+        <a href={`tel:${phone.replace(/[^+\d]/g, "")}`} className={contactClass}>
           <DossierIcon name="metric-7" />
           <span className="min-w-0">
-            <span className="block text-xs text-slate-400">
-              Direct Expedition Hotline
-            </span>
-            <span className="block font-mono text-xs font-bold break-words">
-              {phone}
-            </span>
+            <span className="block text-xs text-slate-400">Direct Expedition Hotline</span>
+            <span className="block font-mono text-xs font-bold break-words">{phone}</span>
           </span>
         </a>
         <a href={`mailto:${email}`} className={contactClass}>
           <Mail aria-hidden="true" className="size-4 shrink-0 text-sky-200" />
           <span className="min-w-0">
             <span className="block text-xs text-slate-400">Email Basecamp</span>
-            <span className="block font-mono text-xs font-bold break-all">
-              {email}
-            </span>
+            <span className="block font-mono text-xs font-bold break-all">{email}</span>
           </span>
         </a>
       </div>

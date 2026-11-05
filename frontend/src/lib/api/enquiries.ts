@@ -1,9 +1,5 @@
 import type { ApiDataResponse, ApiResponse } from "@/types/api";
-import type {
-  CreateEnquiryInput,
-  Enquiry,
-  UpdateEnquiryInput,
-} from "@/types/enquiry";
+import type { CreateEnquiryInput, Enquiry, UpdateEnquiryInput } from "@/types/enquiry";
 import type { Trip, TripKind } from "@/types/trip";
 
 import api, { publicApi } from "../axios";
@@ -17,9 +13,10 @@ export async function getEnquiryTripOptions(signal: AbortSignal) {
   const kinds: TripKind[] = ["treks", "expeditions"];
   return Promise.all(
     kinds.map(async (kind) => {
-      const { data } = await publicApi.get<
-        ApiDataResponse<Pick<Trip, "id" | "name">[]>
-      >(`/${kind}`, { signal });
+      const { data } = await publicApi.get<ApiDataResponse<Pick<Trip, "id" | "name">[]>>(
+        `/${kind}`,
+        { signal },
+      );
       return { kind, trips: data.data };
     }),
   );
@@ -33,10 +30,9 @@ export async function getEnquiries(signal?: AbortSignal) {
 }
 
 export async function getEnquiry(id: string, signal?: AbortSignal) {
-  const { data } = await api.get<ApiDataResponse<Enquiry>>(
-    `/enquiries/${encodeURIComponent(id)}`,
-    { signal },
-  );
+  const { data } = await api.get<ApiDataResponse<Enquiry>>(`/enquiries/${encodeURIComponent(id)}`, {
+    signal,
+  });
   return data.data;
 }
 

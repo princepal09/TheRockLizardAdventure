@@ -6,6 +6,15 @@ import { contactIdSchema } from './contact.schema.js';
 import type { ContactService } from './contact.service.js';
 
 export class ContactController {
+  markSelectedReadController = catchAsync(async (req: Request, res: Response) => {
+    const updatedCount = await this.contactService.markSelectedRead(req.body.ids);
+    sendResponse(res, 200, {
+      success: true,
+      message: 'Selected enquiries marked as read',
+      data: { updatedCount },
+    });
+  });
+
   constructor(private readonly contactService: ContactService) {}
 
   createContactController = catchAsync(async (req: Request, res: Response) => {

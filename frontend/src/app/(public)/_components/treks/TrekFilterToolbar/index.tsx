@@ -55,10 +55,7 @@ export default function TrekFilterToolbar({
         ["", "All Grades"],
         ...tripDifficulties
           .filter((grade) => grades.has(grade))
-          .map(
-            (grade) =>
-              [grade, grade.toLowerCase().replaceAll("_", " ")] as const,
-          ),
+          .map((grade) => [grade, grade.toLowerCase().replaceAll("_", " ")] as const),
       ],
     },
     {
@@ -68,10 +65,7 @@ export default function TrekFilterToolbar({
         ["", "All Durations"],
         ...Array.from(durations)
           .sort((a, b) => a - b)
-          .map(
-            (days) =>
-              [String(days), `${days} ${days === 1 ? "day" : "days"}`] as const,
-          ),
+          .map((days) => [String(days), `${days} ${days === 1 ? "day" : "days"}`] as const),
       ],
     },
     {
@@ -107,35 +101,28 @@ export default function TrekFilterToolbar({
         aria-label="Filter by region"
         className="flex flex-wrap justify-center gap-2"
       >
-        {[["", `All Trails (${trips.length})`], ...regions].map(
-          ([id, label]) => (
-            <Button
-              key={id}
-              type="button"
-              variant="outline"
-              size="sm"
-              aria-pressed={filters.region === id}
-              onClick={() => onChange({ ...filters, region: id })}
-              className="rounded-full border-slate-200 bg-white px-3 aria-pressed:border-orange-500 aria-pressed:bg-orange-500 aria-pressed:text-[#ffffff]"
-            >
-              {id && <Mountain aria-hidden="true" />}
-              {label}
-            </Button>
-          ),
-        )}
+        {[["", `All Trails (${trips.length})`], ...regions].map(([id, label]) => (
+          <Button
+            key={id}
+            type="button"
+            variant="outline"
+            size="sm"
+            aria-pressed={filters.region === id}
+            onClick={() => onChange({ ...filters, region: id })}
+            className="rounded-full border-slate-200 bg-white px-3 aria-pressed:border-orange-500 aria-pressed:bg-orange-500 aria-pressed:text-[#ffffff]"
+          >
+            {id && <Mountain aria-hidden="true" />}
+            {label}
+          </Button>
+        ))}
       </div>
       <div className="grid gap-3 rounded-xl border border-slate-200 bg-white p-3 sm:grid-cols-2 lg:grid-cols-5">
         {fields.map(({ key, label, options }) => (
-          <label
-            key={key}
-            className="min-w-0 space-y-1 text-xs font-medium text-slate-600"
-          >
+          <label key={key} className="min-w-0 space-y-1 text-xs font-medium text-slate-600">
             <span>{label}</span>
             <select
               value={filters[key]}
-              onChange={(event) =>
-                onChange({ ...filters, [key]: event.target.value })
-              }
+              onChange={(event) => onChange({ ...filters, [key]: event.target.value })}
               className="block w-full rounded-lg border border-transparent bg-slate-100 px-2.5 py-2 text-sm text-slate-900 capitalize focus-visible:outline-2 focus-visible:outline-sky-700"
             >
               {options.map(([value, title]) => (

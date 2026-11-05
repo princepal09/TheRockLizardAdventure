@@ -6,10 +6,6 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   return tripMetadata("expeditions", slug);
 }
 
-export default function ExpeditionPage({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
+export default function ExpeditionPage({ params }: { params: Promise<{ slug: string }> }) {
   return <TripDetailPage kind="expeditions" params={params} />;
 }

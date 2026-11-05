@@ -16,7 +16,11 @@ export default function AuthFooter() {
           Secure SSL Encrypted Connection
         </p>
         <p className="text-center">
-          ©<Suspense fallback={null}><CopyrightYear /></Suspense> Rock Lizard Adventure. All rights reserved.
+          ©
+          <Suspense fallback={null}>
+            <CopyrightYear />
+          </Suspense>{" "}
+          Rock Lizard Adventure. All rights reserved.
         </p>
       </div>
     </footer>

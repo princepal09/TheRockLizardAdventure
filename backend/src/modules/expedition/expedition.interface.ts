@@ -20,6 +20,8 @@ type ExpeditionDetails = ExpeditionSeasons & {
 };
 
 export interface IExpeditionRepository {
+  publishSelected(ids: string[]): Promise<{ updatedCount: number }>;
+  deleteSelected(ids: string[]): Promise<(Expedition & { images: ExpeditionImage[] })[]>;
   createExpedition(
     data: CreateExpeditionRecord,
     adminId: string,

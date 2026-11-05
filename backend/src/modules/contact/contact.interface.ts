@@ -7,6 +7,7 @@ export type ContactDetails = Contact & {
 };
 
 export interface IContactRepository {
+  markSelectedRead(ids: string[]): Promise<number>;
   createContact(data: CreateContactDTO): Promise<ContactDetails>;
   findContacts(): Promise<ContactDetails[]>;
   findContactById(id: string): Promise<ContactDetails | null>;

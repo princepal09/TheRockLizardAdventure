@@ -43,11 +43,7 @@ export default function FaqAccordion() {
           );
         })}
       </div>
-      <Accordion
-        key={active}
-        defaultValue={[items[0].question]}
-        className="space-y-2.5"
-      >
+      <Accordion key={active} defaultValue={[items[0].question]} className="space-y-2.5">
         {items.map(({ question, answer }) => (
           <AccordionItem
             key={question}

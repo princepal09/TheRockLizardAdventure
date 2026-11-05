@@ -94,7 +94,10 @@ export class AuthRepository implements IAuthRepository {
     return admin;
   }
 
-  async updatePassword(adminId: string, passwordHash: string): Promise<PasswordNotificationRecipient> {
+  async updatePassword(
+    adminId: string,
+    passwordHash: string,
+  ): Promise<PasswordNotificationRecipient> {
     const [recipient] = await prisma.$transaction([
       prisma.admin.update({
         where: { id: adminId },

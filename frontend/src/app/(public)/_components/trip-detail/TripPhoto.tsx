@@ -30,7 +30,8 @@ export default function TripPhoto({
       src={src}
       alt={alt}
       fill
-      loader={imageLoaderFor(src)} unoptimized={!canOptimizeImage(src)}
+      loader={imageLoaderFor(src)}
+      unoptimized={!canOptimizeImage(src)}
       priority={hero}
       sizes={hero ? "100vw" : "(min-width: 1024px) 25vw, 50vw"}
       className="object-cover"

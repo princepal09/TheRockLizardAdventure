@@ -5,13 +5,7 @@ import { ArrowRight, MapPin, Mountain } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import type { PublishedExpedition } from "@/lib/api/published-expeditions";
 
 export default function ExpeditionCard({
@@ -24,9 +18,7 @@ export default function ExpeditionCard({
   const href = `/expeditions/${encodeURIComponent(expedition.slug)}`;
   const image = expedition.coverImageUrl;
   const altitude = expedition.maxAltitudeMeters?.toLocaleString("en-IN");
-  const location = [expedition.startingPoint, expedition.endingPoint]
-    .filter(Boolean)
-    .join(" • ");
+  const location = [expedition.startingPoint, expedition.endingPoint].filter(Boolean).join(" • ");
   const grade = expedition.difficulty.toLowerCase().replaceAll("_", " ");
   const gradeClass =
     expedition.difficulty === "EASY"
@@ -43,7 +35,15 @@ export default function ExpeditionCard({
         className="relative grid aspect-[5/4] place-items-center overflow-hidden bg-slate-800 text-white focus-visible:outline-2 focus-visible:-outline-offset-4 focus-visible:outline-white"
       >
         {image && /^(?:https?:\/\/|\/(?!\/))/i.test(image) ? (
-          <Image src={image} alt="" fill loader={imageLoaderFor(image)} unoptimized={!canOptimizeImage(image)} sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw" className="object-cover" />
+          <Image
+            src={image}
+            alt=""
+            fill
+            loader={imageLoaderFor(image)}
+            unoptimized={!canOptimizeImage(image)}
+            sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+            className="object-cover"
+          />
         ) : (
           <Mountain aria-hidden="true" className="size-8 text-slate-400" />
         )}
@@ -54,9 +54,7 @@ export default function ExpeditionCard({
         <span
           className={`absolute top-2 left-2 rounded-full px-2 py-1 font-mono text-[9px] font-bold tracking-widest uppercase ${primary ? "bg-orange-500 text-slate-950" : "bg-slate-950/85 text-sky-200"}`}
         >
-          {expedition.isFeatured
-            ? "Flagship expedition"
-            : "Himalayan expedition"}
+          {expedition.isFeatured ? "Flagship expedition" : "Himalayan expedition"}
         </span>
         {altitude && (
           <span className="absolute right-2 bottom-2 rounded bg-slate-950/85 px-2 py-1 font-mono text-[10px]">
@@ -70,10 +68,7 @@ export default function ExpeditionCard({
         </CardTitle>
         {location && (
           <p className="flex items-start gap-1 text-xs text-slate-600">
-            <MapPin
-              aria-hidden="true"
-              className="size-3.5 shrink-0 text-orange-700"
-            />
+            <MapPin aria-hidden="true" className="size-3.5 shrink-0 text-orange-700" />
             {location}
           </p>
         )}
@@ -83,25 +78,18 @@ export default function ExpeditionCard({
           <div className="flex justify-between gap-2">
             <dt>Duration</dt>
             <dd className="text-right font-mono font-semibold text-slate-900">
-              {expedition.durationDays}{" "}
-              {expedition.durationDays === 1 ? "day" : "days"}
+              {expedition.durationDays} {expedition.durationDays === 1 ? "day" : "days"}
             </dd>
           </div>
           {altitude && (
             <div className="flex justify-between gap-2">
               <dt>Max altitude</dt>
-              <dd className="text-right font-mono font-semibold text-slate-900">
-                {altitude} m
-              </dd>
+              <dd className="text-right font-mono font-semibold text-slate-900">{altitude} m</dd>
             </div>
           )}
           <div className="flex justify-between gap-2">
             <dt>Grade</dt>
-            <dd
-              className={`rounded px-1.5 font-semibold capitalize ${gradeClass}`}
-            >
-              {grade}
-            </dd>
+            <dd className={`rounded px-1.5 font-semibold capitalize ${gradeClass}`}>{grade}</dd>
           </div>
         </dl>
       </CardContent>
@@ -110,8 +98,7 @@ export default function ExpeditionCard({
           href={href}
           className={`inline-flex w-full items-center justify-center gap-1 rounded-lg px-3 py-2 text-xs font-bold ${primary ? "bg-slate-900 text-white hover:bg-slate-700" : "bg-slate-100 text-slate-900 hover:bg-slate-200"}`}
         >
-          Expedition Brief{" "}
-          <ArrowRight aria-hidden="true" className="size-3.5" />
+          Expedition Brief <ArrowRight aria-hidden="true" className="size-3.5" />
         </Link>
       </CardFooter>
     </Card>

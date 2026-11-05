@@ -1,4 +1,5 @@
 import express from 'express';
+import { bulkActionSchema } from '../../utils/common/bulk-action.schema.js';
 
 import { verifyUser } from '../../middlewares/auth.middleware.js';
 import { validate } from '../../middlewares/validate.middleware.js';
@@ -11,6 +12,11 @@ const router = express.Router();
 router.post('/', validate(createContactSchema), contactController.createContactController);
 
 router.use(verifyUser(authService));
+router.patch(
+  '/bulk/read',
+  validate(bulkActionSchema),
+  contactController.markSelectedReadController,
+);
 
 router.get('/', contactController.getContactsController);
 router.get('/:contactId', contactController.getContactController);

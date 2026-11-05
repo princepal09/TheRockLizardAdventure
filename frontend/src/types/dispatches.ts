@@ -11,7 +11,7 @@ export const featuredDispatch = {
 
 export const trekkingArticles = [
   {
-    title: "Essential Gear Checklist for High Kumaon Passes",
+    title: "Essential Gear Checklist for Mountain Trails in India",
     category: "Gear guide",
     image: "/image2.jpeg",
     detail:

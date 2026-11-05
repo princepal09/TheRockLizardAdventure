@@ -25,9 +25,7 @@ export default function GalleryUploadForm({
     const form = event.currentTarget;
     const files = new FormData(form)
       .getAll("images")
-      .filter(
-        (file): file is File => file instanceof File && Boolean(file.name),
-      );
+      .filter((file): file is File => file instanceof File && Boolean(file.name));
     const result = galleryFilesSchema.safeParse(files);
     if (!result.success) {
       setValidationError(getErrorMessage(result.error));

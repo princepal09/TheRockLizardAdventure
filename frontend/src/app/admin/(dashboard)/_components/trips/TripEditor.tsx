@@ -6,11 +6,7 @@ import { useRouter } from "next/navigation";
 import type { FormEvent } from "react";
 
 import { Button } from "@/components/ui/button";
-import {
-  useTrip,
-  useTripMutation,
-  useTripOptions,
-} from "@/hooks/trips/useTrips";
+import { useTrip, useTripMutation, useTripOptions } from "@/hooks/trips/useTrips";
 import { deleteTrip, saveTrip } from "@/lib/api/trips";
 import { tripFormSchema } from "@/lib/validation/admin";
 import { imageFileSchema } from "@/lib/validation/image";
@@ -60,23 +56,13 @@ function TripForm({
     kind,
     async ({ input, cover }: { input: TripInput; cover?: File }) => {
       const details = tripFormSchema.parse(input);
-      if (!trip)
-        return saveTrip(
-          kind,
-          undefined,
-          details,
-          imageFileSchema.optional().parse(cover),
-        );
+      if (!trip) return saveTrip(kind, undefined, details, imageFileSchema.optional().parse(cover));
       return saveTrip(kind, trip.id, details);
     },
     trip ? `${label} updated` : `${label} created`,
     trip?.id,
   );
-  const remove = useTripMutation(
-    kind,
-    (id: string) => deleteTrip(kind, id),
-    `${label} deleted`,
-  );
+  const remove = useTripMutation(kind, (id: string) => deleteTrip(kind, id), `${label} deleted`);
   const busy = save.isPending || remove.isPending;
 
   async function submit(event: FormEvent<HTMLFormElement>) {
@@ -120,9 +106,7 @@ function TripForm({
 
     const file = form.get("coverImage");
     const cover = file instanceof File && file.name ? file : undefined;
-    const saved = await save
-      .mutateAsync({ input, cover })
-      .catch(() => undefined);
+    const saved = await save.mutateAsync({ input, cover }).catch(() => undefined);
     if (saved) {
       if (!trip) {
         element.reset();
@@ -141,17 +125,9 @@ function TripForm({
         </p>
       </header>
       <fieldset disabled={busy} className="space-y-5">
-        <h3 className="text-sm font-semibold text-primary">
-          Basics and publishing
-        </h3>
+        <h3 className="text-sm font-semibold text-primary">Basics and publishing</h3>
         <div className={tripGridClass}>
-          <TripField
-            label="Name"
-            name="name"
-            required
-            maxLength={200}
-            defaultValue={trip?.name}
-          />
+          <TripField label="Name" name="name" required maxLength={200} defaultValue={trip?.name} />
           <label className="block space-y-1.5 text-sm font-medium">
             <span>
               Region
@@ -192,11 +168,7 @@ function TripForm({
           </label>
           <label className="block space-y-1.5 text-sm font-medium">
             <span>Status</span>
-            <select
-              className={tripInputClass}
-              name="status"
-              defaultValue={trip?.status ?? "DRAFT"}
-            >
+            <select className={tripInputClass} name="status" defaultValue={trip?.status ?? "DRAFT"}>
               {tripStatuses.map((value) => (
                 <option key={value}>{value}</option>
               ))}
@@ -211,7 +183,9 @@ function TripForm({
           />
         </div>
         <p className="text-xs leading-relaxed text-slate-600">
-          Published trips appear in the public listing. Leave the publication date blank to set it automatically when publishing. The homepage highlights up to three of the most recently published featured treks.
+          Published trips appear in the public listing. Leave the publication date blank to set it
+          automatically when publishing. The homepage highlights up to three of the most recently
+          published featured treks.
         </p>
         <h3 className="border-t border-slate-200 pt-5 text-sm font-semibold text-primary">
           Route and group
@@ -338,40 +312,29 @@ function TripForm({
                   type="checkbox"
                   name="seasonIds"
                   value={season.id}
-                  defaultChecked={trip?.seasons.some(
-                    ({ seasonId }) => seasonId === season.id,
-                  )}
+                  defaultChecked={trip?.seasons.some(({ seasonId }) => seasonId === season.id)}
                 />
                 {season.name}
                 {season.isActive ? "" : " (inactive)"}
               </label>
             ))}
-            {!seasons.length && (
-              <p className="text-slate-600">No seasons available.</p>
-            )}
+            {!seasons.length && <p className="text-slate-600">No seasons available.</p>}
           </div>
         </fieldset>
         <label className="flex items-center gap-2 text-sm font-medium">
-          <input
-            type="checkbox"
-            name="isFeatured"
-            defaultChecked={trip?.isFeatured}
-          />
+          <input type="checkbox" name="isFeatured" defaultChecked={trip?.isFeatured} />
           Featured {label.toLowerCase()}
         </label>
         <section
           className="space-y-4 border-t border-slate-200 pt-5"
           aria-labelledby="trip-planning-editor-title"
         >
-          <h3
-            id="trip-planning-editor-title"
-            className="text-sm font-semibold text-primary"
-          >
+          <h3 id="trip-planning-editor-title" className="text-sm font-semibold text-primary">
             Departure details and booking terms
           </h3>
           <p className="text-xs text-slate-600">
-            Publish only confirmed client information. Leave unknown details
-            blank; the public page will direct travellers to Basecamp.
+            Publish only confirmed client information. Leave unknown details blank; the public page
+            will direct travellers to Basecamp.
           </p>
           {(
             [
@@ -429,10 +392,7 @@ function TripForm({
                 className={tripInputClass}
                 aria-describedby={`${name}-hint`}
               />
-              <span
-                id={`${name}-hint`}
-                className="block text-xs font-normal text-slate-600"
-              >
+              <span id={`${name}-hint`} className="block text-xs font-normal text-slate-600">
                 {hint}
               </span>
             </label>
@@ -447,11 +407,7 @@ function TripForm({
       )}
       <div className="flex flex-wrap gap-3 border-t border-slate-200 pt-4">
         <Button type="submit" disabled={busy} variant="secondary">
-          {save.isPending
-            ? "Saving…"
-            : trip
-              ? "Save details"
-              : `Create ${label.toLowerCase()}`}
+          {save.isPending ? "Saving…" : trip ? "Save details" : `Create ${label.toLowerCase()}`}
         </Button>
         {trip && (
           <DeleteConfirmation
@@ -470,13 +426,7 @@ function TripForm({
   );
 }
 
-export default function TripEditor({
-  kind,
-  id,
-}: {
-  kind: TripKind;
-  id?: string;
-}) {
+export default function TripEditor({ kind, id }: { kind: TripKind; id?: string }) {
   const trip = useTrip(kind, id);
   const options = useTripOptions();
   const error = trip.error ?? options.error;
@@ -511,12 +461,7 @@ export default function TripEditor({
         </div>
       ) : options.data && (!id || trip.data) ? (
         <>
-          <TripForm
-            key={trip.data?.id ?? "new"}
-            kind={kind}
-            trip={trip.data}
-            {...options.data}
-          />
+          <TripForm key={trip.data?.id ?? "new"} kind={kind} trip={trip.data} {...options.data} />
           {trip.data && (
             <>
               <TripItineraries kind={kind} trip={trip.data} />

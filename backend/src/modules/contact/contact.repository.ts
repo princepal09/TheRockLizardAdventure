@@ -8,6 +8,14 @@ const contactTrips = {
 } as const;
 
 export class ContactRepository implements IContactRepository {
+  async markSelectedRead(ids: string[]) {
+    const result = await prisma.contact.updateMany({
+      where: { id: { in: ids }, status: 'UNREAD' },
+      data: { status: 'READ' },
+    });
+    return result.count;
+  }
+
   async createContact(data: CreateContactDTO) {
     return prisma.contact.create({ data, include: contactTrips });
   }

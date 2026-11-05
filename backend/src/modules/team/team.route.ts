@@ -1,4 +1,5 @@
 import express from 'express';
+import { bulkActionSchema } from '../../utils/common/bulk-action.schema.js';
 import { verifyUser } from '../../middlewares/auth.middleware.js';
 import { upload } from '../../middlewares/muler.middleware.js';
 import { validate } from '../../middlewares/validate.middleware.js';
@@ -11,6 +12,7 @@ const router = express.Router();
 router.get('/', teamController.getActiveMembersController);
 
 router.use(verifyUser(authService));
+router.patch('/bulk/hide', validate(bulkActionSchema), teamController.hideSelectedController);
 
 router.get('/admin', teamController.getMembersController);
 router.get('/:memberId', teamController.getMemberController);

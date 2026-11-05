@@ -25,13 +25,8 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
   if (session.isError) {
     return (
       <main className="mx-auto space-y-4 p-8">
-        <p role="alert">
-          We couldn&apos;t verify your session. Please try again.
-        </p>
-        <Button
-          disabled={session.isFetching}
-          onClick={() => void session.refetch()}
-        >
+        <p role="alert">We couldn&apos;t verify your session. Please try again.</p>
+        <Button disabled={session.isFetching} onClick={() => void session.refetch()}>
           Retry
         </Button>
       </main>

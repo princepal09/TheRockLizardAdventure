@@ -14,10 +14,7 @@ type Props = {
 
 async function TripDiscoveryContent({ kind, searchParams }: Props) {
   const load = kind === "treks" ? getPublishedTreks : getPublishedExpeditions;
-  const [{ q }, trips] = await Promise.all([
-    searchParams,
-    load().catch(() => null),
-  ]);
+  const [{ q }, trips] = await Promise.all([searchParams, load().catch(() => null)]);
   if (!trips)
     return (
       <p role="alert" className="text-sm text-slate-700">
@@ -26,9 +23,7 @@ async function TripDiscoveryContent({ kind, searchParams }: Props) {
     );
   const query = (Array.isArray(q) ? q[0] : q)?.slice(0, 100).trim() ?? "";
 
-  return (
-    <TripDiscoveryResults key={query} kind={kind} trips={trips} query={query} />
-  );
+  return <TripDiscoveryResults key={query} kind={kind} trips={trips} query={query} />;
 }
 
 export default function TripDiscovery(props: Props) {

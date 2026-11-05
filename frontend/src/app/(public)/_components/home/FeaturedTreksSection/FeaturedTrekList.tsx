@@ -19,18 +19,10 @@ const filters = [
   },
 ];
 
-export default function FeaturedTrekList({
-  treks,
-}: {
-  treks: TrekSearchItem[];
-}) {
+export default function FeaturedTrekList({ treks }: { treks: TrekSearchItem[] }) {
   const [active, setActive] = useState(0);
   const { levels } = filters[active];
-  const matching = (
-    levels.length
-      ? treks.filter((trek) => levels.includes(trek.difficulty))
-      : treks
-  );
+  const matching = levels.length ? treks.filter((trek) => levels.includes(trek.difficulty)) : treks;
   const visible = matching.slice(0, 3);
 
   return (
@@ -55,7 +47,8 @@ export default function FeaturedTrekList({
       </div>
       {matching.length > visible.length && (
         <p className="mb-4 text-xs text-slate-600">
-          Showing the {visible.length} most recently published featured treks at this level. Explore all routes on the Treks page.
+          Showing the {visible.length} most recently published featured treks at this level. Explore
+          all routes on the Treks page.
         </p>
       )}
       {visible.length ? (

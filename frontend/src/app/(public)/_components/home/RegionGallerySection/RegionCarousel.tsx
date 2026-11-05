@@ -18,10 +18,7 @@ import {
 } from "@/components/ui/carousel";
 import type { TrekSearchItem } from "@/lib/api/published-treks";
 
-type GalleryTrek = Pick<
-  TrekSearchItem,
-  "id" | "name" | "slug" | "coverImageUrl"
->;
+type GalleryTrek = Pick<TrekSearchItem, "id" | "name" | "slug" | "coverImageUrl">;
 const controlClass =
   "z-20 size-9 border-stone-200 bg-white text-slate-900 shadow-sm hover:bg-stone-100 focus-visible:outline-2 focus-visible:outline-sky-700";
 
@@ -43,7 +40,9 @@ function TrekCard({ trek }: { trek: GalleryTrek }) {
           src={imageUrl}
           alt=""
           fill
-          loader={imageLoaderFor(imageUrl)} unoptimized={!canOptimizeImage(imageUrl)} sizes="(min-width: 768px) 20vw, 50vw"
+          loader={imageLoaderFor(imageUrl)}
+          unoptimized={!canOptimizeImage(imageUrl)}
+          sizes="(min-width: 768px) 20vw, 50vw"
           onError={() => setFailed(true)}
           className="object-cover motion-safe:transition-transform motion-safe:duration-300 motion-safe:group-hover:scale-105"
         />
@@ -57,9 +56,7 @@ function TrekCard({ trek }: { trek: GalleryTrek }) {
         aria-hidden="true"
         className="absolute inset-0 bg-linear-to-t from-slate-950/95 via-slate-950/25 to-transparent"
       />
-      <span className="relative text-sm leading-snug font-semibold">
-        {trek.name}
-      </span>
+      <span className="relative text-sm leading-snug font-semibold">{trek.name}</span>
     </Link>
   );
 }
@@ -83,15 +80,7 @@ export default function RegionCarousel({ treks }: { treks: GalleryTrek[] }) {
   }, [api]);
 
   useEffect(() => {
-    if (
-      !api ||
-      !overflow ||
-      paused ||
-      hovered ||
-      focused ||
-      reduceMotion !== false
-    )
-      return;
+    if (!api || !overflow || paused || hovered || focused || reduceMotion !== false) return;
     const timer = window.setInterval(() => {
       if (document.hidden) return;
       if (api.canScrollNext()) api.scrollNext();
@@ -110,8 +99,7 @@ export default function RegionCarousel({ treks }: { treks: GalleryTrek[] }) {
       onMouseLeave={() => setHovered(false)}
       onFocusCapture={() => setFocused(true)}
       onBlurCapture={(event) => {
-        if (!event.currentTarget.contains(event.relatedTarget))
-          setFocused(false);
+        if (!event.currentTarget.contains(event.relatedTarget)) setFocused(false);
       }}
     >
       <Carousel
@@ -126,10 +114,7 @@ export default function RegionCarousel({ treks }: { treks: GalleryTrek[] }) {
       >
         <CarouselContent className="-ml-2.5!">
           {treks.map((trek) => (
-            <CarouselItem
-              key={trek.id}
-              className="basis-1/2! pl-2.5! sm:basis-1/3! md:basis-1/5!"
-            >
+            <CarouselItem key={trek.id} className="basis-1/2! pl-2.5! sm:basis-1/3! md:basis-1/5!">
               <TrekCard key={trek.coverImageUrl} trek={trek} />
             </CarouselItem>
           ))}

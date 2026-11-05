@@ -21,8 +21,8 @@ export default function FaqSection() {
             Climber Field Notes &amp; High-Altitude FAQs
           </h2>
           <p className="mx-auto mt-2 max-w-md text-sm leading-relaxed text-slate-600">
-            Everything you need to prepare for acclimatization, meals, rental
-            gear, and mountain emergencies.
+            Everything you need to prepare for acclimatization, meals, rental gear, and mountain
+            emergencies.
           </p>
         </div>
         <FaqAccordion />

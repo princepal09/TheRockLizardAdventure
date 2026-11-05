@@ -2,10 +2,7 @@
 
 import { MessageSquareQuote, Star } from "lucide-react";
 import { useState } from "react";
-import {
-  ReactGoogleReviews,
-  type ReactGoogleReview,
-} from "react-google-reviews";
+import { ReactGoogleReviews, type ReactGoogleReview } from "react-google-reviews";
 import "react-google-reviews/dist/index.css";
 
 import type { GoogleReviewsData } from "@/lib/api/google-reviews";
@@ -43,13 +40,7 @@ const avatarColors = [
   "bg-slate-100 text-slate-600",
 ];
 
-function ReviewCard({
-  review,
-  index,
-}: {
-  review: ReactGoogleReview;
-  index: number;
-}) {
+function ReviewCard({ review, index }: { review: ReactGoogleReview; index: number }) {
   const [expanded, setExpanded] = useState(false);
   const [imageFailed, setImageFailed] = useState(false);
   const name = review.reviewer.displayName || "Google reviewer";
@@ -87,9 +78,7 @@ function ReviewCard({
           )}
         </div>
         <div className="min-w-0 flex-1 pt-0.5">
-          <h3 className="text-sm font-bold tracking-tight break-words text-slate-800">
-            {name}
-          </h3>
+          <h3 className="text-sm font-bold tracking-tight break-words text-slate-800">{name}</h3>
           <div className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 text-[10px] text-slate-500">
             <span className="font-mono">Google review</span>
             {validDate && (
@@ -155,8 +144,8 @@ export default function Testimonials({
           Voices From The Ridgeline
         </h2>
         <p className="mt-3 max-w-xs text-xs leading-relaxed text-slate-500">
-          Direct quotes and real experiences from trekkers who explored the
-          mountains with our Almora team.
+          Direct quotes and real experiences from trekkers who explored the mountains with our
+          Almora team.
         </p>
 
         <div className="mt-6 rounded-2xl border border-slate-200/70 bg-[#f0f5fa] px-3 py-5 text-center">
@@ -166,9 +155,7 @@ export default function Testimonials({
               <p className="mt-1 font-mono text-[clamp(1.8rem,3vw,2.5rem)] leading-tight font-bold tracking-tight">
                 {data.averageRating.toFixed(1)} / 5.0
               </p>
-              <p className="mt-2 text-xs font-semibold text-slate-600">
-                Google reviews
-              </p>
+              <p className="mt-2 text-xs font-semibold text-slate-600">Google reviews</p>
               <p className="mt-2 font-mono text-[10px] leading-relaxed text-slate-500">
                 Based on {data.totalReviewCount.toLocaleString("en-IN")}{" "}
                 {data.totalReviewCount === 1 ? "review" : "reviews"}
@@ -176,9 +163,7 @@ export default function Testimonials({
             </>
           ) : (
             <p role="status" className="py-5 text-sm text-slate-600">
-              {loading
-                ? "Loading Google reviews…"
-                : "Read our traveller reviews on Google."}
+              {loading ? "Loading Google reviews…" : "Read our traveller reviews on Google."}
             </p>
           )}
           {profileUrl && (
@@ -188,8 +173,7 @@ export default function Testimonials({
               rel="noopener noreferrer"
               className="mt-3 inline-block text-[11px] font-semibold text-slate-600 underline underline-offset-4 hover:text-orange-800"
             >
-              View on Google{" "}
-              <span className="sr-only">(opens in a new tab)</span>
+              View on Google <span className="sr-only">(opens in a new tab)</span>
             </a>
           )}
         </div>
@@ -202,11 +186,8 @@ export default function Testimonials({
               rel="noopener noreferrer"
               className="flex min-h-11 items-center justify-center gap-2 rounded-xl bg-[#ffdac9] px-3 py-3 text-center text-xs font-bold text-[#60351f] transition-colors hover:bg-[#ffccb4] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-orange-800"
             >
-              <MessageSquareQuote
-                aria-hidden="true"
-                className="size-4 shrink-0"
-              />{" "}
-              Write a Mountain Review
+              <MessageSquareQuote aria-hidden="true" className="size-4 shrink-0" /> Write a Mountain
+              Review
               <span className="sr-only">on Google (opens in a new tab)</span>
             </a>
           ) : (
@@ -246,10 +227,7 @@ export default function Testimonials({
             role="status"
             className="flex min-h-52 flex-col items-center justify-center gap-3 rounded-2xl border border-[#e6e1d8] bg-[#fffefa] p-8 text-center"
           >
-            <MessageSquareQuote
-              aria-hidden="true"
-              className="size-7 text-orange-700"
-            />
+            <MessageSquareQuote aria-hidden="true" className="size-7 text-orange-700" />
             <p className="text-sm text-slate-600">
               {data
                 ? "The next mountain story could be yours."
@@ -262,8 +240,7 @@ export default function Testimonials({
                 rel="noopener noreferrer"
                 className="text-sm font-semibold text-orange-800 underline underline-offset-4"
               >
-                Visit us on Google{" "}
-                <span className="sr-only">(opens in a new tab)</span>
+                Visit us on Google <span className="sr-only">(opens in a new tab)</span>
               </a>
             )}
           </div>

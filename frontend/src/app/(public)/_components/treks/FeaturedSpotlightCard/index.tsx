@@ -22,9 +22,7 @@ export default function FeaturedSpotlightCard({
       ? trip.coverImageUrl
       : null;
   const location = [
-    ...new Set(
-      [trip.region?.name, trip.startingPoint, trip.endingPoint].filter(Boolean),
-    ),
+    ...new Set([trip.region?.name, trip.startingPoint, trip.endingPoint].filter(Boolean)),
   ].join(" · ");
   const seasons = trip.seasons
     ?.map(({ season }) => season?.name)
@@ -58,7 +56,9 @@ export default function FeaturedSpotlightCard({
             src={image}
             alt=""
             fill
-            loader={imageLoaderFor(image)} unoptimized={!canOptimizeImage(image)} sizes="(min-width: 1024px) 50vw, 100vw"
+            loader={imageLoaderFor(image)}
+            unoptimized={!canOptimizeImage(image)}
+            sizes="(min-width: 1024px) 50vw, 100vw"
             onError={() => setFailed(true)}
             className="object-cover"
           />
@@ -69,10 +69,7 @@ export default function FeaturedSpotlightCard({
       <div className="min-w-0 space-y-4 p-5 sm:p-6 lg:p-8">
         {location && (
           <p className="inline-flex items-center gap-1 rounded-full bg-slate-100 px-2.5 py-1 text-xs font-medium text-slate-700">
-            <MapPin
-              aria-hidden="true"
-              className="size-3.5 shrink-0 text-sky-700"
-            />
+            <MapPin aria-hidden="true" className="size-3.5 shrink-0 text-sky-700" />
             {location}
           </p>
         )}
@@ -86,9 +83,7 @@ export default function FeaturedSpotlightCard({
             {trip.name}
           </h3>
           {trip.summary && (
-            <p className="mt-2 text-sm leading-relaxed text-slate-600">
-              {trip.summary}
-            </p>
+            <p className="mt-2 text-sm leading-relaxed text-slate-600">{trip.summary}</p>
           )}
         </div>
         <dl className="grid grid-cols-2 gap-2 rounded-xl bg-slate-100 p-2">
@@ -99,9 +94,7 @@ export default function FeaturedSpotlightCard({
                 <dt className="font-mono text-[10px] tracking-wide text-slate-600 uppercase">
                   {label}
                 </dt>
-                <dd className="mt-1 text-sm font-bold break-words capitalize">
-                  {value}
-                </dd>
+                <dd className="mt-1 text-sm font-bold break-words capitalize">{value}</dd>
               </div>
             ))}
         </dl>

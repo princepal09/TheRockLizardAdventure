@@ -6,11 +6,7 @@ export function formatTripPrice({
   currency,
 }: Pick<PublicListingTrip, "discountPrice" | "price" | "currency">) {
   const amount = discountPrice ?? price;
-  if (
-    amount == null ||
-    !Number.isFinite(Number(amount)) ||
-    !/^[A-Z]{3}$/i.test(currency)
-  )
+  if (amount == null || !Number.isFinite(Number(amount)) || !/^[A-Z]{3}$/i.test(currency))
     return null;
 
   return new Intl.NumberFormat("en-IN", {

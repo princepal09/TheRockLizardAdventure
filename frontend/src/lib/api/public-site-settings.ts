@@ -7,9 +7,7 @@ import { normalizeSocialUrl } from "@/lib/social-url";
 function webUrl(value: string | null) {
   if (!value) return null;
   const url = URL.parse(value);
-  return url && (url.protocol === "https:" || url.protocol === "http:")
-    ? url.href
-    : null;
+  return url && (url.protocol === "https:" || url.protocol === "http:") ? url.href : null;
 }
 
 export async function getPublicSiteSettings(): Promise<SiteSettings | null> {
