@@ -1,6 +1,11 @@
 import Link from "next/link";
+import { privacyPolicy } from "@/lib/privacy-policy";
+import { medicalForm } from "@/lib/medical-form";
+import { declarationForm } from "@/lib/declaration-form";
 
-const columns = [
+type FooterItem = { label: string; href?: string; download?: string };
+
+const columns: { title: string; items: FooterItem[] }[] = [
   {
     title: "Expeditions & Base",
     items: [
@@ -18,9 +23,11 @@ const columns = [
     title: "Governance & Safety",
     items: [
       { label: "Disclaimer" },
-      { label: "Website Privacy" },
+      { label: "Privacy Policy", href: privacyPolicy.href, download: privacyPolicy.downloadName },
       { label: "Terms & Condition" },
       { label: "Trek Insurance & Safety" },
+      { label: "Medical Form", href: medicalForm.href, download: medicalForm.downloadName },
+      { label: "Declaration Form (Indemnity Bond)", href: declarationForm.href, download: declarationForm.downloadName },
       { label: "Responsible Tourism Policy" },
     ],
   },
@@ -35,9 +42,18 @@ export default function FooterLinksColumns() {
             {title}
           </h2>
           <ul className="space-y-1.5 text-[11px] leading-snug text-slate-400">
-            {items.map(({ label, href }) => (
+            {items.map(({ label, href, download }) => (
               <li key={label}>
-                {href ? (
+                {href && download ? (
+                  <a
+                    href={href}
+                    download={download}
+                    className="hover:text-white hover:underline focus-visible:underline"
+                  >
+                    {label}
+                    <span className="sr-only"> (download PDF)</span>
+                  </a>
+                ) : href ? (
                   <Link
                     href={href}
                     className="hover:text-white hover:underline focus-visible:underline"

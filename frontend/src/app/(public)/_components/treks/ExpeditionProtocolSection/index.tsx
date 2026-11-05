@@ -1,4 +1,6 @@
 import { Backpack, BriefcaseMedical, UsersRound, Utensils } from "lucide-react";
+import MedicalFormDownload from "../../MedicalFormDownload";
+import DeclarationFormDownload from "../../DeclarationFormDownload";
 
 const protocols = [
   {
@@ -58,6 +60,10 @@ export default function ExpeditionProtocolSection() {
             </p>
           </div>
         ))}
+      </div>
+      <div className="mt-6 space-y-3">
+        <MedicalFormDownload />
+        <DeclarationFormDownload />
       </div>
     </section>
   );

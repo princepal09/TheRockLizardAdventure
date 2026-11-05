@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { createEnquiry, getEnquiryTripOptions } from "@/lib/api/enquiries";
 import { getErrorMessage } from "@/utils/error";
+import { privacyPolicy } from "@/lib/privacy-policy";
 
 import {
   contactSchema,
@@ -135,7 +136,7 @@ export default function ContactForm({
       <p className="text-sm text-slate-600">
         Send your trip or general enquiry to the Almora team.
       </p>
-      <form noValidate onSubmit={handleSubmit(submit)} aria-busy={isSubmitting}>
+      <form noValidate onSubmit={handleSubmit(submit)} aria-busy={isSubmitting} aria-describedby="contact-privacy">
         <fieldset disabled={isSubmitting} className="min-w-0 space-y-4">
           <legend className="sr-only">Enquiry details</legend>
           <div
@@ -329,6 +330,22 @@ export default function ContactForm({
               className={`${inputClass} resize-y`}
             />
           </Field>
+          <p id="contact-privacy" className="text-xs leading-relaxed text-slate-600">
+            We use the details you share to respond to your enquiry and coordinate
+            the services you request. Our{" "}
+            <a
+              href={privacyPolicy.href}
+              download={privacyPolicy.downloadName}
+              className="font-semibold text-orange-800 underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-800"
+            >
+              Privacy Policy (PDF download)
+            </a>{" "}
+            explains how we handle your information and your privacy rights.
+            For privacy-related requests, email{" "}
+            <a href="mailto:rocklizardalmora@gmail.com" className="break-all font-medium underline underline-offset-4">
+              rocklizardalmora@gmail.com
+            </a>.
+          </p>
           <Button
             type="submit"
             disabled={isSubmitting}

@@ -6,6 +6,8 @@ import type { PublishedTripDetail } from "@/lib/api/published-trip-detail";
 import type { SiteSettings } from "@/types/site-settings";
 import { basecampPhone } from "@/types/basecamp";
 import { formatTripPrice } from "@/types/format-trip-price";
+import MedicalFormDownload from "../MedicalFormDownload";
+import DeclarationFormDownload from "../DeclarationFormDownload";
 
 export default function TripBooking({
   trip,
@@ -77,6 +79,8 @@ export default function TripBooking({
           <DossierIcon name="contact-1" /> Call Basecamp
         </a>
       </div>
+      <MedicalFormDownload />
+      <DeclarationFormDownload />
     </Card>
   );
 }
