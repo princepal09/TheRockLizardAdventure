@@ -26,11 +26,12 @@ export default function FeaturedTrekList({
 }) {
   const [active, setActive] = useState(0);
   const { levels } = filters[active];
-  const visible = (
+  const matching = (
     levels.length
       ? treks.filter((trek) => levels.includes(trek.difficulty))
       : treks
-  ).slice(0, 3);
+  );
+  const visible = matching.slice(0, 3);
 
   return (
     <div className="mt-5">
@@ -52,6 +53,11 @@ export default function FeaturedTrekList({
           </Button>
         ))}
       </div>
+      {matching.length > visible.length && (
+        <p className="mb-4 text-xs text-slate-600">
+          Showing the {visible.length} most recently published featured treks at this level. Explore all routes on the Treks page.
+        </p>
+      )}
       {visible.length ? (
         <div className="grid gap-4 md:grid-cols-3 lg:gap-6">
           {visible.map((trek, index) => (

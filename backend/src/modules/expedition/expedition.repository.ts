@@ -1,5 +1,6 @@
 import { ContentStatus, type Expedition } from '../../../generated/prisma/client.js';
 import { prisma } from '../../lib/prisma.js';
+import { sortPublishedTrips } from '../../utils/common/trip-publication.js';
 import type { CreateGalleryImageDTO, UpdateGalleryImageDTO } from '../gallery/gallery.schema.js';
 import type { CreateItineraryDTO, UpdateItineraryDTO } from '../itinerary/itinerary.schema.js';
 import type { CreateExpeditionRecord, IExpeditionRepository } from './expedition.interface.js';
@@ -36,7 +37,7 @@ export class ExpeditionRepository implements IExpeditionRepository {
   }
 
   async findPublishedExpeditions() {
-    return prisma.expedition.findMany({
+    const trips = await prisma.expedition.findMany({
       where: { status: ContentStatus.PUBLISHED },
       omit: { createdBy: true, departureDates: true, meetingPoint: true, inclusions: true, exclusions: true, requiredGear: true, cancellationPolicy: true, refundPolicy: true },
       include: {
@@ -48,6 +49,7 @@ export class ExpeditionRepository implements IExpeditionRepository {
       },
       orderBy: [{ publishedAt: 'desc' }, { id: 'asc' }],
     });
+    return sortPublishedTrips(trips);
   }
 
   async findPublishedExpeditionBySlug(slug: string) {

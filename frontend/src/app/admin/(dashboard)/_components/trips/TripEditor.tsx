@@ -60,7 +60,13 @@ function TripForm({
     kind,
     async ({ input, cover }: { input: TripInput; cover?: File }) => {
       const details = tripFormSchema.parse(input);
-      if (!trip) return saveTrip(kind, undefined, details, imageFileSchema.optional().parse(cover));
+      if (!trip)
+        return saveTrip(
+          kind,
+          undefined,
+          details,
+          imageFileSchema.optional().parse(cover),
+        );
       return saveTrip(kind, trip.id, details);
     },
     trip ? `${label} updated` : `${label} created`,
@@ -204,6 +210,9 @@ function TripForm({
             defaultValue={formatPublishedAt(trip?.publishedAt)}
           />
         </div>
+        <p className="text-xs leading-relaxed text-slate-600">
+          Published trips appear in the public listing. Leave the publication date blank to set it automatically when publishing. The homepage highlights up to three of the most recently published featured treks.
+        </p>
         <h3 className="border-t border-slate-200 pt-5 text-sm font-semibold text-primary">
           Route and group
         </h3>
@@ -350,22 +359,82 @@ function TripForm({
           />
           Featured {label.toLowerCase()}
         </label>
-        <section className="space-y-4 border-t border-slate-200 pt-5" aria-labelledby="trip-planning-editor-title">
-          <h3 id="trip-planning-editor-title" className="text-sm font-semibold text-primary">Departure details and booking terms</h3>
-          <p className="text-xs text-slate-600">Publish only confirmed client information. Leave unknown details blank; the public page will direct travellers to Basecamp.</p>
-          {([
-            { name: "departureDates", label: "Confirmed departure dates", hint: "One start date per line, YYYY-MM-DD. Past dates are not displayed as upcoming departures.", maxLength: 2000 },
-            { name: "meetingPoint", label: "Meeting point and reporting time", hint: "Exact address, landmark, reporting time and pickup instructions.", maxLength: 1000 },
-            { name: "inclusions", label: "Price includes", hint: "One inclusion per line.", maxLength: 10000 },
-            { name: "exclusions", label: "Price excludes", hint: "One exclusion per line.", maxLength: 10000 },
-            { name: "requiredGear", label: "Required gear", hint: "One item per line. Include rental details where relevant.", maxLength: 10000 },
-            { name: "cancellationPolicy", label: "Cancellation terms", hint: "Client-approved terms, deadlines and charges.", maxLength: 10000 },
-            { name: "refundPolicy", label: "Refund terms", hint: "Client-approved eligibility, process and timelines.", maxLength: 10000 },
-          ] as const).map(({ name, label, hint, maxLength }) => (
+        <section
+          className="space-y-4 border-t border-slate-200 pt-5"
+          aria-labelledby="trip-planning-editor-title"
+        >
+          <h3
+            id="trip-planning-editor-title"
+            className="text-sm font-semibold text-primary"
+          >
+            Departure details and booking terms
+          </h3>
+          <p className="text-xs text-slate-600">
+            Publish only confirmed client information. Leave unknown details
+            blank; the public page will direct travellers to Basecamp.
+          </p>
+          {(
+            [
+              {
+                name: "departureDates",
+                label: "Confirmed departure dates",
+                hint: "One start date per line, YYYY-MM-DD. Past dates are not displayed as upcoming departures.",
+                maxLength: 2000,
+              },
+              {
+                name: "meetingPoint",
+                label: "Meeting point and reporting time",
+                hint: "Exact address, landmark, reporting time and pickup instructions.",
+                maxLength: 1000,
+              },
+              {
+                name: "inclusions",
+                label: "Price includes",
+                hint: "One inclusion per line.",
+                maxLength: 10000,
+              },
+              {
+                name: "exclusions",
+                label: "Price excludes",
+                hint: "One exclusion per line.",
+                maxLength: 10000,
+              },
+              {
+                name: "requiredGear",
+                label: "Required gear",
+                hint: "One item per line. Include rental details where relevant.",
+                maxLength: 10000,
+              },
+              {
+                name: "cancellationPolicy",
+                label: "Cancellation terms",
+                hint: "Client-approved terms, deadlines and charges.",
+                maxLength: 10000,
+              },
+              {
+                name: "refundPolicy",
+                label: "Refund terms",
+                hint: "Client-approved eligibility, process and timelines.",
+                maxLength: 10000,
+              },
+            ] as const
+          ).map(({ name, label, hint, maxLength }) => (
             <label key={name} className="block space-y-1.5 text-sm font-medium">
               <span>{label}</span>
-              <textarea name={name} rows={3} maxLength={maxLength} defaultValue={trip?.[name] ?? ""} className={tripInputClass} aria-describedby={`${name}-hint`} />
-              <span id={`${name}-hint`} className="block text-xs font-normal text-slate-600">{hint}</span>
+              <textarea
+                name={name}
+                rows={3}
+                maxLength={maxLength}
+                defaultValue={trip?.[name] ?? ""}
+                className={tripInputClass}
+                aria-describedby={`${name}-hint`}
+              />
+              <span
+                id={`${name}-hint`}
+                className="block text-xs font-normal text-slate-600"
+              >
+                {hint}
+              </span>
             </label>
           ))}
         </section>

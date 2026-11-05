@@ -1,5 +1,6 @@
 import { ContentStatus, type Trek } from '../../../generated/prisma/client.js';
 import { prisma } from '../../lib/prisma.js';
+import { sortPublishedTrips } from '../../utils/common/trip-publication.js';
 import type { CreateGalleryImageDTO, UpdateGalleryImageDTO } from '../gallery/gallery.schema.js';
 import type { CreateItineraryDTO, UpdateItineraryDTO } from '../itinerary/itinerary.schema.js';
 import type { CreateTrekRecord, ITrekRepository } from './trek.interface.js';
@@ -36,7 +37,7 @@ export class TrekRepository implements ITrekRepository {
   }
 
   async findPublishedTreks() {
-    return prisma.trek.findMany({
+    const trips = await prisma.trek.findMany({
       where: { status: ContentStatus.PUBLISHED },
       omit: { createdBy: true, departureDates: true, meetingPoint: true, inclusions: true, exclusions: true, requiredGear: true, cancellationPolicy: true, refundPolicy: true },
       include: {
@@ -49,6 +50,7 @@ export class TrekRepository implements ITrekRepository {
       },
       orderBy: [{ publishedAt: 'desc' }, { id: 'asc' }],
     });
+    return sortPublishedTrips(trips);
   }
 
   async findPublishedTrekBySlug(slug: string) {

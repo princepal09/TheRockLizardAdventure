@@ -46,7 +46,7 @@ export default function Dashboard() {
           {admin?.name && <p className="text-sm break-words text-slate-600">Welcome, {admin.name}.</p>}
         </div>
         <div className="flex flex-wrap gap-2">
-          <Link href="/admin/treks/new" className={buttonVariants({ variant: "secondary", size: "lg" })}>
+          <Link href="/admin/treks/new" style={{color:"white"}} className={buttonVariants({ variant: "secondary", size: "lg" })}>
             <Plus aria-hidden="true" /> New trek
           </Link>
           <Link href="/admin/expeditions/new" className={buttonVariants({ variant: "outline", size: "lg" })}>

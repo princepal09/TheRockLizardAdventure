@@ -84,7 +84,7 @@ function SidebarContents({ onNavigate }: { onNavigate?: () => void }) {
                       href={href}
                       onClick={onNavigate}
                       aria-current={active ? "page" : undefined}
-                      className={`${itemClassName} hover:bg-slate-800 focus-visible:outline-2 focus-visible:outline-tertiary aria-[current=page]:bg-secondary aria-[current=page]:text-secondary-foreground font-semibold`}
+                      className={`${itemClassName} hover:bg-slate-800 focus-visible:outline-2 focus-visible:outline-tertiary aria-[current=page]:bg-secondary aria-[current=page]:text-white font-semibold`}
                     >
                       {content}
                     </Link>

@@ -12,6 +12,7 @@ import { useLogin } from "@/hooks/auth/useLogin";
 import { Button } from "@/components/ui/button";
 import { loginSchema, type LoginFormValues } from "@/types/auth";
 import { getErrorMessage } from "@/utils/error";
+import { useAuthStore } from "@/stores/auth.store";
 
 const inputClassName =
   "h-[50px] w-full rounded-lg placeholder:text-sm  border border-[#e0e3e5]/60 bg-white px-4 pl-[45px] text-base text-[#191c1e] placeholder:text-[#45464d]/75 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-tertiary";
@@ -20,6 +21,14 @@ const fieldIconClassName =
   "pointer-events-none absolute top-1/2 left-4 size-4 -translate-y-1/2 text-[#45464d]";
 
 export default function LoginForm() {
+  const sessionVersion = useAuthStore((state) => state.sessionVersion);
+
+  // Next can retain a visited route. Never reuse its credentials or reveal state
+  // after signing in, signing out, or changing the password.
+  return <LoginFields key={sessionVersion} />;
+}
+
+function LoginFields() {
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const PasswordIcon = showPassword ? EyeOff : Eye;
@@ -40,6 +49,8 @@ export default function LoginForm() {
   const submitHandler = async (data: LoginFormValues) => {
     try {
       await loginMutation.mutateAsync(data);
+      reset({ email: "", password: "" });
+      setShowPassword(false);
       router.replace("/admin/dashboard");
     } catch (err) {
       toast.error(getErrorMessage(err));
@@ -52,6 +63,7 @@ export default function LoginForm() {
   function submitForm(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (isSubmitting) return;
+    setShowPassword(false);
 
     // Browser autofill can update inputs without notifying React Hook Form.
     const fields = new FormData(event.currentTarget);
@@ -130,6 +142,7 @@ export default function LoginForm() {
           <button
             type="button"
             aria-label={showPassword ? "Hide password" : "Show password"}
+            aria-pressed={showPassword}
             aria-controls="password"
             onClick={() => setShowPassword((visible) => !visible)}
             className="absolute inset-y-0 right-0 grid w-11 place-items-center rounded-r-lg text-[#45464d] focus-visible:outline-2 focus-visible:outline-tertiary"
