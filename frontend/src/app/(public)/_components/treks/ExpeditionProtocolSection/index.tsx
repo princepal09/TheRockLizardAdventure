@@ -1,3 +1,4 @@
+import ScrollReveal from "../../ScrollReveal";
 import { Backpack, BriefcaseMedical, UsersRound, Utensils } from "lucide-react";
 import MedicalFormDownload from "../../MedicalFormDownload";
 import DeclarationFormDownload from "../../DeclarationFormDownload";
@@ -31,7 +32,8 @@ const protocols = [
 
 export default function ExpeditionProtocolSection() {
   return (
-    <section
+    <ScrollReveal
+      as="section"
       aria-labelledby="expedition-protocol-heading"
       className="rounded-2xl border border-slate-200 bg-white p-5 text-slate-900 shadow-sm sm:p-7"
     >
@@ -63,6 +65,6 @@ export default function ExpeditionProtocolSection() {
         <MedicalFormDownload />
         <DeclarationFormDownload />
       </div>
-    </section>
+    </ScrollReveal>
   );
 }

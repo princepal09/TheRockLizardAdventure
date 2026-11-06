@@ -1,3 +1,4 @@
+import ScrollReveal from "../ScrollReveal";
 import { Compass, Mountain, UsersRound } from "lucide-react";
 import Image from "next/image";
 import { founderName, founderDesignation } from "@/types/founder";
@@ -22,7 +23,8 @@ const principles = [
 
 export default function AboutStory() {
   return (
-    <section
+    <ScrollReveal
+      as="section"
       aria-labelledby="about-story-heading"
       className="mx-auto grid max-w-7xl items-center gap-6 px-4 py-10 sm:px-6 sm:py-14 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1fr)] lg:gap-12 xl:px-10"
     >
@@ -77,6 +79,6 @@ export default function AboutStory() {
           ))}
         </div>
       </div>
-    </section>
+    </ScrollReveal>
   );
 }

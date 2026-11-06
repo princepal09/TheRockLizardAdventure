@@ -1,3 +1,4 @@
+import ScrollReveal from "../ScrollReveal";
 import { Suspense } from "react";
 
 import { Skeleton } from "@/components/ui/skeleton";
@@ -61,7 +62,8 @@ function GallerySkeleton() {
 
 export default function GallerySection() {
   return (
-    <section
+    <ScrollReveal
+      as="section"
       aria-labelledby="gallery-heading"
       className="bg-[#f5f3ee] bg-[radial-gradient(ellipse_at_top_right,#f9731620,transparent_42%)] px-4 py-8 text-slate-900 sm:px-6 sm:py-12 xl:px-10"
     >
@@ -71,6 +73,6 @@ export default function GallerySection() {
           <GalleryPhotos />
         </Suspense>
       </div>
-    </section>
+    </ScrollReveal>
   );
 }

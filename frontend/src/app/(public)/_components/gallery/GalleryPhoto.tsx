@@ -1,5 +1,7 @@
 "use client";
 
+import ScrollReveal from "../ScrollReveal";
+
 import { canOptimizeImage, imageLoaderFor } from "@/lib/image-optimization";
 
 import { ImageOff } from "lucide-react";
@@ -20,7 +22,10 @@ export default function GalleryPhoto({
   const hasImage = !failed && /^(?:https?:\/\/|\/(?!\/))/i.test(imageUrl);
 
   return (
-    <figure className={`group relative isolate min-w-0 overflow-hidden bg-slate-200 ${className}`}>
+    <ScrollReveal
+      as="figure"
+      className={`group relative isolate min-w-0 overflow-hidden bg-slate-200 ${className}`}
+    >
       {hasImage ? (
         <Image
           src={imageUrl}
@@ -45,6 +50,6 @@ export default function GalleryPhoto({
           {altText}
         </figcaption>
       )}
-    </figure>
+    </ScrollReveal>
   );
 }

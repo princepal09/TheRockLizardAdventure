@@ -1,3 +1,4 @@
+import ScrollReveal from "../ScrollReveal";
 import { Suspense } from "react";
 
 import { Skeleton } from "@/components/ui/skeleton";
@@ -36,7 +37,8 @@ async function TeamProfiles() {
 
 export default function AboutTeam() {
   return (
-    <section
+    <ScrollReveal
+      as="section"
       id="about-team"
       aria-labelledby="about-team-heading"
       className="scroll-mt-20 border-t border-sky-100 bg-[#eef5f8]"
@@ -83,6 +85,6 @@ export default function AboutTeam() {
           <TeamProfiles />
         </Suspense>
       </div>
-    </section>
+    </ScrollReveal>
   );
 }

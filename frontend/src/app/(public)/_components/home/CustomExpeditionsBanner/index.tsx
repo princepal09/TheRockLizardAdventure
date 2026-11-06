@@ -1,3 +1,4 @@
+import ScrollReveal from "../../ScrollReveal";
 import { Map } from "lucide-react";
 import { Suspense } from "react";
 import { founderName } from "@/types/founder";
@@ -10,7 +11,7 @@ export default function CustomExpeditionsBanner() {
       aria-labelledby="custom-expeditions-title"
       className="bg-[#f5f3ee] px-4 py-6 text-slate-900 sm:px-6 xl:px-10"
     >
-      <div className="flex flex-col gap-4 rounded-xl border border-sky-200 bg-[#e7f2f8] p-4 sm:p-5 md:flex-row md:items-center md:justify-between lg:px-6">
+      <ScrollReveal className="flex flex-col gap-4 rounded-xl border border-sky-200 bg-[#e7f2f8] p-4 sm:p-5 md:flex-row md:items-center md:justify-between lg:px-6">
         <div className="min-w-0 max-w-xl">
           <p className="inline-flex items-center gap-1.5 rounded-full bg-orange-100 px-2 py-1 font-mono text-[9px] font-bold tracking-widest text-orange-800 uppercase">
             <Map aria-hidden="true" className="size-3 shrink-0" /> Custom treks, expeditions &amp;
@@ -35,7 +36,7 @@ export default function CustomExpeditionsBanner() {
         <Suspense fallback={<ExpeditionContactLinks />}>
           <CustomExpeditionActions />
         </Suspense>
-      </div>
+      </ScrollReveal>
     </section>
   );
 }

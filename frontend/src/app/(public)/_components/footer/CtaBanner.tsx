@@ -1,3 +1,4 @@
+import ScrollReveal from "../ScrollReveal";
 import { Phone } from "lucide-react";
 import Link from "next/link";
 
@@ -6,7 +7,7 @@ import { basecampPhone } from "../../../../types/basecamp";
 export default function CtaBanner({ phone }: { phone?: string | null }) {
   const contactPhone = phone ?? basecampPhone;
   return (
-    <section className="border-b-2 border-sky-500 bg-[#101727]">
+    <ScrollReveal as="section" className="border-b-2 border-sky-500 bg-[#101727]">
       <div className="flex w-full flex-col gap-3 px-4 py-10 sm:px-6 md:flex-row md:items-center md:justify-between xl:px-10">
         <div>
           <p className="font-mono text-[10px] font-semibold tracking-widest text-orange-400 uppercase">
@@ -39,6 +40,6 @@ export default function CtaBanner({ phone }: { phone?: string | null }) {
           </a>
         </div>
       </div>
-    </section>
+    </ScrollReveal>
   );
 }

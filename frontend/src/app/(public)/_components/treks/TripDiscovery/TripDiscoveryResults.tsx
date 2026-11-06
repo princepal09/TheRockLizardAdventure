@@ -1,5 +1,7 @@
 "use client";
 
+import ScrollReveal from "../../ScrollReveal";
+
 import { useState } from "react";
 
 import type { PublicListingTrip, TripKind } from "@/types/trip";
@@ -74,7 +76,9 @@ export default function TripDiscoveryResults({
       />
       {spotlight ? (
         <>
-          <FeaturedSpotlightCard key={spotlight.id} kind={kind} trip={spotlight} />
+          <ScrollReveal key={spotlight.id}>
+            <FeaturedSpotlightCard kind={kind} trip={spotlight} />
+          </ScrollReveal>
           {others.length > 0 && <TripDirectory kind={kind} trips={others} />}
         </>
       ) : (

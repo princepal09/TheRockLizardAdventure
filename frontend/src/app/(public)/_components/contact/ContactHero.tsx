@@ -1,3 +1,4 @@
+import ScrollReveal from "../ScrollReveal";
 import { Compass, MapPin, MessageSquare, Mountain } from "lucide-react";
 
 const highlights = [
@@ -9,7 +10,7 @@ const highlights = [
 
 export default function ContactHero() {
   return (
-    <section aria-labelledby="contact-heading" className="space-y-5">
+    <ScrollReveal as="section" aria-labelledby="contact-heading" className="space-y-5">
       <div className="space-y-3">
         <p className="inline-flex rounded-full bg-slate-200/70 px-3 py-1 font-mono text-[10px] font-bold tracking-widest text-slate-700 uppercase">
           Almora Basecamp
@@ -40,6 +41,6 @@ export default function ContactHero() {
           </div>
         ))}
       </dl>
-    </section>
+    </ScrollReveal>
   );
 }

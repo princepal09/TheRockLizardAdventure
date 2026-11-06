@@ -1,3 +1,4 @@
+import ScrollReveal from "../../ScrollReveal";
 import { Compass, SlidersHorizontal } from "lucide-react";
 import { Suspense } from "react";
 
@@ -24,7 +25,7 @@ export default function FeaturedTreksSection() {
       aria-labelledby="featured-treks-title"
       className="bg-[#f3f0e8] px-4 py-8 text-slate-900 sm:px-6 sm:py-10 xl:px-10"
     >
-      <div className="flex flex-wrap items-end justify-between gap-3">
+      <ScrollReveal className="flex flex-wrap items-end justify-between gap-3">
         <div>
           <p className="flex items-center gap-1.5 font-mono text-[10px] font-bold tracking-widest text-orange-700 uppercase">
             <Compass aria-hidden="true" className="size-3.5" /> Tailored recommendations
@@ -46,7 +47,7 @@ export default function FeaturedTreksSection() {
             Choose your level
           </span>
         </p>
-      </div>
+      </ScrollReveal>
       <Suspense
         fallback={
           <div role="status" className="mt-5">

@@ -8,7 +8,7 @@ export default async function PublicFloatingTools() {
   const phone = settings?.contactPhone ?? basecampPhone;
   return (
     <>
-      <WhatsAppWidget phone={settings?.whatsappPhone ?? phone} />
+      <WhatsAppWidget phone={settings?.whatsappPhone ?? phone} callPhone={phone} />
       <SafetyProtocol phone={phone} />
     </>
   );

@@ -1,3 +1,4 @@
+import ScrollReveal from "../../ScrollReveal";
 import { Map } from "lucide-react";
 import Image from "next/image";
 import { Suspense } from "react";
@@ -7,7 +8,8 @@ import InquiryActions, { InquiryLinks } from "./InquiryActions";
 
 export default function CustomInquiryBanner() {
   return (
-    <section
+    <ScrollReveal
+      as="section"
       aria-labelledby="custom-inquiry-heading"
       className="relative isolate overflow-hidden rounded-2xl border border-slate-700 bg-[#121a2b] p-5 text-white shadow-lg sm:p-8 lg:p-10"
     >
@@ -39,6 +41,6 @@ export default function CustomInquiryBanner() {
           <InquiryActions />
         </Suspense>
       </div>
-    </section>
+    </ScrollReveal>
   );
 }

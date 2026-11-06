@@ -1,3 +1,4 @@
+import ScrollReveal from "../../ScrollReveal";
 import { ArrowDown } from "lucide-react";
 import { useState } from "react";
 
@@ -37,9 +38,11 @@ export default function TripDirectory({
         </p>
       </div>
       <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {visible.map((trip) => (
+        {visible.map((trip, index) => (
           <li key={trip.id} className="min-w-0">
-            <TrekCard key={trip.coverImageUrl} trip={trip} kind={kind} />
+            <ScrollReveal delay={(index % 3) * 0.08}>
+              <TrekCard key={trip.coverImageUrl} trip={trip} kind={kind} />
+            </ScrollReveal>
           </li>
         ))}
       </ul>

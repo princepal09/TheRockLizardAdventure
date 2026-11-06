@@ -1,3 +1,4 @@
+import ScrollReveal from "../../ScrollReveal";
 import { Thermometer } from "lucide-react";
 import { Suspense } from "react";
 
@@ -49,7 +50,8 @@ async function SeasonalGuideCards({ kind }: { kind: TripKind }) {
 
 export default function SeasonalGuideSection({ kind }: { kind: TripKind }) {
   return (
-    <section
+    <ScrollReveal
+      as="section"
       aria-labelledby="seasonal-guide-heading"
       className="border-y border-sky-100 bg-[#eef5f8] px-4 py-8 text-slate-900 sm:px-6 sm:py-10 xl:px-10"
     >
@@ -82,6 +84,6 @@ export default function SeasonalGuideSection({ kind }: { kind: TripKind }) {
       >
         <SeasonalGuideCards kind={kind} />
       </Suspense>
-    </section>
+    </ScrollReveal>
   );
 }

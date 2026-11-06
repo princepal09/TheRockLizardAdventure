@@ -1,3 +1,4 @@
+import ScrollReveal from "../../ScrollReveal";
 import { Suspense } from "react";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
@@ -42,7 +43,7 @@ export default function RegionGallerySection() {
       aria-labelledby="region-gallery-title"
       className="border-b border-stone-200 bg-[#f5f3ee] px-4 py-8 text-slate-900 sm:px-6 sm:py-10 xl:px-10"
     >
-      <div className="mb-4 flex flex-wrap items-end justify-between gap-x-6 gap-y-2 border-b border-stone-200 pb-2">
+      <ScrollReveal className="mb-4 flex flex-wrap items-end justify-between gap-x-6 gap-y-2 border-b border-stone-200 pb-2">
         <div>
           <p className="font-mono text-[10px] font-bold tracking-widest text-orange-700 uppercase">
             Expedition architecture
@@ -58,7 +59,7 @@ export default function RegionGallerySection() {
           Explore routes in Uttarakhand (Kumaon + Garhwal), Kashmir and Maharashtra, with planning
           and preparation coordinated from Almora.
         </p>
-      </div>
+      </ScrollReveal>
       <Suspense
         fallback={
           <div role="status">

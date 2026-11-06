@@ -1,3 +1,4 @@
+import ScrollReveal from "../_components/ScrollReveal";
 import { pageMetadata } from "@/lib/page-metadata";
 import { Suspense } from "react";
 import { z } from "zod";
@@ -58,22 +59,26 @@ export default function ContactPage({ searchParams }: { searchParams: SearchPara
       <div className="mx-auto max-w-6xl space-y-6">
         <ContactHero />
         <div className="grid items-start gap-5 lg:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)]">
-          <Suspense
-            fallback={
-              <div
-                id="enquiry-form"
-                role="status"
-                className="rounded-xl border border-stone-200 bg-white p-4 text-sm text-slate-600"
-              >
-                Loading enquiry form…
-              </div>
-            }
-          >
-            <EnquiryForm searchParams={searchParams} />
-          </Suspense>
-          <Suspense fallback={<ContactDetailsCard />}>
-            <ContactDetails />
-          </Suspense>
+          <ScrollReveal>
+            <Suspense
+              fallback={
+                <div
+                  id="enquiry-form"
+                  role="status"
+                  className="rounded-xl border border-stone-200 bg-white p-4 text-sm text-slate-600"
+                >
+                  Loading enquiry form…
+                </div>
+              }
+            >
+              <EnquiryForm searchParams={searchParams} />
+            </Suspense>
+          </ScrollReveal>
+          <ScrollReveal delay={0.08}>
+            <Suspense fallback={<ContactDetailsCard />}>
+              <ContactDetails />
+            </Suspense>
+          </ScrollReveal>
         </div>
       </div>
     </main>

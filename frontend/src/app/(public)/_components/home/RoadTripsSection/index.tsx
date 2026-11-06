@@ -1,3 +1,4 @@
+import ScrollReveal from "../../ScrollReveal";
 import { Suspense } from "react";
 import Link from "next/link";
 import { getPublishedRoadTrips } from "@/lib/api/published-road-trips";
@@ -16,9 +17,11 @@ async function RoadTripsContent() {
     .slice(0, 3);
   return featured.length ? (
     <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-      {featured.map((trip) => (
+      {featured.map((trip, index) => (
         <li key={trip.id}>
-          <TrekCard kind="trips" trip={trip} />
+          <ScrollReveal delay={(index % 3) * 0.08}>
+            <TrekCard kind="trips" trip={trip} />
+          </ScrollReveal>
         </li>
       ))}
     </ul>
@@ -35,7 +38,7 @@ export default function RoadTripsSection() {
       aria-labelledby="home-trips-title"
       className="space-y-6 bg-[#f2f7fa] px-4 py-10 text-slate-900 sm:px-6 xl:px-10"
     >
-      <header className="flex flex-wrap items-end justify-between gap-4">
+      <ScrollReveal className="flex flex-wrap items-end justify-between gap-4">
         <div>
           <p className="font-mono text-xs font-bold uppercase tracking-widest text-orange-800">
             Beyond the trail
@@ -57,7 +60,7 @@ export default function RoadTripsSection() {
         >
           Explore all trips →
         </Link>
-      </header>
+      </ScrollReveal>
       <Suspense fallback={<p role="status">Loading road and bike trips…</p>}>
         <RoadTripsContent />
       </Suspense>

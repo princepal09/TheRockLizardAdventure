@@ -1,10 +1,12 @@
+import ScrollReveal from "../ScrollReveal";
 import { ArrowDown, ArrowUpRight, MapPin, Mountain } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
 export default function AboutHero() {
   return (
-    <section
+    <ScrollReveal
+      as="section"
       aria-labelledby="about-heading"
       className="relative isolate overflow-hidden bg-slate-950 text-white"
     >
@@ -61,6 +63,6 @@ export default function AboutHero() {
           </p>
         </aside>
       </div>
-    </section>
+    </ScrollReveal>
   );
 }

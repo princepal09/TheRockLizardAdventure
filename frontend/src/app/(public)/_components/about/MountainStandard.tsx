@@ -1,3 +1,4 @@
+import ScrollReveal from "../ScrollReveal";
 import { BriefcaseMedical, Handshake, Leaf, ShieldCheck, Utensils } from "lucide-react";
 
 import StandardPillarCard from "./StandardPillarCard";
@@ -47,7 +48,8 @@ const pillars = [
 
 export default function MountainStandard() {
   return (
-    <section
+    <ScrollReveal
+      as="section"
       aria-labelledby="mountain-standard-heading"
       className="border-y border-sky-100 bg-[#f3f7f9] px-4 py-10 sm:px-6 sm:py-14 xl:px-10"
     >
@@ -78,6 +80,6 @@ export default function MountainStandard() {
           ))}
         </div>
       </div>
-    </section>
+    </ScrollReveal>
   );
 }

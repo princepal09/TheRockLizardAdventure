@@ -1,3 +1,4 @@
+import ScrollReveal from "../../ScrollReveal";
 import { Suspense } from "react";
 import { getGoogleReviews } from "@/lib/api/google-reviews";
 import Testimonials from "./Testimonials";
@@ -13,9 +14,11 @@ export default function TestimonialsSection() {
       aria-labelledby="testimonials-title"
       className="bg-[#f3f0e9] px-4 py-10 text-slate-900 sm:px-6 sm:py-14 xl:px-10"
     >
-      <Suspense fallback={<Testimonials data={null} loading />}>
-        <TestimonialContent />
-      </Suspense>
+      <ScrollReveal>
+        <Suspense fallback={<Testimonials data={null} loading />}>
+          <TestimonialContent />
+        </Suspense>
+      </ScrollReveal>
     </section>
   );
 }

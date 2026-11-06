@@ -1,0 +1,67 @@
+.viewport {
+  container-type: inline-size;
+  max-width: 64rem;
+  margin-inline: auto;
+  overflow: hidden;
+  mask-image: linear-gradient(to right, transparent, black 4%, black 96%, transparent);
+}
+
+.track {
+  display: flex;
+  width: max-content;
+}
+
+.group {
+  display: flex;
+  flex-shrink: 0;
+  gap: 1.5rem;
+  padding-inline-end: 1.5rem;
+}
+
+.logo {
+  display: flex;
+  width: calc((100cqw - 1.5rem) / 2);
+  min-height: 9rem;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #e2e8f0;
+  background: white;
+  padding: 1.5rem;
+}
+
+@media (min-width: 640px) {
+  .logo {
+    width: calc((100cqw - 3rem) / 2.5);
+    min-height: 11rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .viewport {
+    overflow: visible;
+    mask-image: none;
+  }
+
+  .track {
+    width: 100%;
+    transform: none !important;
+  }
+
+  .group {
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding-inline-end: 0;
+  }
+
+  .logo {
+    width: min(100%, 24rem);
+    max-width: 100%;
+  }
+
+  .duplicate,
+  .controls {
+    display: none;
+  }
+}

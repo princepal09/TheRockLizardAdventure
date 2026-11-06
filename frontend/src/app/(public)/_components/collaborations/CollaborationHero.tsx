@@ -1,10 +1,12 @@
+import ScrollReveal from "../ScrollReveal";
 import { ArrowDown, ArrowUpRight, Handshake } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
 export default function CollaborationHero() {
   return (
-    <section
+    <ScrollReveal
+      as="section"
       aria-labelledby="collaborations-title"
       className="relative isolate overflow-hidden bg-slate-950 text-white"
     >
@@ -60,6 +62,6 @@ export default function CollaborationHero() {
           </p>
         </aside>
       </div>
-    </section>
+    </ScrollReveal>
   );
 }

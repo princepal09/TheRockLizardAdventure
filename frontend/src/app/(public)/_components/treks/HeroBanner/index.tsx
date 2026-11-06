@@ -1,3 +1,4 @@
+import ScrollReveal from "../../ScrollReveal";
 import { Mountain } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -47,7 +48,8 @@ export default function HeroBanner({ kind }: { kind: TripKind }) {
   ];
 
   return (
-    <section
+    <ScrollReveal
+      as="section"
       aria-labelledby="trip-listing-heading"
       className="relative isolate overflow-hidden border-b border-sky-100 bg-slate-900 px-4 py-10 text-white sm:px-6 sm:py-14 lg:py-16"
     >
@@ -98,6 +100,6 @@ export default function HeroBanner({ kind }: { kind: TripKind }) {
           ))}
         </dl>
       </div>
-    </section>
+    </ScrollReveal>
   );
 }

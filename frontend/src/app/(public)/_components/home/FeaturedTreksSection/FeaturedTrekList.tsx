@@ -6,6 +6,8 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import type { TrekSearchItem } from "@/lib/api/published-treks";
 
+import ScrollReveal from "../../ScrollReveal";
+
 import FeaturedTrekCard from "./FeaturedTrekCard";
 
 const filters = [
@@ -54,11 +56,9 @@ export default function FeaturedTrekList({ treks }: { treks: TrekSearchItem[] })
       {visible.length ? (
         <div className="grid gap-4 md:grid-cols-3 lg:gap-6">
           {visible.map((trek, index) => (
-            <FeaturedTrekCard
-              key={trek.id}
-              trek={trek}
-              highlighted={visible.length === 3 && index === 1}
-            />
+            <ScrollReveal key={trek.id} className="h-full [&>div]:h-full" delay={index * 0.08}>
+              <FeaturedTrekCard trek={trek} highlighted={visible.length === 3 && index === 1} />
+            </ScrollReveal>
           ))}
         </div>
       ) : (

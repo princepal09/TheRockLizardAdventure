@@ -46,18 +46,34 @@ export default function BackToTop() {
     <motion.button
       type="button"
       aria-label="Back to top"
-      title="Back to top"
       onClick={() => {
         window.scrollTo({ top: 0, behavior: reduceMotion ? "instant" : "smooth" });
         document.getElementById("site-navigation")?.focus({ preventScroll: true });
       }}
-      initial={false}
-      whileHover={animate ? { y: -3 } : undefined}
-      whileTap={animate ? { scale: 0.96 } : undefined}
+      initial={animate ? { opacity: 0, y: 12, scale: 0.9 } : false}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      whileHover={animate ? { y: -4, scale: 1.06 } : undefined}
+      whileTap={animate ? { scale: 0.94 } : undefined}
       transition={{ duration: 0.2, ease: "easeOut" }}
-      className="fixed right-6 bottom-24 z-50 grid size-12 place-items-center rounded-full border border-orange-400 bg-orange-600 text-white shadow-lg transition-colors hover:bg-orange-700 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-orange-800"
+      className="group fixed right-6 bottom-28 z-50 grid size-14 place-items-center rounded-full bg-linear-to-br from-amber-300 via-orange-500 to-orange-700 p-[2px] text-white shadow-[0_6px_24px_-5px_#f9731680] ring-4 ring-orange-500/10 transition-shadow hover:shadow-[0_8px_32px_-4px_#f97316b3] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-orange-600"
     >
-      <ArrowUp aria-hidden="true" className="size-5" />
+      <span aria-hidden="true" className="absolute inset-0 rounded-full border border-white/30" />
+      <span className="relative flex size-full flex-col items-center justify-center gap-0.5 rounded-full bg-linear-to-br from-slate-800 to-slate-950 shadow-inner">
+        <ArrowUp
+          aria-hidden="true"
+          strokeWidth={2.5}
+          className="size-5 text-orange-300 motion-safe:transition-transform motion-safe:duration-300 motion-safe:group-hover:-translate-y-0.5 motion-safe:group-focus-visible:-translate-y-0.5"
+        />
+        <span aria-hidden="true" className="text-[8px] font-bold tracking-[0.18em] text-orange-100">
+          TOP
+        </span>
+      </span>
+      <span
+        aria-hidden="true"
+        className="pointer-events-none absolute right-[calc(100%+0.75rem)] whitespace-nowrap rounded-lg border border-slate-700 bg-slate-900 px-3 py-2 text-xs font-semibold text-white opacity-0 shadow-lg group-hover:opacity-100 group-focus-visible:opacity-100 motion-safe:translate-x-1 motion-safe:transition-all motion-safe:duration-200 motion-safe:group-hover:translate-x-0 motion-safe:group-focus-visible:translate-x-0"
+      >
+        Back to top
+      </span>
     </motion.button>
   );
 }

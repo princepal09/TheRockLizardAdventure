@@ -1,3 +1,4 @@
+import ScrollReveal from "../ScrollReveal";
 import { ArrowUpRight, GraduationCap, Sprout } from "lucide-react";
 import Link from "next/link";
 
@@ -41,7 +42,8 @@ const aims = [
 
 export default function AboutPurpose() {
   return (
-    <section
+    <ScrollReveal
+      as="section"
       aria-labelledby="about-purpose-heading"
       className="border-y border-stone-200 bg-[#eef5f8] px-4 py-10 sm:px-6 sm:py-14 xl:px-10"
     >
@@ -88,7 +90,8 @@ export default function AboutPurpose() {
           ))}
         </ol>
 
-        <section
+        <ScrollReveal
+          as="section"
           aria-labelledby="outdoor-learning-heading"
           className="grid gap-5 rounded-2xl border border-orange-200 bg-orange-50 p-5 sm:p-7 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center"
         >
@@ -118,8 +121,8 @@ export default function AboutPurpose() {
           >
             Plan a School Programme <ArrowUpRight aria-hidden="true" className="size-4" />
           </Link>
-        </section>
+        </ScrollReveal>
       </div>
-    </section>
+    </ScrollReveal>
   );
 }

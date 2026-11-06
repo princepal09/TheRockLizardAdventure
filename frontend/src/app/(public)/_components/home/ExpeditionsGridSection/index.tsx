@@ -1,3 +1,4 @@
+import ScrollReveal from "../../ScrollReveal";
 import { ArrowRight, Flag } from "lucide-react";
 import Link from "next/link";
 import { Suspense } from "react";
@@ -26,7 +27,13 @@ async function ExpeditionCards({ showAll }: { showAll: boolean }) {
     <div className={gridClass}>
       {(showAll ? sorted : selectHomepageTrips(expeditions, homepageTripLimits.expeditions)).map(
         (expedition, index) => (
-          <ExpeditionCard key={expedition.id} expedition={expedition} primary={index === 0} />
+          <ScrollReveal
+            key={expedition.id}
+            className="h-full [&>div]:h-full"
+            delay={(index % 4) * 0.08}
+          >
+            <ExpeditionCard expedition={expedition} primary={index === 0} />
+          </ScrollReveal>
         ),
       )}
     </div>
@@ -40,7 +47,7 @@ export default function ExpeditionsGridSection({ showAll = false }: { showAll?: 
       aria-labelledby="expeditions-grid-heading"
       className="bg-[#f5f3ee] px-4 py-8 text-slate-900 sm:px-6 sm:py-10 xl:px-10"
     >
-      <div className="mb-6 flex flex-wrap items-end justify-between gap-3 border-b border-stone-200 pb-3">
+      <ScrollReveal className="mb-6 flex flex-wrap items-end justify-between gap-3 border-b border-stone-200 pb-3">
         <div>
           <p className="flex items-center gap-1 font-mono text-[10px] font-bold tracking-widest text-orange-800 uppercase">
             <Flag aria-hidden="true" className="size-3" /> Curated departures
@@ -60,7 +67,7 @@ export default function ExpeditionsGridSection({ showAll = false }: { showAll?: 
             View All Scheduled Expeditions <ArrowRight aria-hidden="true" className="size-3.5" />
           </Link>
         )}
-      </div>
+      </ScrollReveal>
       <Suspense
         fallback={
           <div role="status">

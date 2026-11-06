@@ -1,3 +1,4 @@
+import ScrollReveal from "../ScrollReveal";
 import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 
@@ -21,7 +22,8 @@ const steps = [
 
 export default function CollaborationProcess() {
   return (
-    <section
+    <ScrollReveal
+      as="section"
       aria-labelledby="collaboration-process-title"
       className="bg-[#eef5f8] px-4 py-10 sm:px-6 sm:py-14 xl:px-10"
     >
@@ -61,6 +63,6 @@ export default function CollaborationProcess() {
           </Link>
         </div>
       </div>
-    </section>
+    </ScrollReveal>
   );
 }

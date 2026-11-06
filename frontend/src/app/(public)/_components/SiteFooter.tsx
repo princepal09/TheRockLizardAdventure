@@ -1,3 +1,4 @@
+import ScrollReveal from "./ScrollReveal";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -14,7 +15,7 @@ export default async function SiteFooter() {
   return (
     <footer className="bg-[#101829] text-slate-300">
       <CtaBanner phone={settings?.contactPhone} />
-      <div className="w-full px-4 sm:px-6 xl:px-10">
+      <ScrollReveal className="w-full px-4 sm:px-6 xl:px-10">
         <SocialAndBrochureBar settings={settings} />
         <div className="grid gap-4 py-4 sm:gap-5 sm:py-5 md:grid-cols-2 md:items-start">
           <div className="flex min-w-0 flex-col items-start gap-4 lg:flex-row lg:gap-5 xl:gap-8">
@@ -38,7 +39,7 @@ export default async function SiteFooter() {
         </div>
 
         <CopyrightBar />
-      </div>
+      </ScrollReveal>
     </footer>
   );
 }

@@ -1,3 +1,4 @@
+import ScrollReveal from "../../ScrollReveal";
 import { Suspense } from "react";
 
 import FaqAccordion from "./FaqAccordion";
@@ -9,7 +10,7 @@ export default function FaqSection() {
       aria-labelledby="faq-heading"
       className="border-y border-sky-100 bg-[#eef5fa] px-4 py-10 text-slate-900 sm:px-6 sm:py-14"
     >
-      <div className="mx-auto max-w-4xl">
+      <ScrollReveal className="mx-auto max-w-4xl">
         <div className="text-center">
           <p className="font-mono text-[10px] font-bold tracking-widest text-orange-700 uppercase">
             Expedition intel
@@ -29,7 +30,7 @@ export default function FaqSection() {
         <Suspense fallback={<FaqContactPanel />}>
           <FaqContact />
         </Suspense>
-      </div>
+      </ScrollReveal>
     </section>
   );
 }

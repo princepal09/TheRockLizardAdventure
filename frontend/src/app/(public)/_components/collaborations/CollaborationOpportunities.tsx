@@ -1,3 +1,4 @@
+import ScrollReveal from "../ScrollReveal";
 import { Building2, HeartHandshake } from "lucide-react";
 import Link from "next/link";
 
@@ -30,7 +31,8 @@ const opportunities = [
 
 export default function CollaborationOpportunities() {
   return (
-    <section
+    <ScrollReveal
+      as="section"
       id="collaboration-opportunities"
       aria-labelledby="collaboration-opportunities-title"
       className="scroll-mt-24 border-b border-stone-200 px-4 py-10 sm:px-6 sm:py-14 xl:px-10"
@@ -80,6 +82,6 @@ export default function CollaborationOpportunities() {
           ))}
         </ul>
       </div>
-    </section>
+    </ScrollReveal>
   );
 }
