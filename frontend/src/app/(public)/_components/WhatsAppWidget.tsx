@@ -58,7 +58,7 @@ export default function WhatsAppWidget({
     },
   };
   const actionClass =
-    "flex min-h-12 w-full items-center gap-3 rounded-full px-5 py-3 text-sm font-semibold shadow-lg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-violet-700";
+    "flex min-h-12 w-full cursor-pointer items-center gap-3 rounded-full px-5 py-3 text-sm font-semibold shadow-lg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-violet-700 motion-safe:transition-transform motion-safe:duration-200 motion-safe:ease-out motion-safe:hover:scale-[1.03] motion-safe:focus-visible:scale-[1.03]";
 
   return (
     <>
@@ -92,7 +92,7 @@ export default function WhatsAppWidget({
             closed: { opacity: 0, transition: { duration: reducedMotion ? 0 : 0.1 } },
           }}
           style={{ pointerEvents: open ? "auto" : "none" }}
-          className="absolute right-0 bottom-20 flex w-[min(18rem,calc(100vw-3rem))] flex-col gap-3"
+          className="absolute  right-0 bottom-20 flex w-[min(18rem,calc(100vw-3rem))] flex-col gap-3"
         >
           <motion.div variants={itemVariants}>
             <Link
@@ -131,12 +131,30 @@ export default function WhatsAppWidget({
             </a>
           </motion.div>
         </motion.nav>
-        {!open && (
-          <span
-            aria-hidden="true"
-            className="pointer-events-none absolute -inset-2 rounded-full bg-violet-600/20 ring-8 ring-violet-500/10"
-          />
-        )}
+        {!open &&
+          [0, 1].map((ring) => (
+            <motion.span
+              key={ring}
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-0 rounded-full border border-violet-400/60 bg-violet-600/30"
+              initial={{ scale: 1, opacity: 0 }}
+              animate={
+                reducedMotion === false
+                  ? { scale: [1, 1.75], opacity: [0.6, 0] }
+                  : { scale: 1, opacity: 0 }
+              }
+              transition={
+                reducedMotion === false
+                  ? {
+                      duration: 1.8,
+                      delay: ring * 0.9,
+                      repeat: Infinity,
+                      ease: "easeOut",
+                    }
+                  : { duration: 0 }
+              }
+            />
+          ))}
         <motion.button
           ref={trigger}
           type="button"
@@ -147,12 +165,12 @@ export default function WhatsAppWidget({
           initial={false}
           whileHover={reducedMotion ? undefined : { scale: 1.06 }}
           whileTap={reducedMotion ? undefined : { scale: 0.95 }}
-          className={`relative grid size-14 place-items-center rounded-full text-white shadow-xl transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-violet-800 ${open ? "bg-red-600 hover:bg-red-700" : "bg-violet-700 hover:bg-violet-800"}`}
+          className={`relative grid size-16 cursor-pointer place-items-center rounded-full text-white shadow-xl transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-violet-800 ${open ? "bg-red-600 hover:bg-red-700" : "bg-violet-700 hover:bg-violet-800"}`}
         >
           {open ? (
-            <X aria-hidden="true" className="size-7" />
+            <X aria-hidden="true" className="size-8" />
           ) : (
-            <Headset aria-hidden="true" className="size-7" />
+            <Headset aria-hidden="true" className="size-8" />
           )}
         </motion.button>
       </div>

@@ -92,13 +92,13 @@ export default function SafetyProtocol({ phone = basecampPhone }: { phone?: stri
             transition={{ duration: 0.2, ease: "easeOut" }}
           />
         }
-        className="fixed top-1/2 right-0 z-40 inline-flex min-w-9 -translate-y-1/2 items-center gap-1.5 rounded-l-lg border border-r-0 border-orange-400 bg-orange-600 px-2 py-3 font-mono text-[8px] font-bold tracking-wider text-white uppercase shadow-lg hover:bg-orange-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-900 [writing-mode:vertical-rl] sm:min-w-11 sm:gap-2 sm:rounded-l-xl sm:px-2.5 sm:py-4 sm:text-[10px] sm:tracking-widest"
+        className="fixed top-1/2 right-0 z-40 inline-flex min-w-8 -translate-y-1/2 items-center gap-1 rounded-l-lg border border-r-0 border-orange-400 bg-orange-600 px-1.5 py-2 font-mono text-[8px] font-bold tracking-wide text-white uppercase shadow-lg hover:bg-orange-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-900 [writing-mode:vertical-rl] sm:min-w-9 sm:gap-1.5 sm:px-2 sm:py-2.5 sm:text-[9px] sm:tracking-wider"
       >
-        <ShieldCheck aria-hidden="true" className="size-3.5 sm:size-4" />
+        <ShieldCheck aria-hidden="true" className="size-3 sm:size-3.5" />
         TRLA Safety Protocol
         <motion.span
           aria-hidden="true"
-          className="grid size-5 shrink-0 place-items-center rounded-full border border-white/30 bg-white/10 sm:size-6"
+          className="grid size-4 shrink-0 place-items-center rounded-full border border-white/30 bg-white/10 sm:size-5"
           initial={false}
           animate={{ x: reduceMotion || open ? 0 : [0, -3, 0] }}
           transition={{
@@ -108,7 +108,7 @@ export default function SafetyProtocol({ phone = basecampPhone }: { phone?: stri
             ease: "easeInOut",
           }}
         >
-          <ArrowLeft className="size-3 sm:size-3.5" />
+          <ArrowLeft className="size-2.5 sm:size-3" />
         </motion.span>
       </Dialog.Trigger>
       <Dialog.Portal>

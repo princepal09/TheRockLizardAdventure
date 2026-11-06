@@ -55,16 +55,16 @@ export default function BackToTop() {
       whileHover={animate ? { y: -4, scale: 1.06 } : undefined}
       whileTap={animate ? { scale: 0.94 } : undefined}
       transition={{ duration: 0.2, ease: "easeOut" }}
-      className="group fixed right-6 bottom-28 z-50 grid size-14 place-items-center rounded-full bg-linear-to-br from-amber-300 via-orange-500 to-orange-700 p-[2px] text-white shadow-[0_6px_24px_-5px_#f9731680] ring-4 ring-orange-500/10 transition-shadow hover:shadow-[0_8px_32px_-4px_#f97316b3] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-orange-600"
+      className="group fixed right-6 bottom-28 z-50 grid size-11 place-items-center rounded-full bg-linear-to-br from-amber-300 via-orange-500 to-orange-700 p-[2px] text-white shadow-[0_6px_24px_-5px_#f9731680] ring-2 ring-orange-500/10 transition-shadow hover:shadow-[0_8px_32px_-4px_#f97316b3] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-orange-600"
     >
       <span aria-hidden="true" className="absolute inset-0 rounded-full border border-white/30" />
-      <span className="relative flex size-full flex-col items-center justify-center gap-0.5 rounded-full bg-linear-to-br from-slate-800 to-slate-950 shadow-inner">
+      <span className="relative flex size-full flex-col items-center justify-center gap-0 rounded-full bg-linear-to-br from-slate-800 to-slate-950 shadow-inner">
         <ArrowUp
           aria-hidden="true"
           strokeWidth={2.5}
-          className="size-5 text-orange-300 motion-safe:transition-transform motion-safe:duration-300 motion-safe:group-hover:-translate-y-0.5 motion-safe:group-focus-visible:-translate-y-0.5"
+          className="size-4 text-orange-300 motion-safe:transition-transform motion-safe:duration-300 motion-safe:group-hover:-translate-y-0.5 motion-safe:group-focus-visible:-translate-y-0.5"
         />
-        <span aria-hidden="true" className="text-[8px] font-bold tracking-[0.18em] text-orange-100">
+        <span aria-hidden="true" className="text-[7px] font-bold tracking-[0.14em] text-orange-100">
           TOP
         </span>
       </span>
