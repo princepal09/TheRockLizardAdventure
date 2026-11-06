@@ -79,6 +79,19 @@ export default function TripBooking({
           <DossierIcon name="contact-1" /> Call Basecamp
         </a>
       </div>
+      <div className="rounded-xl border border-sky-100 bg-sky-50 p-4">
+        <h3 className="text-sm font-bold">Want a trip planned around you?</h3>
+        <p className="mt-2 text-sm leading-relaxed text-slate-600">
+          We can discuss a different destination or adapt the route, dates, duration and pace to
+          your group. Tell us what you have in mind.
+        </p>
+        <Link
+          href="/contact?topic=custom-trip#enquiry-form"
+          className="mt-2 inline-flex min-h-11 items-center text-sm font-semibold text-orange-800 underline underline-offset-4 hover:text-orange-950 focus-visible:outline-2 focus-visible:outline-orange-800"
+        >
+          Customize Your Trip →
+        </Link>
+      </div>
       <BookingPolicyDownloads />
       <MedicalFormDownload />
       <DeclarationFormDownload />

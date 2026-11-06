@@ -24,8 +24,10 @@ type SearchParams = Promise<{
 async function EnquiryForm({ searchParams }: { searchParams: SearchParams }) {
   const { topic, kind, trip } = await searchParams;
   const collaboration = topic === "collaboration" || topic === "travel-trade";
+  const customTrip = topic === "custom-trip";
   let selectedTrip: { value: string; name: string } | undefined;
   if (
+    !customTrip &&
     (kind === "treks" || kind === "expeditions" || kind === "trips") &&
     typeof trip === "string" &&
     z.uuid().safeParse(trip).success
@@ -42,8 +44,9 @@ async function EnquiryForm({ searchParams }: { searchParams: SearchParams }) {
   }
   return (
     <ContactForm
-      key={`${collaboration}:${selectedTrip?.value ?? "general"}`}
+      key={`${collaboration}:${customTrip}:${selectedTrip?.value ?? "general"}`}
       collaboration={collaboration}
+      customTrip={customTrip}
       selectedTrip={selectedTrip}
     />
   );

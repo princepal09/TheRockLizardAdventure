@@ -30,7 +30,7 @@ export const metadata: Metadata = {
     template: "%s | Rocklizard Adventure",
   },
   description:
-    "Explore guided treks and expeditions in Uttarakhand, Kashmir and Maharashtra with Rocklizard Adventure. Browse itineraries and plan your next adventure.",
+    "Explore guided treks and expeditions in Uttarakhand (Kumaon + Garhwal), Kashmir and Maharashtra with Rocklizard Adventure. Browse itineraries and plan your next adventure.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

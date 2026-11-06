@@ -33,7 +33,8 @@ export default function AboutHero() {
           </h1>
           <p className="mt-4 max-w-xl text-sm leading-relaxed text-slate-200 sm:text-base">
             Meet the local team behind our treks and expeditions. We plan our routes from Almora and
-            help visitors prepare for the mountains of Uttarakhand, Kashmir and Maharashtra.
+            help visitors prepare for the mountains of Uttarakhand (Kumaon + Garhwal), Kashmir and
+            Maharashtra.
           </p>
           <div className="mt-6 flex flex-wrap gap-2.5">
             <a

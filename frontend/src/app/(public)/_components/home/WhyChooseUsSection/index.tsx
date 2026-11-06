@@ -19,8 +19,8 @@ export default function WhyChooseUsSection() {
           The Almora Mountaineering Standard
         </h2>
         <p className="mt-1.5 max-w-md text-sm leading-relaxed text-slate-300">
-          From our Almora Basecamp, we help you prepare for adventures across Uttarakhand, Kashmir
-          and Maharashtra.
+          From our Almora Basecamp, we help you prepare for adventures across Uttarakhand (Kumaon +
+          Garhwal), Kashmir and Maharashtra.
         </p>
       </SectionReveal>
       <div className="mt-7 grid gap-4 md:grid-cols-[1.4fr_1fr] lg:gap-6">

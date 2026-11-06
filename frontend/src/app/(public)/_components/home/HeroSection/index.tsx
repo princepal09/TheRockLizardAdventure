@@ -48,8 +48,8 @@ const HeroSection = async () => {
           </span>
         </h1>
         <p className="mt-4 max-w-[32rem] text-sm leading-relaxed text-slate-200 lg:text-base">
-          From Himalayan trails to Sahyadri ridges, explore Uttarakhand, Kashmir and Maharashtra
-          with planning and guidance from our Almora-based team.
+          From Himalayan trails to Sahyadri ridges, explore Uttarakhand (Kumaon + Garhwal), Kashmir
+          and Maharashtra with planning and guidance from our Almora-based team.
         </p>
         <div className="mt-3 flex max-w-[36rem] items-center gap-2 sm:w-[65%]">
           <span aria-hidden="true" className="h-px flex-1 bg-white/15" />

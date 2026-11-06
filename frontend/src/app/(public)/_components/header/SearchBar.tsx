@@ -69,7 +69,7 @@ const SearchBar = () => {
           }}
           maxLength={100}
           aria-label="Search treks by name"
-          placeholder="Search treks across India (Uttarakhand, Kashmir, Himachal...)"
+          placeholder="Search treks: Uttarakhand (Kumaon + Garhwal), Kashmir, Himachal..."
           className="min-w-0 flex-1 truncate bg-transparent text-xs tracking-wide text-white placeholder:text-gray-500 focus:outline-none"
         />
 

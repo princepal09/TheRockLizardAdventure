@@ -2,7 +2,7 @@ import { Compass, MapPin, MessageSquare, Mountain } from "lucide-react";
 
 const highlights = [
   { Icon: Mountain, label: "Basecamp", value: "Almora" },
-  { Icon: MapPin, label: "Region", value: "Uttarakhand" },
+  { Icon: MapPin, label: "Region", value: "Uttarakhand (Kumaon + Garhwal)" },
   { Icon: Compass, label: "Trip planning", value: "Treks & expeditions" },
   { Icon: MessageSquare, label: "Contact", value: "Direct enquiries" },
 ];

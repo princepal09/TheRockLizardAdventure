@@ -53,8 +53,9 @@ export default function AboutStory() {
         </h2>
         <p className="mt-3 max-w-xl text-sm leading-relaxed text-slate-600 sm:text-base">
           Rock Lizard Adventure is a trekking and mountaineering organisation at heart. Founded by
-          {founderName} and based in Almora, Uttarakhand, we believe exploring nature can bring
-          fitness, discipline and enjoyment together, while deepening our respect for the outdoors.
+          {founderName} and based in Almora, Uttarakhand (Kumaon + Garhwal), we believe exploring
+          nature can bring fitness, discipline and enjoyment together, while deepening our respect
+          for the outdoors.
         </p>
         <p className="mt-3 max-w-xl text-sm leading-relaxed text-slate-600 sm:text-base">
           Our name reflects that belief. Just as a lizard holds firmly to the rock, we hold on to

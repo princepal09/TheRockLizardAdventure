@@ -32,14 +32,14 @@ export default function BasecampStory() {
         <span className="rounded-full bg-orange-400/15 px-2.5 py-1 font-bold text-orange-400">
           Zero-incident record
         </span>
-        <span className="text-slate-400">Est. Almora, Uttarakhand</span>
+        <span className="text-slate-400">Est. Almora, Uttarakhand (Kumaon + Garhwal)</span>
       </div>
       <h3 className="mt-4 max-w-lg text-xl leading-tight font-bold tracking-tight sm:text-2xl">
         Local mountain knowledge that cannot be outsourced.
       </h3>
       <p className="mt-2 text-sm leading-relaxed text-slate-300">
         Rock Lizard Adventure is based in Almora. Plan with {founderName} and the Basecamp team for
-        routes across Uttarakhand, Kashmir and Maharashtra.
+        routes across Uttarakhand (Kumaon + Garhwal), Kashmir and Maharashtra.
       </p>
       <div className="mt-4 grid gap-4 border-t border-slate-700/70 pt-4 sm:grid-cols-2">
         {features.map(({ Icon, color, title, description }) => (

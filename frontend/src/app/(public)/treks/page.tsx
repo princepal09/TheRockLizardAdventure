@@ -7,7 +7,7 @@ import TripDiscovery from "../_components/treks/TripDiscovery";
 
 export const metadata = pageMetadata(
   "Treks Across India",
-  "Explore guided treks in Uttarakhand, Kashmir and Maharashtra. Compare routes, difficulty, itineraries and preparation details with Rocklizard Adventure.",
+  "Explore guided treks in Uttarakhand (Kumaon + Garhwal), Kashmir and Maharashtra. Compare routes, difficulty, itineraries and preparation details with Rocklizard Adventure.",
   "/treks",
 );
 

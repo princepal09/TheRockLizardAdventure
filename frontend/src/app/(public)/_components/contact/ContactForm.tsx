@@ -73,9 +73,11 @@ function Field({
 
 export default function ContactForm({
   collaboration = false,
+  customTrip = false,
   selectedTrip,
 }: {
   collaboration?: boolean;
+  customTrip?: boolean;
   selectedTrip?: { value: string; name: string };
 }) {
   const initialValues: ContactFormValues = selectedTrip
@@ -85,9 +87,11 @@ export default function ContactForm({
         trip: selectedTrip.value,
         subject: "Booking and availability",
       }
-    : collaboration
-      ? { ...defaults, subject: collaborationTopic }
-      : defaults;
+    : customTrip
+      ? { ...defaults, subject: "Custom itinerary" }
+      : collaboration
+        ? { ...defaults, subject: collaborationTopic }
+        : defaults;
   const {
     control,
     register,
@@ -139,8 +143,16 @@ export default function ContactForm({
         </span>
       </div>
       <p className="text-sm text-slate-600">
-        Send your trip or general enquiry to the Almora team.
+        {customTrip
+          ? "Tell us about the trip you’d like us to create for you."
+          : "Send your trip or general enquiry to the Almora team."}
       </p>
+      {customTrip && (
+        <p className="rounded-lg border border-sky-100 bg-sky-50 p-3 text-xs leading-relaxed text-sky-900">
+          Share your preferred destination, approximate dates, number of days, group size, budget
+          and interests. You can request a destination that isn’t listed on our website.
+        </p>
+      )}
       <form
         noValidate
         onSubmit={handleSubmit(submit)}
@@ -309,7 +321,11 @@ export default function ContactForm({
               id="contact-message"
               rows={5}
               maxLength={5000}
-              placeholder="How can our Almora team help you?"
+              placeholder={
+                customTrip
+                  ? "Where would you like to go? Tell us your preferred dates, duration, group size, budget and what you’d like to experience."
+                  : "How can our Almora team help you?"
+              }
               required
               {...register("message")}
               aria-invalid={Boolean(errors.message)}

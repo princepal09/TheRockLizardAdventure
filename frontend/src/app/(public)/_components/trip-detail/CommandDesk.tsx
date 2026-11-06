@@ -44,7 +44,7 @@ export default function CommandDesk({ settings }: { settings: SiteSettings | nul
         </a>
       </div>
       <div className="mt-auto flex flex-wrap justify-between gap-2 border-t border-slate-700/80 pt-3 font-mono text-[10px] text-slate-400">
-        <span>Almora, Uttarakhand</span>
+        <span>Almora, Uttarakhand (Kumaon + Garhwal)</span>
         <a href="#trip-booking" className="text-sky-200 hover:underline">
           Check Availability
         </a>

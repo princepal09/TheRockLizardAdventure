@@ -15,7 +15,7 @@ export default function GalleryIntro() {
       </h1>
       <p className="mt-4 max-w-sm text-sm leading-relaxed text-slate-600 sm:text-base">
         A field gallery from Rock Lizard Adventure. Explore the terrain, camps, and moments along
-        our treks and expeditions in Uttarakhand.
+        our treks and expeditions in Uttarakhand (Kumaon + Garhwal).
       </p>
     </div>
   );

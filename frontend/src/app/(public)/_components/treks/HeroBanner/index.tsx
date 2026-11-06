@@ -86,8 +86,8 @@ export default function HeroBanner({ kind }: { kind: TripKind }) {
             : "Find Your Next Trail, Summit, and Mountain Escape"}
         </h1>
         <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-white text-shadow-sm text-shadow-black/90 sm:text-base">
-          Explore Uttarakhand, Kashmir and Maharashtra with our Almora-based team. Choose an
-          itinerary that fits your experience, group and preferred destination.
+          Explore Uttarakhand (Kumaon + Garhwal), Kashmir and Maharashtra with our Almora-based
+          team. Choose an itinerary that fits your experience, group and preferred destination.
         </p>
         <dl className="mx-auto mt-7 grid max-w-3xl grid-cols-2 gap-3 rounded-xl border border-white/80 bg-white/90 p-3 text-left text-slate-900 shadow-sm sm:mt-8 sm:grid-cols-4">
           {highlights.map(({ label: title, value, accent }) => (

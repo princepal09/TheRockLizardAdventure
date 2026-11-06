@@ -8,7 +8,6 @@ import SocialAndBrochureBar from "./footer/SocialAndBrochureBar";
 import FooterLinksColumns from "./footer/FooterLinksColumns";
 import BasecampInfoCard from "./footer/BasecampInfoCard";
 import CopyrightBar from "./footer/CopyrightBar";
-import BackToTop from "./footer/BackToTop";
 
 export default async function SiteFooter() {
   const settings = await getPublicSiteSettings().catch(() => null);
@@ -38,7 +37,6 @@ export default async function SiteFooter() {
           <BasecampInfoCard settings={settings} />
         </div>
 
-        <BackToTop />
         <CopyrightBar />
       </div>
     </footer>
