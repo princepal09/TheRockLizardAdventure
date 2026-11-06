@@ -49,17 +49,22 @@ export default function AboutStory() {
           id="about-story-heading"
           className="section-heading-accent mt-2 max-w-xl font-heading text-3xl leading-tight font-bold tracking-tight sm:text-5xl"
         >
-          Built around the people who know these mountains
+          Rooted in adventure. Grounded in purpose.
         </h2>
         <p className="mt-3 max-w-xl text-sm leading-relaxed text-slate-600 sm:text-base">
-          Founded by {founderName}, Rock Lizard Adventure is based in Almora, Uttarakhand. Our work
-          starts with a conversation about your group, your experience, and the kind of route you
-          want to explore.
+          Rock Lizard Adventure is a trekking and mountaineering organisation at heart. Founded by
+          {founderName} and based in Almora, Uttarakhand, we believe exploring nature can bring
+          fitness, discipline and enjoyment together, while deepening our respect for the outdoors.
         </p>
         <p className="mt-3 max-w-xl text-sm leading-relaxed text-slate-600 sm:text-base">
-          The Basecamp team brings together route planning, guest coordination, and departure
-          logistics for adventures across Uttarakhand, Kashmir and Maharashtra, from short walks to
-          longer expeditions.
+          Our name reflects that belief. Just as a lizard holds firmly to the rock, we hold on to
+          our values with determination: care for nature, a willingness to learn and the courage to
+          meet a challenge.
+        </p>
+        <p className="mt-3 max-w-xl text-sm leading-relaxed text-slate-600 sm:text-base">
+          From treks and expeditions to outdoor learning for students, we create opportunities to
+          step beyond familiar surroundings. Our aim is to help people build confidence, work
+          together and discover a more active, responsible relationship with the natural world.
         </p>
         <div className="mt-6 grid gap-2.5 sm:grid-cols-3">
           {principles.map(({ Icon, title, description }) => (

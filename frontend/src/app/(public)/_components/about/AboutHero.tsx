@@ -9,16 +9,16 @@ export default function AboutHero() {
       className="relative isolate overflow-hidden bg-slate-950 text-white"
     >
       <Image
-        src="/image4.jpeg"
+        src="/about.jpeg"
         alt=""
         fill
         priority
         sizes="100vw"
-        className="-z-20 object-cover object-center"
+        className="-z-20 object-cover object-[center_65%]"
       />
       <div
         aria-hidden="true"
-        className="absolute inset-0 -z-10 bg-[linear-gradient(90deg,#0f172aee_0%,#0f172ab3_52%,#0f172a40_100%),linear-gradient(0deg,#0f172acc,transparent_80%)]"
+        className="absolute inset-0 -z-10 bg-[linear-gradient(90deg,#0f172ad9_0%,#0f172a80_52%,#0f172a26_100%),linear-gradient(0deg,#0f172ab3,transparent_80%)]"
       />
       <div className="mx-auto grid min-h-[30rem] max-w-7xl items-end gap-8 px-4 py-12 sm:px-6 sm:py-16 lg:grid-cols-[minmax(0,1fr)_18rem] xl:px-10">
         <div>
