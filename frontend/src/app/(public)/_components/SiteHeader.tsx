@@ -7,6 +7,7 @@ import SearchBar from "./header/SearchBar";
 import NavLinks from "./header/NavLinks";
 import HeaderActions from "./header/HeaderActions";
 import MobileMenu from "./header/MobileMenu";
+import Link from "next/link";
 
 const SiteHeader = () => {
   const headerRef = useRef<HTMLElement>(null);
@@ -37,23 +38,23 @@ const SiteHeader = () => {
         ref={headerRef}
         className="fixed inset-x-0 top-0 z-40 w-full border-b border-gray-800/80 bg-[#0b1120] px-4 py-3 shadow-lg sm:px-6 xl:px-10 xl:py-4"
       >
-        <div className="flex w-full flex-wrap items-center gap-x-4 gap-y-3 xl:flex-nowrap xl:gap-x-6">
-          <div className="shrink-0">
+        <div className="flex w-full items-center gap-x-2 sm:gap-x-4 xl:gap-x-6">
+          <Link href="/" className="shrink-0">
             <Logo />
-          </div>
-          <div className="order-last w-full md:ml-17 min-w-0 sm:order-none sm:w-auto sm:flex-1 xl:max-w-96">
+          </Link>
+          <div className="ml-auto min-w-0 max-w-48 flex-1 sm:ml-0 sm:max-w-none md:ml-17 xl:max-w-96">
             <SearchBar />
           </div>
           <div className="ml-auto hidden shrink-0 items-center gap-6 xl:flex">
             <NavLinks />
             <HeaderActions />
           </div>
-          <div className="ml-auto xl:hidden">
+          <div className="shrink-0 sm:ml-auto xl:hidden">
             <MobileMenu />
           </div>
         </div>
       </header>
-      <div aria-hidden="true" className="h-32 shrink-0 sm:h-18 xl:h-20" style={{ height }} />
+      <div aria-hidden="true" className="h-18 shrink-0 xl:h-20" style={{ height }} />
     </>
   );
 };

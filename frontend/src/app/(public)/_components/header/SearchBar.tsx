@@ -3,7 +3,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { Search } from "lucide-react";
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useId, useMemo, useRef, useState } from "react";
 
 import { getPublishedPickerTreks } from "@/lib/api/trek-picker";
 
@@ -11,9 +11,17 @@ const SearchBar = () => {
   const [input, setInput] = useState("");
   const [term, setTerm] = useState("");
   const [open, setOpen] = useState(false);
+  const [mobileExpanded, setMobileExpanded] = useState(false);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  const formId = useId();
   const currentTerm = input.trim().toLowerCase();
   const showResults = open && currentTerm.length >= 2;
   const waiting = currentTerm !== term;
+
+  useEffect(() => {
+    if (mobileExpanded) inputRef.current?.focus();
+  }, [mobileExpanded]);
 
   useEffect(() => {
     const timer = window.setTimeout(() => setTerm(currentTerm), 250);
@@ -38,27 +46,47 @@ const SearchBar = () => {
 
   return (
     <div
-      className="relative"
+      className="relative flex justify-end sm:block"
       onBlur={(event) => {
-        if (!event.currentTarget.contains(event.relatedTarget)) setOpen(false);
+        if (!event.currentTarget.contains(event.relatedTarget)) {
+          setOpen(false);
+          setMobileExpanded(false);
+        }
       }}
       onKeyDown={(event) => {
-        if (event.key === "Escape" && showResults) {
+        if (event.key === "Escape" && (showResults || mobileExpanded)) {
           event.preventDefault();
           setOpen(false);
+          setMobileExpanded(false);
+          window.requestAnimationFrame(() => {
+            if (triggerRef.current?.getClientRects().length) triggerRef.current.focus();
+          });
         }
       }}
     >
+      <button
+        ref={triggerRef}
+        type="button"
+        aria-label="Open trek search"
+        aria-expanded={mobileExpanded}
+        aria-controls={formId}
+        onClick={() => setMobileExpanded(true)}
+        className={`${mobileExpanded ? "hidden" : "grid"} size-11 shrink-0 place-items-center rounded-full text-slate-100 hover:bg-slate-800 focus-visible:outline-2 focus-visible:outline-sky-400 sm:hidden`}
+      >
+        <Search aria-hidden="true" className="size-5" />
+      </button>
       <form
+        id={formId}
         action="/treks"
         onSubmit={(event) => {
           if (!currentTerm) event.preventDefault();
         }}
         role="search"
         aria-label="Header trek search"
-        className="flex w-full items-center gap-2 rounded-full border border-gray-800/80 bg-[#131b2e]/90 px-4 py-2 text-gray-300 shadow-inner focus-within:border-sky-500"
+        className={`${mobileExpanded ? "flex" : "hidden"} w-full items-center gap-1 rounded-full border border-gray-800/80 bg-[#131b2e]/90 px-2 py-2 text-gray-300 shadow-inner focus-within:border-sky-500 sm:flex sm:gap-2 sm:px-4`}
       >
         <input
+          ref={inputRef}
           type="search"
           name="q"
           value={input}
@@ -83,7 +111,7 @@ const SearchBar = () => {
         </button>
       </form>
       {showResults && (
-        <div className="absolute inset-x-0 top-full z-30 mt-2 rounded-xl border border-slate-700 bg-[#131b2e] p-2 text-sm text-slate-100 shadow-xl">
+        <div className="fixed inset-x-4 top-[calc(var(--public-header-height,4.5rem)+0.5rem)] z-30 rounded-xl border border-slate-700 bg-[#131b2e] p-2 text-sm text-slate-100 shadow-xl sm:absolute sm:inset-x-0 sm:top-full sm:mt-2">
           {waiting || isPending ? (
             <p role="status" className="px-3 py-2 text-slate-300">
               Searching…
@@ -103,6 +131,7 @@ const SearchBar = () => {
                       setInput("");
                       setTerm("");
                       setOpen(false);
+                      setMobileExpanded(false);
                     }}
                     className="block rounded-md px-3 py-2 hover:bg-slate-800 focus-visible:bg-slate-800"
                   >
