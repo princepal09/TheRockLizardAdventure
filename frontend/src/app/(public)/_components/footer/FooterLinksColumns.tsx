@@ -19,7 +19,7 @@ const columns: { title: string; items: FooterItem[] }[] = [
       { label: "Trips", href: "/trips" },
       { label: "Trail Gallery", href: "/gallery" },
       { label: "Rent A Gear Almora" },
-      { label: "Travel Trade", href: "/travel-trade" },
+      { label: "Collaborations", href: "/collaborations" },
       { label: "Contact Us", href: "/contact" },
     ],
   },

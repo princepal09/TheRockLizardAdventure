@@ -57,11 +57,11 @@ export default function SocialAndBrochureBar({ settings }: { settings: SiteSetti
       </div>
 
       <Link
-        href="/contact?topic=travel-trade#enquiry-form"
+        href="/contact?topic=collaboration#enquiry-form"
         className="inline-flex min-h-11 items-center gap-1.5 rounded-lg border border-slate-700 bg-slate-800 px-3 py-2 text-[10px] font-semibold text-slate-200 hover:bg-slate-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-400"
       >
         <ArrowUpRight aria-hidden="true" className="size-3 text-sky-400" />
-        Request B2B Rates &amp; Itineraries
+        Company &amp; NGO Collaborations
       </Link>
     </div>
   );

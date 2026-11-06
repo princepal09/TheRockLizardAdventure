@@ -5,6 +5,9 @@ const frontendRoot = path.resolve(__dirname);
 
 const nextConfig: NextConfig = {
   outputFileTracingRoot: frontendRoot,
+  async redirects() {
+    return [{ source: "/travel-trade", destination: "/collaborations", permanent: true }];
+  },
   images: {
     remotePatterns: [
       { protocol: "https", hostname: "res.cloudinary.com", pathname: "/*/image/upload/**" },

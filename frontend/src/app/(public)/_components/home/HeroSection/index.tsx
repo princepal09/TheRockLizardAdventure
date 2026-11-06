@@ -66,11 +66,11 @@ const HeroSection = async () => {
             Explore Our Treks <ArrowRight aria-hidden="true" className="size-3.5" />
           </Link>
           <Link
-            href="/travel-trade"
+            href="/collaborations"
             className="inline-flex items-center gap-2 rounded-lg border border-white/15 bg-white/10 px-4 py-2.5 text-xs font-semibold text-white transition-colors hover:bg-white/20 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
           >
-            <UsersRound aria-hidden="true" className="size-3.5 text-sky-400" /> Travel Trade
-            Partnerships
+            <UsersRound aria-hidden="true" className="size-3.5 text-sky-400" /> Collaborate With
+            Companies & NGOs
           </Link>
         </div>
       </HeroEntrance>

@@ -23,7 +23,7 @@ type SearchParams = Promise<{
 
 async function EnquiryForm({ searchParams }: { searchParams: SearchParams }) {
   const { topic, kind, trip } = await searchParams;
-  const travelTrade = topic === "travel-trade";
+  const collaboration = topic === "collaboration" || topic === "travel-trade";
   let selectedTrip: { value: string; name: string } | undefined;
   if (
     (kind === "treks" || kind === "expeditions" || kind === "trips") &&
@@ -42,8 +42,8 @@ async function EnquiryForm({ searchParams }: { searchParams: SearchParams }) {
   }
   return (
     <ContactForm
-      key={`${travelTrade}:${selectedTrip?.value ?? "general"}`}
-      travelTrade={travelTrade}
+      key={`${collaboration}:${selectedTrip?.value ?? "general"}`}
+      collaboration={collaboration}
       selectedTrip={selectedTrip}
     />
   );

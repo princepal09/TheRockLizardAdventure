@@ -28,13 +28,13 @@ const defaults: ContactFormValues = {
 };
 const inputClass =
   "w-full rounded-lg border border-transparent bg-slate-100 px-3 py-2.5 text-sm text-slate-900 placeholder:text-slate-500 focus-visible:outline-2 focus-visible:outline-orange-600 aria-invalid:border-red-600";
-const travelTradeTopic = "Travel trade partnership";
+const collaborationTopic = "Company / NGO collaboration";
 const topics = [
   "Booking and availability",
   "Custom itinerary",
   "Gear and preparation",
   "School or corporate group",
-  travelTradeTopic,
+  collaborationTopic,
   "Other enquiry",
 ];
 
@@ -72,10 +72,10 @@ function Field({
 }
 
 export default function ContactForm({
-  travelTrade = false,
+  collaboration = false,
   selectedTrip,
 }: {
-  travelTrade?: boolean;
+  collaboration?: boolean;
   selectedTrip?: { value: string; name: string };
 }) {
   const initialValues: ContactFormValues = selectedTrip
@@ -85,8 +85,8 @@ export default function ContactForm({
         trip: selectedTrip.value,
         subject: "Booking and availability",
       }
-    : travelTrade
-      ? { ...defaults, subject: travelTradeTopic }
+    : collaboration
+      ? { ...defaults, subject: collaborationTopic }
       : defaults;
   const {
     control,
