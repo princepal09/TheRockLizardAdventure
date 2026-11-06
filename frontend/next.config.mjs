@@ -1,9 +1,10 @@
-import type { NextConfig } from "next";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 
-const frontendRoot = path.resolve(__dirname);
+const frontendRoot = path.dirname(fileURLToPath(import.meta.url));
 
-const nextConfig: NextConfig = {
+/** @type {import("next").NextConfig} */
+const nextConfig = {
   outputFileTracingRoot: frontendRoot,
   async redirects() {
     return [{ source: "/travel-trade", destination: "/collaborations", permanent: true }];
@@ -23,12 +24,6 @@ const nextConfig: NextConfig = {
   reactCompiler: true,
   turbopack: {
     root: frontendRoot,
-    rules: {
-      "*.css": {
-        loaders: ["@tailwindcss/turbopack"],
-        as: "*.css",
-      },
-    },
   },
 };
 
