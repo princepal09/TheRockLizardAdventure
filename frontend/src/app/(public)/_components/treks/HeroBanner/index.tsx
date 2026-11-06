@@ -11,6 +11,12 @@ const copy = {
     image: "/image4.jpeg",
     routes: "Guided Treks Across India",
   },
+  trips: {
+    label: "Road & Bike Trips",
+    roster: "India Road & Bike Roster",
+    image: "/image4.jpeg",
+    routes: "Road & Bike Journeys",
+  },
   expeditions: {
     label: "Curated Expeditions",
     roster: "India Expedition Roster",
@@ -25,7 +31,7 @@ export default function HeroBanner({ kind }: { kind: TripKind }) {
     { label: "Curated routes", value: routes, accent: "border-orange-500" },
     {
       label: "Pace & guild",
-      value: "Guided Group Treks",
+      value: kind === "trips" ? "Road & Bike Groups" : "Guided Group Treks",
       accent: "border-sky-500",
     },
     {
@@ -35,7 +41,7 @@ export default function HeroBanner({ kind }: { kind: TripKind }) {
     },
     {
       label: "Route planning",
-      value: "Acclimatization Focus",
+      value: kind === "trips" ? "Route & Vehicle Details" : "Acclimatization Focus",
       accent: "border-orange-500",
     },
   ];
@@ -75,7 +81,9 @@ export default function HeroBanner({ kind }: { kind: TripKind }) {
           id="trip-listing-heading"
           className="mx-auto mt-4 max-w-4xl font-heading text-3xl leading-[1.05] font-semibold tracking-tight text-shadow-md text-shadow-black/90 sm:text-5xl lg:text-6xl"
         >
-          Find Your Next Trail, Summit, and Mountain Escape
+          {kind === "trips"
+            ? "Open Roads, Two Wheels, New Horizons"
+            : "Find Your Next Trail, Summit, and Mountain Escape"}
         </h1>
         <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-white text-shadow-sm text-shadow-black/90 sm:text-base">
           Explore Uttarakhand, Kashmir and Maharashtra with our Almora-based team. Choose an

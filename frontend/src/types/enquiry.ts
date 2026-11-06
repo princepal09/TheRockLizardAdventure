@@ -18,6 +18,7 @@ export type Enquiry = {
   updatedAt: string;
   trek: EnquiryTrip | null;
   expedition: EnquiryTrip | null;
+  trip: EnquiryTrip | null;
 };
 
 export type UpdateEnquiryInput = Partial<Pick<Enquiry, "status" | "adminNotes">>;
@@ -29,7 +30,8 @@ export type CreateEnquiryInput = {
   subject?: string;
   message: string;
 } & (
-  | { trekId?: never; expeditionId?: never }
-  | { trekId: string; expeditionId?: never }
-  | { expeditionId: string; trekId?: never }
+  | { trekId?: never; expeditionId?: never; tripId?: never }
+  | { trekId: string; expeditionId?: never; tripId?: never }
+  | { expeditionId: string; trekId?: never; tripId?: never }
+  | { tripId: string; trekId?: never; expeditionId?: never }
 );

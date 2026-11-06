@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "concurrently --kill-others-on-fail --names frontend,backend \"npm --prefix frontend run dev\" \"npm --prefix backend run dev\"",
-    "build": "npm --prefix backend run build && npm --prefix frontend run build",
+    "build": "node scripts/build.mjs",
     "start": "concurrently --kill-others --names frontend,backend \"npm --prefix frontend start\" \"npm --prefix backend start\""
   },
   "repository": {

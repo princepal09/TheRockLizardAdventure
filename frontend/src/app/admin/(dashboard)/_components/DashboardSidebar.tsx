@@ -2,6 +2,7 @@
 import { Dialog } from "@base-ui/react/dialog";
 import {
   CalendarDays,
+  Car,
   Images,
   Inbox,
   LayoutDashboard,
@@ -31,10 +32,11 @@ const groups: { label: string; items: NavigationItem[] }[] = [
     ],
   },
   {
-    label: "Trips",
+    label: "Adventures",
     items: [
       { label: "Treks", icon: Route, href: "/admin/treks" },
       { label: "Expeditions", icon: Mountain, href: "/admin/expeditions" },
+      { label: "Trips", icon: Car, href: "/admin/trips" },
     ],
   },
   {

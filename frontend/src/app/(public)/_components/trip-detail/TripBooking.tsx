@@ -41,7 +41,7 @@ export default function TripBooking({
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
           <p className="font-mono text-[10px] font-bold tracking-widest text-orange-800 uppercase">
-            Direct Mountaineer Consultation
+            {kind === "trips" ? "Talk to Your Trip Coordinator" : "Direct Mountaineer Consultation"}
           </p>
           <h2 className="section-heading-accent mt-1 font-heading text-3xl font-bold tracking-tight sm:text-4xl">
             Plan Your Departure with Almora HQ

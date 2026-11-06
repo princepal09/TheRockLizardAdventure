@@ -10,6 +10,12 @@ import TripPhoto from "./TripPhoto";
 
 export default function DossierHero({ trip, kind }: { trip: PublishedTripDetail; kind: TripKind }) {
   const facts = [
+    ...(kind === "trips"
+      ? [
+          ["Trip type", trip.tripType === "BIKE" ? "Bike trip" : "Road trip"],
+          ["Route distance", trip.distanceKm == null ? null : `${trip.distanceKm} km`],
+        ]
+      : []),
     [
       "Elevation",
       trip.maxAltitudeMeters == null ? null : `${trip.maxAltitudeMeters.toLocaleString("en-IN")} m`,

@@ -10,6 +10,8 @@ const price = z.number().nonnegative().max(99999999.99).multipleOf(0.01).nullabl
 const optionalText = z.string().nullable();
 
 export const tripFormSchema = z.object({
+  tripType: z.enum(["ROAD", "BIKE"]).optional(),
+  vehicleDetails: z.string().trim().max(5000).nullable().optional(),
   departureDates: z
     .string()
     .trim()

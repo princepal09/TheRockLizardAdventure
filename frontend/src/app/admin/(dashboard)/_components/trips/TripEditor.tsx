@@ -51,7 +51,7 @@ function TripForm({
   seasons: TripOption[];
 }) {
   const router = useRouter();
-  const label = kind === "treks" ? "Trek" : "Expedition";
+  const label = kind === "treks" ? "Trek" : kind === "trips" ? "Trip" : "Expedition";
   const save = useTripMutation(
     kind,
     async ({ input, cover }: { input: TripInput; cover?: File }) => {
@@ -73,6 +73,12 @@ function TripForm({
     const form = new FormData(element);
     const publishedAt = tripText(form, "publishedAt");
     const input: TripInput = {
+      ...(kind === "trips"
+        ? {
+            tripType: tripText(form, "tripType") as "ROAD" | "BIKE",
+            vehicleDetails: tripText(form, "vehicleDetails") || null,
+          }
+        : {}),
       departureDates: tripText(form, "departureDates") || null,
       meetingPoint: tripText(form, "meetingPoint") || null,
       inclusions: tripText(form, "inclusions") || null,
@@ -125,6 +131,40 @@ function TripForm({
         </p>
       </header>
       <fieldset disabled={busy} className="space-y-5">
+        {kind === "trips" && (
+          <section className="space-y-4" aria-label="Road and bike trip details">
+            <label className="block space-y-1.5 text-sm font-medium">
+              <span>
+                Trip type
+                <RequiredMark />
+              </span>
+              <select
+                name="tripType"
+                required
+                defaultValue={trip?.tripType ?? "ROAD"}
+                className={tripInputClass}
+              >
+                <option value="ROAD">Road trip</option>
+                <option value="BIKE">Bike trip</option>
+              </select>
+            </label>
+            <label className="block space-y-1.5 text-sm font-medium">
+              <span>Vehicle, rental and rider details</span>
+              <textarea
+                name="vehicleDetails"
+                rows={4}
+                maxLength={5000}
+                defaultValue={trip?.vehicleDetails ?? ""}
+                className={tripInputClass}
+                aria-describedby="vehicle-details-hint"
+              />
+              <span id="vehicle-details-hint" className="block text-xs font-normal text-slate-600">
+                Add confirmed transport, bike rental, licence requirements, support vehicle and fuel
+                arrangements. Use Meeting point below for pickup instructions.
+              </span>
+            </label>
+          </section>
+        )}
         <h3 className="text-sm font-semibold text-primary">Basics and publishing</h3>
         <div className={tripGridClass}>
           <TripField label="Name" name="name" required maxLength={200} defaultValue={trip?.name} />
@@ -184,8 +224,7 @@ function TripForm({
         </div>
         <p className="text-xs leading-relaxed text-slate-600">
           Published trips appear in the public listing. Leave the publication date blank to set it
-          automatically when publishing. The homepage highlights up to three of the most recently
-          published featured treks.
+          automatically when publishing. Featured routes can be highlighted on the homepage.
         </p>
         <h3 className="border-t border-slate-200 pt-5 text-sm font-semibold text-primary">
           Route and group
@@ -201,7 +240,7 @@ function TripForm({
             defaultValue={trip?.durationDays}
           />
           <TripField
-            label="Distance (km)"
+            label={kind === "trips" ? "Driving / riding distance (km)" : "Distance (km)"}
             name="distanceKm"
             type="number"
             min={0}
@@ -430,7 +469,7 @@ export default function TripEditor({ kind, id }: { kind: TripKind; id?: string }
   const trip = useTrip(kind, id);
   const options = useTripOptions();
   const error = trip.error ?? options.error;
-  const label = kind === "treks" ? "trek" : "expedition";
+  const label = kind === "treks" ? "trek" : kind === "trips" ? "trip" : "expedition";
 
   return (
     <section className="mx-auto max-w-6xl space-y-5">

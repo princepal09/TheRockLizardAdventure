@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowRight, Inbox, Mountain, Plus, Route } from "lucide-react";
+import { ArrowRight, Car, Inbox, Mountain, Plus, Route } from "lucide-react";
 import Link from "next/link";
 import { useEffect } from "react";
 import { toast } from "sonner";
@@ -21,6 +21,7 @@ const cards = [
     href: "/admin/expeditions",
     icon: Mountain,
   },
+  { label: "Published trips", key: "publishedTrips", href: "/admin/trips", icon: Car },
   { label: "Unread enquiries", key: "unreadEnquiries", href: "/admin/enquiries", icon: Inbox },
 ] as const;
 
@@ -68,12 +69,18 @@ export default function Dashboard() {
           >
             <Plus aria-hidden="true" /> New expedition
           </Link>
+          <Link
+            href="/admin/trips/new"
+            className={buttonVariants({ variant: "outline", size: "lg" })}
+          >
+            <Plus aria-hidden="true" /> New trip
+          </Link>
         </div>
       </header>
 
       {data ? (
         <>
-          <ul className="grid gap-4 sm:grid-cols-3" aria-label="Dashboard totals">
+          <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4" aria-label="Dashboard totals">
             {cards.map(({ label, key, href, icon: Icon }) => (
               <li key={key} className="min-w-0">
                 <Link

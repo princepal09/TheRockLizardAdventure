@@ -33,9 +33,17 @@ async function TripDossier({ kind, params }: Props) {
 
   const links = [
     { id: "trip-overview", label: "Overview" },
-    { id: "trip-specifications", label: "Expedition Dossier" },
+    {
+      id: "trip-specifications",
+      label: kind === "trips" ? "Journey Details" : "Expedition Dossier",
+    },
     ...(trip.itineraries.length
-      ? [{ id: "trip-itinerary", label: "Acclimatization & Camps" }]
+      ? [
+          {
+            id: "trip-itinerary",
+            label: kind === "trips" ? "Day-by-day Route" : "Acclimatization & Camps",
+          },
+        ]
       : []),
     { id: "trip-booking", label: "Tariff & Booking" },
     { id: "trip-planning", label: "Departure details" },

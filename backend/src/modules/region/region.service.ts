@@ -101,7 +101,7 @@ export class RegionService {
         case 'P2002':
           throw new AppError('A region with this slug already exists', 409);
         case 'P2003':
-          throw new AppError('Region is linked to a trek or expedition', 409);
+          throw new AppError('Region is linked to a trek, expedition or trip', 409);
         case 'P2025':
           throw new AppError('Region not found', 404);
       }

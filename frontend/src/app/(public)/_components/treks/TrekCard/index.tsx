@@ -1,3 +1,5 @@
+"use client";
+
 import { canOptimizeImage, imageLoaderFor } from "@/lib/image-optimization";
 import { ArrowRight, CalendarDays, Clock, MapPin, Mountain } from "lucide-react";
 import Image from "next/image";
@@ -53,6 +55,11 @@ export default function TrekCard({ trip, kind }: { trip: PublicListingTrip; kind
         )}
       </Link>
       <CardHeader>
+        {trip.tripType && (
+          <p className="font-mono text-[10px] font-bold uppercase tracking-wide text-orange-800">
+            {trip.tripType === "BIKE" ? "Bike trip" : "Road trip"}
+          </p>
+        )}
         <CardTitle className="font-sans! text-base font-bold">
           <h4>{trip.name}</h4>
         </CardTitle>
@@ -110,7 +117,8 @@ export default function TrekCard({ trip, kind }: { trip: PublicListingTrip; kind
           prefetch={false}
           className="ml-auto inline-flex items-center gap-1 rounded-lg border bg-secondary text-[#ffffff] border-slate-200 px-2.5 py-1.5 text-xs font-bold hover:bg-orange-400 focus-visible:outline-2 focus-visible:outline-sky-700"
         >
-          View Trail Details <ArrowRight aria-hidden="true" className="size-3" />
+          {kind === "trips" ? "View Trip Details" : "View Trail Details"}{" "}
+          <ArrowRight aria-hidden="true" className="size-3" />
         </Link>
       </CardFooter>
     </Card>

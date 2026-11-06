@@ -1,4 +1,4 @@
-export type TripKind = "treks" | "expeditions";
+export type TripKind = "treks" | "expeditions" | "trips";
 
 export const tripStatuses = ["DRAFT", "PUBLISHED", "ARCHIVED"] as const;
 export const tripDifficulties = [
@@ -13,6 +13,8 @@ export type TripStatus = (typeof tripStatuses)[number];
 export type TripDifficulty = (typeof tripDifficulties)[number];
 
 export type TripInput = {
+  tripType?: "ROAD" | "BIKE";
+  vehicleDetails?: string | null;
   departureDates?: string | null;
   meetingPoint?: string | null;
   inclusions?: string | null;
@@ -78,6 +80,7 @@ export type TripOption = { id: string; name: string; isActive: boolean };
 
 export type PublicListingTrip = Pick<
   Trip,
+  | "tripType"
   | "id"
   | "name"
   | "slug"

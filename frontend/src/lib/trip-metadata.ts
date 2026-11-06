@@ -8,7 +8,7 @@ export async function tripMetadata(kind: TripKind, slug: string) {
   if (!trip) notFound();
   const description = (
     trip.summary?.trim() ||
-    `${trip.durationDays}-day ${kind === "treks" ? "trek" : "expedition"}${trip.region?.name ? ` in ${trip.region.name}` : ""}. Explore the itinerary, preparation details and booking information with Rocklizard Adventure.`
+    `${trip.durationDays}-day ${kind === "treks" ? "trek" : kind === "trips" ? "trip" : "expedition"}${trip.region?.name ? ` in ${trip.region.name}` : ""}. Explore the itinerary, preparation details and booking information with Rocklizard Adventure.`
   ).slice(0, 160);
   const image = trip.coverImageUrl || trip.images[0]?.imageUrl;
   return pageMetadata(

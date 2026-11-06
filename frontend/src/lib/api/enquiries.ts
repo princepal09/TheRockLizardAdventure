@@ -10,7 +10,7 @@ export async function createEnquiry(input: CreateEnquiryInput) {
 }
 
 export async function getEnquiryTripOptions(signal: AbortSignal) {
-  const kinds: TripKind[] = ["treks", "expeditions"];
+  const kinds: TripKind[] = ["treks", "expeditions", "trips"];
   return Promise.all(
     kinds.map(async (kind) => {
       const { data } = await publicApi.get<ApiDataResponse<Pick<Trip, "id" | "name">[]>>(

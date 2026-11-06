@@ -1,6 +1,7 @@
 import { pageMetadata } from "@/lib/page-metadata";
 import { Suspense } from "react";
 import { z } from "zod";
+import { getPublishedRoadTrips } from "@/lib/api/published-road-trips";
 import { getPublishedTreks } from "@/lib/api/published-treks";
 import { getPublishedExpeditions } from "@/lib/api/published-expeditions";
 
@@ -25,13 +26,17 @@ async function EnquiryForm({ searchParams }: { searchParams: SearchParams }) {
   const travelTrade = topic === "travel-trade";
   let selectedTrip: { value: string; name: string } | undefined;
   if (
-    (kind === "treks" || kind === "expeditions") &&
+    (kind === "treks" || kind === "expeditions" || kind === "trips") &&
     typeof trip === "string" &&
     z.uuid().safeParse(trip).success
   ) {
-    const trips = await (kind === "treks" ? getPublishedTreks() : getPublishedExpeditions()).catch(
-      () => [],
-    );
+    const trips = await (
+      kind === "treks"
+        ? getPublishedTreks()
+        : kind === "trips"
+          ? getPublishedRoadTrips()
+          : getPublishedExpeditions()
+    ).catch(() => []);
     const match = trips.find(({ id }) => id === trip);
     if (match) selectedTrip = { value: `${kind}:${match.id}`, name: match.name };
   }

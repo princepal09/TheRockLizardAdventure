@@ -1,3 +1,4 @@
+import { getPublishedRoadTrips } from "@/lib/api/published-road-trips";
 import { Suspense } from "react";
 
 import { Skeleton } from "@/components/ui/skeleton";
@@ -13,7 +14,12 @@ type Props = {
 };
 
 async function TripDiscoveryContent({ kind, searchParams }: Props) {
-  const load = kind === "treks" ? getPublishedTreks : getPublishedExpeditions;
+  const load =
+    kind === "treks"
+      ? getPublishedTreks
+      : kind === "trips"
+        ? getPublishedRoadTrips
+        : getPublishedExpeditions;
   const [{ q }, trips] = await Promise.all([searchParams, load().catch(() => null)]);
   if (!trips)
     return (
@@ -30,7 +36,9 @@ export default function TripDiscovery(props: Props) {
   return (
     <section className="space-y-6 bg-[#f2f7fa] px-4 py-8 text-slate-900 sm:px-6 xl:px-10">
       <h2 className="section-heading-accent section-heading-accent--center text-center font-heading text-3xl font-semibold tracking-tight sm:text-4xl">
-        Filter by Your Mountain Calling
+        {props.kind === "trips"
+          ? "Find Your Next Road or Bike Journey"
+          : "Filter by Your Mountain Calling"}
       </h2>
       <Suspense
         fallback={

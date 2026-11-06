@@ -4,6 +4,7 @@ import api from "../axios";
 export const bulkActionPaths = {
   treks: "/treks/bulk",
   expeditions: "/expeditions/bulk",
+  trips: "/trips/bulk",
   enquiries: "/enquiries/bulk/read",
   team: "/team/bulk/hide",
 } as const;
@@ -16,7 +17,7 @@ export async function updateSelectedRecords(
   action: "delete" | "publish" = "delete",
 ) {
   if (!ids.length || ids.length > 5000) throw new Error("Select between 1 and 5,000 records.");
-  if (scope === "treks" || scope === "expeditions") {
+  if (scope === "treks" || scope === "expeditions" || scope === "trips") {
     if (action === "publish") {
       const { data } = await api.patch<ApiDataResponse<{ updatedCount: number }>>(
         `${bulkActionPaths[scope]}/publish`,

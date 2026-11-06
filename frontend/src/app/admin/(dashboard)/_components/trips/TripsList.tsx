@@ -14,7 +14,7 @@ import BulkActionToolbar, { SelectionCheckbox } from "../BulkActionToolbar";
 
 export default function TripsList({ kind }: { kind: TripKind }) {
   const trips = useTrips(kind);
-  const label = kind === "treks" ? "Trek" : "Expedition";
+  const label = kind === "treks" ? "Trek" : kind === "trips" ? "Trip" : "Expedition";
   const remove = useAdminBulkAction(kind);
   const publish = useAdminBulkAction(kind, "publish");
   const pending = remove.isPending || publish.isPending;
@@ -97,6 +97,8 @@ export default function TripsList({ kind }: { kind: TripKind }) {
                   <div className="min-w-0">
                     <p className="font-semibold break-words text-primary">{trip.name}</p>
                     <p className="text-sm text-slate-600">
+                      {trip.tripType &&
+                        `${trip.tripType === "BIKE" ? "Bike trip" : "Road trip"} · `}
                       {trip.durationDays} days ·{" "}
                       {trip.difficulty.toLowerCase().replaceAll("_", " ")}
                     </p>

@@ -23,7 +23,7 @@ export default function TripDirectory({
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
           <p className="font-mono text-[10px] font-bold tracking-widest text-orange-800 uppercase">
-            Expedition directory
+            {kind === "trips" ? "Road & Bike Directory" : "Expedition directory"}
           </p>
           <h3
             id="trip-directory-title"
@@ -45,8 +45,8 @@ export default function TripDirectory({
       </ul>
       <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-slate-200 bg-sky-50 px-4 py-3">
         <p className="text-xs text-slate-700">
-          <strong>Need a custom alpine departure?</strong> Ask Basecamp about private routes for
-          your group.
+          <strong>Need a custom departure?</strong> Ask Basecamp about private routes for your
+          group.
         </p>
         {!showAll && trips.length > initialCount && (
           <Button type="button" onClick={() => setShowAll(true)}>

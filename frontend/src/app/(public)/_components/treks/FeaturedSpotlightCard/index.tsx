@@ -31,11 +31,15 @@ export default function FeaturedSpotlightCard({
   const amount = formatTripPrice(trip);
   const facts = [
     {
-      label: "Max elevation",
+      label: kind === "trips" ? "Trip type" : "Max elevation",
       value:
-        trip.maxAltitudeMeters != null
-          ? `${trip.maxAltitudeMeters.toLocaleString("en-IN")} m`
-          : null,
+        kind === "trips"
+          ? trip.tripType === "BIKE"
+            ? "Bike trip"
+            : "Road trip"
+          : trip.maxAltitudeMeters != null
+            ? `${trip.maxAltitudeMeters.toLocaleString("en-IN")} m`
+            : null,
     },
     {
       label: "Duration",
@@ -112,7 +116,7 @@ export default function FeaturedSpotlightCard({
             className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-orange-500 px-4 py-3 text-sm font-bold text-[#ffffff] hover:bg-orange-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-800"
           >
             <CalendarDays aria-hidden="true" className="size-4" /> View{" "}
-            {kind === "treks" ? "Trek" : "Expedition"} Details{" "}
+            {kind === "treks" ? "Trek" : kind === "trips" ? "Trip" : "Expedition"} Details{" "}
             <ArrowRight aria-hidden="true" className="size-4" />
           </Link>
         </div>

@@ -19,9 +19,11 @@ export default function TripDiscoveryResults({
 }) {
   const [filters, setFilters] = useState<TripFilters>(defaultFilters);
   const [search, setSearch] = useState(query);
+  const [tripType, setTripType] = useState("");
   const term = search.toLowerCase();
   const matched = trips.filter(
     (trip) =>
+      (!tripType || trip.tripType === tripType) &&
       (!term || trip.name.toLowerCase().includes(term)) &&
       (!filters.region || filters.region === trip.regionId) &&
       (!filters.grade || filters.grade === trip.difficulty) &&
@@ -39,6 +41,25 @@ export default function TripDiscoveryResults({
 
   return (
     <div className="space-y-6">
+      {kind === "trips" && (
+        <div role="group" aria-label="Trip type" className="flex flex-wrap justify-center gap-2">
+          {[
+            ["", "All trips"],
+            ["ROAD", "Road trips"],
+            ["BIKE", "Bike trips"],
+          ].map(([value, label]) => (
+            <button
+              key={value}
+              type="button"
+              aria-pressed={tripType === value}
+              onClick={() => setTripType(value)}
+              className="min-h-11 rounded-full border border-slate-200 bg-white px-5 text-sm font-semibold aria-pressed:border-orange-500 aria-pressed:bg-orange-500 aria-pressed:text-white"
+            >
+              {label}
+            </button>
+          ))}
+        </div>
+      )}
       <TrekFilterToolbar
         trips={trips}
         filters={filters}
@@ -47,6 +68,7 @@ export default function TripDiscoveryResults({
         query={search}
         onReset={() => {
           setFilters(defaultFilters);
+          setTripType("");
           setSearch("");
         }}
       />

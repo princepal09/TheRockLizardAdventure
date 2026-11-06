@@ -4,6 +4,7 @@ import type { CreateContactDTO, UpdateContactDTO } from './contact.schema.js';
 export type ContactDetails = Contact & {
   trek: { name: string; slug: string } | null;
   expedition: { name: string; slug: string } | null;
+  trip: { name: string; slug: string } | null;
 };
 
 export interface IContactRepository {

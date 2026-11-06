@@ -16,7 +16,7 @@ export default function CommandDesk({ settings }: { settings: SiteSettings | nul
   return (
     <Card className="min-w-0 gap-3 rounded-xl border border-slate-800 bg-[#101829] p-4 text-white shadow-sm ring-0! sm:p-5">
       <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-700/80 pb-3 font-mono text-[10px] tracking-wide">
-        <p className="font-bold text-orange-400 uppercase">Expeditions Desk</p>
+        <p className="font-bold text-orange-400 uppercase">Adventure Desk</p>
         <span className="text-sky-200">Almora Basecamp</span>
       </div>
       <div>
@@ -31,7 +31,7 @@ export default function CommandDesk({ settings }: { settings: SiteSettings | nul
         <a href={`tel:${phone.replace(/[^+\d]/g, "")}`} className={contactClass}>
           <DossierIcon name="metric-7" />
           <span className="min-w-0">
-            <span className="block text-xs text-slate-400">Direct Expedition Hotline</span>
+            <span className="block text-xs text-slate-400">Direct Basecamp Hotline</span>
             <span className="block font-mono text-xs font-bold break-words">{phone}</span>
           </span>
         </a>

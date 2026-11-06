@@ -27,6 +27,13 @@ enum ContentStatus {
   @@map("content_status")
 }
 
+enum TripType {
+  ROAD
+  BIKE
+
+  @@map("trip_type")
+}
+
 enum ContactStatus {
   READ
   UNREAD
@@ -50,6 +57,7 @@ model Admin {
 
   refreshTokens       RefreshToken[]
   resetPasswordTokens ResetPasswordToken[]
+  createdTrips        Trip[] @relation("TripCreator")
   createdTreks        Trek[]               @relation("TrekCreator")
   createdExpeditions  Expedition[]         @relation("ExpeditionCreator")
 
@@ -99,6 +107,7 @@ model Region {
   createdAt     DateTime @default(now()) @map("created_at") @db.DateTime(0)
   updatedAt     DateTime @default(now()) @updatedAt @map("updated_at") @db.DateTime(0)
 
+  trips       Trip[]
   treks       Trek[]
   expeditions Expedition[]
 
@@ -116,6 +125,7 @@ model Season {
   createdAt   DateTime @default(now()) @map("created_at") @db.DateTime(0)
   updatedAt   DateTime @default(now()) @updatedAt @map("updated_at") @db.DateTime(0)
 
+  trips       TripSeason[]
   treks       TrekSeason[]
   expeditions ExpeditionSeason[]
 
@@ -331,6 +341,108 @@ model ExpeditionImage {
   @@map("expedition_image")
 }
 
+// ============ ROAD / BIKE TRIPS ============
+
+model Trip {
+  id                 String          @id @default(uuid()) @db.Char(36)
+  tripType           TripType @map("trip_type")
+  vehicleDetails     String? @map("vehicle_details") @db.Text
+  name               String          @db.VarChar(200)
+  slug               String          @unique @db.VarChar(220)
+  summary            String?         @db.VarChar(500)
+  description        String?         @db.Text
+  regionId           String          @map("region_id") @db.Char(36)
+  difficulty         DifficultyLevel
+  status             ContentStatus   @default(DRAFT)
+  durationDays       Int             @map("duration_days")
+  distanceKm         Decimal?        @map("distance_km") @db.Decimal(8, 2)
+  maxAltitudeMeters  Int?            @map("max_altitude_meters")
+  startingPoint      String?         @map("starting_point") @db.VarChar(255)
+  endingPoint        String?         @map("ending_point") @db.VarChar(255)
+  coverImageUrl      String?         @map("cover_image_url") @db.VarChar(1000)
+  coverImagePublicId String?         @map("cover_image_public_id") @db.VarChar(1000)
+
+  price         Decimal?  @db.Decimal(10, 2)
+  discountPrice Decimal?  @map("discount_price") @db.Decimal(10, 2)
+  currency      String    @default("INR") @db.Char(3)
+  maxGroupSize  Int?      @map("max_group_size")
+  minAge        Int?      @map("min_age")
+  maxAge        Int?      @map("max_age")
+  isFeatured    Boolean   @default(false) @map("is_featured")
+  publishedAt   DateTime? @map("published_at") @db.DateTime(0)
+  createdBy     String?   @map("created_by") @db.Char(36)
+  createdAt     DateTime  @default(now()) @map("created_at") @db.DateTime(0)
+  updatedAt     DateTime  @default(now()) @updatedAt @map("updated_at") @db.DateTime(0)
+
+  region      Region                @relation(fields: [regionId], references: [id], onDelete: Restrict)
+  creator     Admin?                @relation("TripCreator", fields: [createdBy], references: [id], onDelete: SetNull)
+  seasons     TripSeason[]
+  itineraries TripItinerary[]
+  images      TripImage[]
+  contacts    Contact[]
+
+  @@index([regionId, status])
+  @@index([status, isFeatured])
+  @@index([status, publishedAt])
+  @@index([difficulty])
+  @@index([status, tripType])
+  @@index([createdBy])
+  @@map("trip")
+  departureDates String? @map("departure_dates") @db.Text
+  meetingPoint String? @map("meeting_point") @db.Text
+  inclusions String? @map("inclusions") @db.Text
+  exclusions String? @map("exclusions") @db.Text
+  requiredGear String? @map("required_gear") @db.Text
+  cancellationPolicy String? @map("cancellation_policy") @db.Text
+  refundPolicy String? @map("refund_policy") @db.Text
+
+}
+
+model TripSeason {
+  tripId String @map("trip_id") @db.Char(36)
+  seasonId     String @map("season_id") @db.Char(36)
+
+  trip Trip @relation(fields: [tripId], references: [id], onDelete: Cascade)
+  season     Season     @relation(fields: [seasonId], references: [id], onDelete: Cascade)
+
+  @@id([tripId, seasonId])
+  @@index([seasonId])
+  @@map("trip_season")
+}
+
+model TripItinerary {
+  id             String   @id @default(uuid()) @db.Char(36)
+  tripId   String   @map("trip_id") @db.Char(36)
+  dayNumber      Int      @map("day_number")
+  title          String   @db.VarChar(255)
+  description    String?  @db.Text
+  distanceKm     Decimal? @map("distance_km") @db.Decimal(8, 2)
+  altitudeMeters Int?     @map("altitude_meters")
+  createdAt      DateTime @default(now()) @map("created_at") @db.DateTime(0)
+  updatedAt      DateTime @default(now()) @updatedAt @map("updated_at") @db.DateTime(0)
+
+  trip Trip @relation(fields: [tripId], references: [id], onDelete: Cascade)
+
+  @@unique([tripId, dayNumber])
+  @@map("trip_itinerary")
+}
+
+model TripImage {
+  id            String   @id @default(uuid()) @db.Char(36)
+  tripId  String   @map("trip_id") @db.Char(36)
+  imageUrl      String   @map("image_url") @db.VarChar(1000)
+  imagePublicId String   @map("image_public_id") @db.VarChar(1000)
+  altText       String?  @map("alt_text") @db.VarChar(255)
+  caption       String?  @db.VarChar(255)
+  sortOrder     Int      @default(0) @map("sort_order")
+  createdAt     DateTime @default(now()) @map("created_at") @db.DateTime(0)
+
+  trip Trip @relation(fields: [tripId], references: [id], onDelete: Cascade)
+
+  @@index([tripId, sortOrder])
+  @@map("trip_image")
+}
+
 // ============ GALLERY / CONTACT / SETTINGS ============
 
 model Gallery {
@@ -354,6 +466,7 @@ model Contact {
   phone        String?       @db.VarChar(30)
   subject      String?       @db.VarChar(255)
   message      String        @db.Text
+  tripId       String?       @map("trip_id") @db.Char(36)
   trekId       String?       @map("trek_id") @db.Char(36)
   expeditionId String?       @map("expedition_id") @db.Char(36)
   status       ContactStatus @default(UNREAD)
@@ -361,6 +474,7 @@ model Contact {
   createdAt    DateTime      @default(now()) @map("created_at") @db.DateTime(0)
   updatedAt    DateTime      @default(now()) @updatedAt @map("updated_at") @db.DateTime(0)
 
+  trip       Trip?       @relation(fields: [tripId], references: [id], onDelete: SetNull)
   trek       Trek?       @relation(fields: [trekId], references: [id], onDelete: SetNull)
   expedition Expedition? @relation(fields: [expeditionId], references: [id], onDelete: SetNull)
 

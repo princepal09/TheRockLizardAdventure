@@ -24,6 +24,7 @@ export default function TripSpecifications({ trip }: { trip: PublishedTripDetail
     .filter(Boolean)
     .join(" · ");
   const specs = [
+    ["Trip type", trip.tripType ? (trip.tripType === "BIKE" ? "Bike trip" : "Road trip") : null],
     ["Region", trip.region?.name],
     ["Start", trip.startingPoint],
     ["Finish", trip.endingPoint],
@@ -43,13 +44,21 @@ export default function TripSpecifications({ trip }: { trip: PublishedTripDetail
           Full Specifications
         </p>
         <h2 className="section-heading-accent mt-1 font-heading text-3xl font-bold tracking-tight sm:text-4xl">
-          Technical Dossier
+          {trip.tripType ? "Journey Details" : "Technical Dossier"}
         </h2>
       </div>
       {trip.description && (
         <p className="max-w-4xl whitespace-pre-line text-sm leading-relaxed text-slate-700">
           {trip.description}
         </p>
+      )}
+      {trip.vehicleDetails && (
+        <section className="rounded-xl bg-slate-100 p-4">
+          <h3 className="text-sm font-bold">Vehicle & rider arrangements</h3>
+          <p className="mt-2 whitespace-pre-line text-sm leading-relaxed text-slate-700">
+            {trip.vehicleDetails}
+          </p>
+        </section>
       )}
       <dl className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {specs

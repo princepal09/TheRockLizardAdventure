@@ -8,6 +8,7 @@ import { AppError } from './utils/common/error/AppError.js';
 import authRoutes from './modules/auth/auth.route.js';
 import regionRoutes from './modules/region/region.route.js';
 import trekRoutes from './modules/trek/trek.route.js';
+import tripRoutes from './modules/trip/trip.route.js';
 import expeditionRoutes from './modules/expedition/expedition.route.js';
 import seasonRoutes from './modules/season/season.route.js';
 import contactRoutes from './modules/contact/contact.route.js';
@@ -33,7 +34,10 @@ app.use(
 );
 // Trip editors can contain several client-supplied policy/gear sections.
 // Keep the smaller limit for enquiries, authentication and other endpoints.
-app.use(['/api/v1/treks', '/api/v1/expeditions'], express.json({ limit: '256kb' }));
+app.use(
+  ['/api/v1/treks', '/api/v1/expeditions', '/api/v1/trips'],
+  express.json({ limit: '256kb' }),
+);
 app.use(
   ['/api/v1/enquiries/bulk/read', '/api/v1/team/bulk/hide'],
   express.json({ limit: '256kb' }),
@@ -55,6 +59,7 @@ app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/regions', regionRoutes);
 app.use('/api/v1/treks', trekRoutes);
 app.use('/api/v1/expeditions', expeditionRoutes);
+app.use('/api/v1/trips', tripRoutes);
 app.use('/api/v1/seasons', seasonRoutes);
 app.use('/api/v1/enquiries', contactRoutes);
 app.use('/api/v1/site-settings', siteSettingsRoutes);

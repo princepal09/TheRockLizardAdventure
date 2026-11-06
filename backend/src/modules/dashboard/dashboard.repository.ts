@@ -3,11 +3,12 @@ import { prisma } from '../../lib/prisma.js';
 
 export class DashboardRepository {
   async getSummary() {
-    const [publishedTreks, publishedExpeditions, unreadEnquiries, recentEnquiries] =
+    const [publishedTreks, publishedExpeditions, publishedTrips, unreadEnquiries, recentEnquiries] =
       await prisma.$transaction(
         [
           prisma.trek.count({ where: { status: ContentStatus.PUBLISHED } }),
           prisma.expedition.count({ where: { status: ContentStatus.PUBLISHED } }),
+          prisma.trip.count({ where: { status: ContentStatus.PUBLISHED } }),
           prisma.contact.count({ where: { status: ContactStatus.UNREAD } }),
           prisma.contact.findMany({
             take: 5,
@@ -18,6 +19,12 @@ export class DashboardRepository {
         { isolationLevel: Prisma.TransactionIsolationLevel.RepeatableRead },
       );
 
-    return { publishedTreks, publishedExpeditions, unreadEnquiries, recentEnquiries };
+    return {
+      publishedTreks,
+      publishedExpeditions,
+      publishedTrips,
+      unreadEnquiries,
+      recentEnquiries,
+    };
   }
 }

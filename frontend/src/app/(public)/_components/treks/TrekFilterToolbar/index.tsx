@@ -50,7 +50,7 @@ export default function TrekFilterToolbar({
   }[] = [
     {
       key: "grade",
-      label: "Trail Grade",
+      label: "Route Grade",
       options: [
         ["", "All Grades"],
         ...tripDifficulties
@@ -75,7 +75,7 @@ export default function TrekFilterToolbar({
     },
     {
       key: "basecamp",
-      label: "Assembly Basecamp",
+      label: "Starting Point",
       options: [
         ["", "All Departure Hubs"],
         ...Array.from(basecamps)
@@ -85,7 +85,7 @@ export default function TrekFilterToolbar({
     },
     {
       key: "sort",
-      label: "Sort Trails By",
+      label: "Sort Routes By",
       options: [
         ["recommended", "Recommended Routes"],
         ["shortest", "Shortest First"],
@@ -101,7 +101,7 @@ export default function TrekFilterToolbar({
         aria-label="Filter by region"
         className="flex flex-wrap justify-center gap-2"
       >
-        {[["", `All Trails (${trips.length})`], ...regions].map(([id, label]) => (
+        {[["", `All Routes (${trips.length})`], ...regions].map(([id, label]) => (
           <Button
             key={id}
             type="button"

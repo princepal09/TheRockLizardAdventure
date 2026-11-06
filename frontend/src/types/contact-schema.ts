@@ -20,14 +20,14 @@ export const contactSchema = z
     if (values.category === "trip") {
       const [kind, id, extra] = values.trip.split(":");
       if (
-        (kind !== "treks" && kind !== "expeditions") ||
+        (kind !== "treks" && kind !== "expeditions" && kind !== "trips") ||
         extra !== undefined ||
         !z.uuid().safeParse(id).success
       ) {
         ctx.addIssue({
           code: "custom",
           path: ["trip"],
-          message: "Select a trek or expedition.",
+          message: "Select a trek, expedition or trip.",
         });
       }
     }
@@ -56,5 +56,9 @@ export function toEnquiryInput({
   const input = { name, email, phone: phone || undefined, subject, message };
   if (category === "general") return input;
   const [kind, id] = trip.split(":");
-  return kind === "treks" ? { ...input, trekId: id } : { ...input, expeditionId: id };
+  return kind === "treks"
+    ? { ...input, trekId: id }
+    : kind === "trips"
+      ? { ...input, tripId: id }
+      : { ...input, expeditionId: id };
 }

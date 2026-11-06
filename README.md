@@ -140,7 +140,9 @@ Restart the appropriate application after changing its `.env` file.
 
 From the repository root:
 
-Build both applications with `npm run build`. Keep the backend API running in a separate terminal during the frontend build.
+Build both applications with `npm run build`. The root build command reuses an available API or starts the local backend temporarily, waits for it, verifies database-backed content is available, builds the frontend, and stops only the backend it started. MySQL and the configured database/migrations must already be ready. It does not create or seed the database.
+
+If building each application separately, keep the API running during the frontend build:
 
 ```sh
 npm --prefix backend run typecheck
@@ -153,6 +155,29 @@ Frontend lint is available with `npm --prefix frontend run lint`. Existing unrel
 Format frontend source files with `npm --prefix frontend run format`, or check formatting without changing files with `npm --prefix frontend run format:check`. These commands skip dependencies, generated output and static assets.
 
 ## Production configuration
+
+### Road and bike trips
+
+Road and bike trips are managed separately from treks and expeditions under
+`/admin/trips`. Create a trip, select Road or Bike, and add route distance,
+vehicle/rental arrangements, pickup information, prices, seasons, itinerary and
+photos. Drafts are private; published trips appear at `/trips`, in the homepage
+Trips section, in enquiry options and in the sitemap. Featured trips take
+priority in the homepage section. The public cards and detail pages share the
+existing visual style, with journey-specific labels and vehicle information.
+
+Apply migrations and regenerate the Prisma client before deploying this update:
+
+```sh
+npm --prefix backend run db:deploy
+npm --prefix backend run db:generate
+```
+
+For the local development MySQL database, run `npm --prefix backend run test:trips`
+after seeding an admin. It checks authentication, ROAD/BIKE validation, draft and
+published visibility, CRUD, itinerary ownership, bulk actions and enquiry
+relations. It removes its own temporary records and does not send email or
+upload images. See [Trips API contract](backend/docs/trips-api.md).
 
 ### API rate limits
 
@@ -185,12 +210,14 @@ npm --prefix backend start
 npm --prefix frontend start
 ```
 
-Keep the backend available during the frontend build because some public pages load API data while prerendering. Rebuild the frontend after changing public environment variables. Use a process manager or hosting service to keep both servers running.
+Keep the backend available during the frontend build because some public pages load API data while prerendering. The root build command handles this for a local API; when deploying separate Hostinger apps, deploy the backend first and set the frontend's API URL to that live backend before building the frontend. Rebuild the frontend after changing public environment variables. Use a process manager or hosting service to keep both servers running.
 
 ## Troubleshooting
 
 | Problem                                      | What to check                                                                                                                                  |
 | -------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| Build reports `ECONNREFUSED` on port 5000 | Run `npm run build` from the repository root to start the local API automatically. For a frontend-only build, start the API first. |
+| `npm start` reports missing `.next` files | The previous build did not finish. Fix the build error and complete `npm run build` successfully before running `npm start`. |
 | `Invalid environment variables`              | Complete `backend/.env`; secrets need at least 32 characters, the admin password needs at least 8, and `MAIL_FROM` must be an email address.   |
 | Database connection fails                    | Start MySQL; check the database exists, user permissions and `DATABASE_URL`.                                                                   |
 | Missing Prisma client or database columns    | Run the migrate and generate commands from `backend` with `--config prisma7.config.ts`.                                                        |

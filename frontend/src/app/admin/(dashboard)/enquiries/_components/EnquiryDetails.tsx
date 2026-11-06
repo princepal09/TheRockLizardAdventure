@@ -69,7 +69,7 @@ function EnquiryEditor({ enquiry }: { enquiry: Enquiry }) {
 export default function EnquiryDetails({ id }: { id: string }) {
   const query = useEnquiry(id);
   const enquiry = query.data;
-  const trip = enquiry?.trek ?? enquiry?.expedition;
+  const trip = enquiry?.trek ?? enquiry?.expedition ?? enquiry?.trip;
 
   return (
     <section aria-labelledby="enquiry-heading" className="mx-auto max-w-6xl space-y-5">
@@ -122,7 +122,7 @@ export default function EnquiryDetails({ id }: { id: string }) {
             </header>
             {trip && (
               <p className="rounded-lg bg-tertiary/10 px-3 py-2 text-sm break-words text-tertiary-foreground">
-                <span className="font-semibold">{enquiry.trek ? "Trek" : "Expedition"}</span> ·{" "}
+                <span className="font-semibold">{enquiry.trek ? "Trek" : enquiry.trip ? "Trip" : "Expedition"}</span> ·{" "}
                 {trip.name}
               </p>
             )}

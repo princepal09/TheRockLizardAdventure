@@ -157,7 +157,7 @@ export default function ContactForm({
               onClick={() => changeCategory("trip")}
               className="rounded-lg aria-pressed:border-orange-500 aria-pressed:bg-orange-500 aria-pressed:text-[#ffffff]"
             >
-              <Mountain aria-hidden="true" /> Trek / Expedition Query
+              <Mountain aria-hidden="true" /> Trek / Expedition / Trip Query
             </Button>
             <Button
               type="button"
@@ -173,7 +173,7 @@ export default function ContactForm({
           {category === "trip" && (
             <Field
               id="contact-trip"
-              label="Trek or Expedition"
+              label="Trek, Expedition or Trip"
               required
               error={errors.trip?.message}
             >
@@ -197,7 +197,12 @@ export default function ContactForm({
                 {tripOptions.data?.map(
                   ({ kind, trips }) =>
                     trips.length > 0 && (
-                      <optgroup key={kind} label={kind === "treks" ? "Treks" : "Expeditions"}>
+                      <optgroup
+                        key={kind}
+                        label={
+                          kind === "treks" ? "Treks" : kind === "trips" ? "Trips" : "Expeditions"
+                        }
+                      >
                         {trips.map(({ id, name }) => (
                           <option key={id} value={`${kind}:${id}`}>
                             {name}

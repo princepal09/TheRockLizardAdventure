@@ -14,7 +14,10 @@ export class ContactService {
   async createContact(data: CreateContactDTO): Promise<void> {
     try {
       const contact = await this.contactRepo.createContact(data);
-      await sendContactEmails(contact, contact.trek?.name ?? contact.expedition?.name);
+      await sendContactEmails(
+        contact,
+        contact.trek?.name ?? contact.expedition?.name ?? contact.trip?.name,
+      );
     } catch (error) {
       if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2003') {
         throw new AppError('Selected trip not found', 404);

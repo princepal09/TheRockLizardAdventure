@@ -5,6 +5,7 @@ import type { CreateContactDTO, UpdateContactDTO } from './contact.schema.js';
 const contactTrips = {
   trek: { select: { name: true, slug: true } },
   expedition: { select: { name: true, slug: true } },
+  trip: { select: { name: true, slug: true } },
 } as const;
 
 export class ContactRepository implements IContactRepository {

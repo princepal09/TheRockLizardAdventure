@@ -19,6 +19,7 @@ const NavLinks = ({
     { name: "About Us", href: "/about" },
     { name: "Treks", href: "/treks" },
     { name: "Expeditions", href: "/expeditions" },
+    { name: "Trips", href: "/trips" },
     { name: "Trail Gallery", href: "/gallery" },
     { name: "Contact Us", href: "/contact" },
   ];

@@ -12,9 +12,13 @@ export const createContactSchema = z
     message: z.string().trim().min(1).max(5000),
     trekId: z.uuid().nullable().optional(),
     expeditionId: z.uuid().nullable().optional(),
+    tripId: z.uuid().nullable().optional(),
   })
   .strict()
-  .refine((data) => !data.trekId || !data.expeditionId, 'Select either a trek or an expedition');
+  .refine(
+    (data) => [data.trekId, data.expeditionId, data.tripId].filter(Boolean).length <= 1,
+    'Select only one trek, expedition or trip',
+  );
 
 export const updateContactSchema = z
   .object({
