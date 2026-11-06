@@ -1,6 +1,7 @@
 import { pageMetadata } from "@/lib/page-metadata";
 import RoadTripsSection from "./_components/home/RoadTripsSection";
 import HeroSection from "./_components/home/HeroSection";
+import AffiliationsSection from "./_components/home/AffiliationsSection";
 import RegionGallerySection from "./_components/home/RegionGallerySection";
 import FeaturedTreksSection from "./_components/home/FeaturedTreksSection";
 import CustomExpeditionsBanner from "./_components/home/CustomExpeditionsBanner";
@@ -28,6 +29,7 @@ const Home = () => {
       <WhyChooseUsSection />
       <TestimonialsSection />
       <DispatchesSection />
+      <AffiliationsSection />
       <FaqSection />
     </main>
   );

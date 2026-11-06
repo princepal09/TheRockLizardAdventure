@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { createEnquiry, getEnquiryTripOptions } from "@/lib/api/enquiries";
 import { getErrorMessage } from "@/utils/error";
+import PolicyLink from "@/components/PolicyLink";
 import { privacyPolicy } from "@/lib/privacy-policy";
 import BookingPolicyDownloads from "../BookingPolicyDownloads";
 
@@ -320,13 +321,12 @@ export default function ContactForm({
           <p id="contact-privacy" className="text-xs leading-relaxed text-slate-600">
             We use the details you share to respond to your enquiry and coordinate the services you
             request. Our{" "}
-            <a
-              href={privacyPolicy.href}
-              download={privacyPolicy.downloadName}
+            <PolicyLink
+              policy={privacyPolicy.id}
               className="font-semibold text-orange-800 underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-800"
             >
-              Privacy Policy (PDF download)
-            </a>{" "}
+              Privacy Policy
+            </PolicyLink>{" "}
             explains how we handle your information and your privacy rights. For privacy-related
             requests, email{" "}
             <a

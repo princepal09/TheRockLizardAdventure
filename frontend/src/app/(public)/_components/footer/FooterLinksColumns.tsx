@@ -1,10 +1,12 @@
+import PolicyLink from "@/components/PolicyLink";
+import type { PolicyId } from "@/lib/policies";
 import Link from "next/link";
 import { privacyPolicy } from "@/lib/privacy-policy";
 import { medicalForm } from "@/lib/medical-form";
 import { declarationForm } from "@/lib/declaration-form";
 import { cancellationRefundPolicy, termsAndConditions } from "@/lib/booking-policies";
 
-type FooterItem = { label: string; href?: string; download?: string };
+type FooterItem = { label: string; href?: string; download?: string; policy?: PolicyId };
 
 const columns: { title: string; items: FooterItem[] }[] = [
   {
@@ -25,16 +27,14 @@ const columns: { title: string; items: FooterItem[] }[] = [
     title: "Governance & Safety",
     items: [
       { label: "Disclaimer" },
-      { label: "Privacy Policy", href: privacyPolicy.href, download: privacyPolicy.downloadName },
+      { label: privacyPolicy.title, policy: privacyPolicy.id },
       {
         label: termsAndConditions.title,
-        href: termsAndConditions.href,
-        download: termsAndConditions.downloadName,
+        policy: termsAndConditions.id,
       },
       {
         label: cancellationRefundPolicy.title,
-        href: cancellationRefundPolicy.href,
-        download: cancellationRefundPolicy.downloadName,
+        policy: cancellationRefundPolicy.id,
       },
       { label: "Trek Insurance & Safety" },
       { label: "Medical Form", href: medicalForm.href, download: medicalForm.downloadName },
@@ -57,9 +57,16 @@ export default function FooterLinksColumns() {
             {title}
           </h2>
           <ul className="space-y-1.5 text-[11px] leading-snug text-slate-400">
-            {items.map(({ label, href, download }) => (
+            {items.map(({ label, href, download, policy }) => (
               <li key={label}>
-                {href && download ? (
+                {policy ? (
+                  <PolicyLink
+                    policy={policy}
+                    className="hover:text-white hover:underline focus-visible:underline"
+                  >
+                    {label}
+                  </PolicyLink>
+                ) : href && download ? (
                   <a
                     href={href}
                     download={download}

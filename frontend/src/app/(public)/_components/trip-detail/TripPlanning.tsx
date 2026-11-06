@@ -1,3 +1,4 @@
+import PolicyLink from "@/components/PolicyLink";
 import { CalendarDays, MapPin } from "lucide-react";
 import Link from "next/link";
 import { connection } from "next/server";
@@ -59,13 +60,12 @@ export default async function TripPlanning({
       fallback: (
         <>
           Read our{" "}
-          <a
-            href={cancellationRefundPolicy.href}
-            download={cancellationRefundPolicy.downloadName}
+          <PolicyLink
+            policy={cancellationRefundPolicy.id}
             className="font-semibold text-orange-800 underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2"
           >
-            Cancellation &amp; Refund Policy (PDF)
-          </a>{" "}
+            Cancellation &amp; Refund Policy
+          </PolicyLink>{" "}
           and confirm any booking-specific terms with Basecamp.
         </>
       ),
@@ -76,13 +76,12 @@ export default async function TripPlanning({
       fallback: (
         <>
           Review refund eligibility and the request process in our{" "}
-          <a
-            href={cancellationRefundPolicy.href}
-            download={cancellationRefundPolicy.downloadName}
+          <PolicyLink
+            policy={cancellationRefundPolicy.id}
             className="font-semibold text-orange-800 underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2"
           >
-            Cancellation &amp; Refund Policy (PDF)
-          </a>{" "}
+            Cancellation &amp; Refund Policy
+          </PolicyLink>{" "}
           before payment.
         </>
       ),

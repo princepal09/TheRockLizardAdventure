@@ -1,4 +1,5 @@
-import { Download } from "lucide-react";
+import PolicyLink from "@/components/PolicyLink";
+import { FileText } from "lucide-react";
 
 import { cancellationRefundPolicy, termsAndConditions } from "@/lib/booking-policies";
 
@@ -10,15 +11,14 @@ export default function BookingPolicyDownloads() {
       </p>
       <div className="mt-2 flex flex-wrap gap-x-5 gap-y-1">
         {[termsAndConditions, cancellationRefundPolicy].map((document) => (
-          <a
-            key={document.href}
-            href={document.href}
-            download={document.downloadName}
+          <PolicyLink
+            key={document.id}
+            policy={document.id}
             className="inline-flex min-h-11 items-center gap-2 text-xs font-semibold text-orange-800 underline underline-offset-4 hover:text-orange-950 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-800"
           >
-            <Download aria-hidden="true" className="size-3.5 shrink-0" />
-            {document.title} (PDF)
-          </a>
+            <FileText aria-hidden="true" className="size-3.5 shrink-0" />
+            {document.title}
+          </PolicyLink>
         ))}
       </div>
     </div>
