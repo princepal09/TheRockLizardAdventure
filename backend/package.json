@@ -15,6 +15,7 @@
     "db:generate": "prisma generate --config prisma7.config.ts",
     "typecheck": "tsc --noEmit",
     "test:trips": "node --import tsx tests/trips.integration.ts",
+    "test:errors": "node --import tsx --test tests/error-handling.test.ts",
     "clean": "node -e \"require('node:fs').rmSync('dist', { recursive: true, force: true })\"",
     "prisma:studio": "prisma studio --config prisma7.config.ts"
   },

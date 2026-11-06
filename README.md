@@ -219,7 +219,7 @@ Keep the backend available during the frontend build because some public pages l
 | Build reports `ECONNREFUSED` on port 5000 | Run `npm run build` from the repository root to start the local API automatically. For a frontend-only build, start the API first. |
 | `npm start` reports missing `.next` files | The previous build did not finish. Fix the build error and complete `npm run build` successfully before running `npm start`. |
 | `Invalid environment variables`              | Complete `backend/.env`; secrets need at least 32 characters, the admin password needs at least 8, and `MAIL_FROM` must be an email address.   |
-| Database connection fails                    | Start MySQL; check the database exists, user permissions and `DATABASE_URL`.                                                                   |
+| Database connection fails                    | Start MySQL; check the database exists, user permissions and `DATABASE_URL`. Local loopback connections enable RSA public key retrieval for MySQL 8 authentication. Remote databases retain their configured TLS/key settings. |
 | Missing Prisma client or database columns    | Run the migrate and generate commands from `backend` with `--config prisma7.config.ts`.                                                        |
 | Login fails on a fresh database              | Run the seed command and use the seeded email/password. Editing `.env` afterwards does not reset an existing admin.                            |
 | Frontend cannot reach the API                | Check the backend health URL, API port and `/api/v1` suffix. `FRONTEND_URL` must match the browser origin for CORS.                            |

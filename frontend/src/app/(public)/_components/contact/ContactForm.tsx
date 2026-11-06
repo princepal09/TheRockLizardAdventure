@@ -2,7 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useQuery } from "@tanstack/react-query";
-import { LoaderCircle, Mountain, Send } from "lucide-react";
+import { LoaderCircle, Mountain, Route, Send } from "lucide-react";
 import { useForm, useWatch } from "react-hook-form";
 import { toast } from "sonner";
 import type { ReactNode } from "react";
@@ -29,9 +29,10 @@ const defaults: ContactFormValues = {
 const inputClass =
   "w-full rounded-lg border border-transparent bg-slate-100 px-3 py-2.5 text-sm text-slate-900 placeholder:text-slate-500 focus-visible:outline-2 focus-visible:outline-orange-600 aria-invalid:border-red-600";
 const collaborationTopic = "Company / NGO collaboration";
+const customTripTopic = "Custom itinerary";
 const topics = [
   "Booking and availability",
-  "Custom itinerary",
+  customTripTopic,
   "Gear and preparation",
   "School or corporate group",
   collaborationTopic,
@@ -88,7 +89,7 @@ export default function ContactForm({
         subject: "Booking and availability",
       }
     : customTrip
-      ? { ...defaults, subject: "Custom itinerary" }
+      ? { ...defaults, subject: customTripTopic }
       : collaboration
         ? { ...defaults, subject: collaborationTopic }
         : defaults;
@@ -106,6 +107,8 @@ export default function ContactForm({
   });
   const category = useWatch({ control, name: "category" });
   const tripValue = useWatch({ control, name: "trip" });
+  const subject = useWatch({ control, name: "subject" });
+  const isCustomTrip = category === "general" && subject === customTripTopic;
   const tripOptions = useQuery({
     queryKey: ["public", "enquiry-trip-options"],
     queryFn: ({ signal }) => getEnquiryTripOptions(signal),
@@ -113,10 +116,18 @@ export default function ContactForm({
   });
 
   function changeCategory(next: ContactFormValues["category"]) {
-    if (next === category) return;
+    if (next === category && !isCustomTrip) return;
     setValue("category", next);
     setValue("trip", "");
-    clearErrors("trip");
+    if (isCustomTrip) setValue("subject", next === "trip" ? "Booking and availability" : "");
+    clearErrors(["trip", "subject"]);
+  }
+
+  function chooseCustomTrip() {
+    setValue("category", "general");
+    setValue("trip", "");
+    setValue("subject", customTripTopic, { shouldDirty: true });
+    clearErrors(["trip", "subject"]);
   }
 
   async function submit(values: ContactFormValues) {
@@ -143,11 +154,11 @@ export default function ContactForm({
         </span>
       </div>
       <p className="text-sm text-slate-600">
-        {customTrip
+        {isCustomTrip
           ? "Tell us about the trip you’d like us to create for you."
           : "Send your trip or general enquiry to the Almora team."}
       </p>
-      {customTrip && (
+      {isCustomTrip && (
         <p className="rounded-lg border border-sky-100 bg-sky-50 p-3 text-xs leading-relaxed text-sky-900">
           Share your preferred destination, approximate dates, number of days, group size, budget
           and interests. You can request a destination that isn’t listed on our website.
@@ -176,11 +187,21 @@ export default function ContactForm({
               type="button"
               variant="outline"
               size="sm"
-              aria-pressed={category === "general"}
+              aria-pressed={category === "general" && !isCustomTrip}
               onClick={() => changeCategory("general")}
               className="rounded-lg aria-pressed:border-orange-500 aria-pressed:bg-orange-500 aria-pressed:text-[#ffffff]"
             >
               General Query
+            </Button>
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              aria-pressed={isCustomTrip}
+              onClick={chooseCustomTrip}
+              className="rounded-lg aria-pressed:border-orange-500 aria-pressed:bg-orange-500 aria-pressed:text-[#ffffff]"
+            >
+              <Route aria-hidden="true" /> Customize Your Trip
             </Button>
           </div>
           {category === "trip" && (
@@ -300,7 +321,15 @@ export default function ContactForm({
             <select
               id="contact-subject"
               required
-              {...register("subject")}
+              {...register("subject", {
+                onChange: (event) => {
+                  if (event.target.value === customTripTopic) {
+                    setValue("category", "general");
+                    setValue("trip", "");
+                    clearErrors("trip");
+                  }
+                },
+              })}
               aria-invalid={Boolean(errors.subject)}
               aria-describedby={errors.subject ? "contact-subject-error" : undefined}
               className={inputClass}
@@ -322,7 +351,7 @@ export default function ContactForm({
               rows={5}
               maxLength={5000}
               placeholder={
-                customTrip
+                isCustomTrip
                   ? "Where would you like to go? Tell us your preferred dates, duration, group size, budget and what you’d like to experience."
                   : "How can our Almora team help you?"
               }

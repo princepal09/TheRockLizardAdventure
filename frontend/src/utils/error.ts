@@ -15,6 +15,16 @@ export const getErrorMessage = (error: unknown): string => {
   }
 
   if (axios.isAxiosError<{ message?: unknown; errors?: unknown }>(error)) {
+    // Never display internal server messages, including responses from older APIs.
+    if (!error.response) {
+      return "Could not connect. Please check your connection and try again.";
+    }
+    if (error.response.status === 503) {
+      return "Our service is temporarily unavailable. Please try again shortly.";
+    }
+    if (error.response.status >= 500) {
+      return "Something went wrong. Please try again later.";
+    }
     const data = error.response?.data;
     if (Array.isArray(data?.errors)) {
       const issue = data.errors.find(
