@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowUp } from "lucide-react";
+import { ChevronUp } from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -55,19 +55,13 @@ export default function BackToTop() {
       whileHover={animate ? { y: -4, scale: 1.06 } : undefined}
       whileTap={animate ? { scale: 0.94 } : undefined}
       transition={{ duration: 0.2, ease: "easeOut" }}
-      className="group fixed right-6 bottom-28 z-50 grid size-11 place-items-center rounded-full bg-linear-to-br from-amber-300 via-orange-500 to-orange-700 p-[2px] text-white shadow-[0_6px_24px_-5px_#f9731680] ring-2 ring-orange-500/10 transition-shadow hover:shadow-[0_8px_32px_-4px_#f97316b3] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-orange-600"
+      className="group fixed right-[34px] bottom-[184px] z-50 grid size-11 cursor-pointer place-items-center rounded-full border border-white/80 bg-orange-600 text-white shadow-[0_5px_14px_-4px_#ea580c40] transition-colors hover:bg-orange-700 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-orange-700"
     >
-      <span aria-hidden="true" className="absolute inset-0 rounded-full border border-white/30" />
-      <span className="relative flex size-full flex-col items-center justify-center gap-0 rounded-full bg-linear-to-br from-slate-800 to-slate-950 shadow-inner">
-        <ArrowUp
-          aria-hidden="true"
-          strokeWidth={2.5}
-          className="size-4 text-orange-300 motion-safe:transition-transform motion-safe:duration-300 motion-safe:group-hover:-translate-y-0.5 motion-safe:group-focus-visible:-translate-y-0.5"
-        />
-        <span aria-hidden="true" className="text-[7px] font-bold tracking-[0.14em] text-orange-100">
-          TOP
-        </span>
-      </span>
+      <ChevronUp
+        aria-hidden="true"
+        strokeWidth={2.5}
+        className="size-5 motion-safe:transition-transform motion-safe:duration-200 motion-safe:group-hover:-translate-y-0.5 motion-safe:group-focus-visible:-translate-y-0.5"
+      />
       <span
         aria-hidden="true"
         className="pointer-events-none absolute right-[calc(100%+0.75rem)] whitespace-nowrap rounded-lg border border-slate-700 bg-slate-900 px-3 py-2 text-xs font-semibold text-white opacity-0 shadow-lg group-hover:opacity-100 group-focus-visible:opacity-100 motion-safe:translate-x-1 motion-safe:transition-all motion-safe:duration-200 motion-safe:group-hover:translate-x-0 motion-safe:group-focus-visible:translate-x-0"
