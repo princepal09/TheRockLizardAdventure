@@ -1,0 +1,15 @@
+# Rocklizard Adventure
+
+> Rocklizard Adventure organizes guided treks and expeditions in Uttarakhand (Kumaon and Garhwal), Kashmir, and Maharashtra, as well as road and bike trips across India.
+
+## Plan a trip
+
+- [Treks](https://therocklizard.com/treks): Browse guided treks and open individual itineraries for route, difficulty, and trip details.
+- [Expeditions](https://therocklizard.com/expeditions): Browse expeditions and find detailed itineraries.
+- [Road and bike trips](https://therocklizard.com/trips): Compare routes, distances, vehicle arrangements, and departure details.
+- [Contact](https://therocklizard.com/contact): Ask about a trip, check availability, or enquire about a custom itinerary.
+
+## About Rocklizard
+
+- [About](https://therocklizard.com/about): Learn about Rocklizard Adventure and its team.
+- [Collaborations](https://therocklizard.com/collaborations): Find information for travel partners and collaborators.
