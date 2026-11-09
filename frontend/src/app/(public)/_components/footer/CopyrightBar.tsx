@@ -9,6 +9,8 @@ export default function CopyrightBar() {
         The code behind the climb <span aria-hidden="true">·</span>{" "}
         <a
           href="https://princepal.vercel.app/"
+          target="_blank"
+          rel="noopener noreferrer"
           className="rounded-sm text-slate-200 underline decoration-slate-500 underline-offset-2 hover:text-orange-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-400"
         >
           Prince Pal
