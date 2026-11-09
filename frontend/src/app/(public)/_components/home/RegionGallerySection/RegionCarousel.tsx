@@ -14,6 +14,7 @@ import {
   type CarouselApi,
 } from "@/components/ui/carousel";
 import type { TrekSearchItem } from "@/lib/api/published-treks";
+import { homepageTrekCoverSizes } from "@/lib/homepage-trips";
 
 import TripPhoto from "../../trip-detail/TripPhoto";
 
@@ -32,7 +33,7 @@ function TrekCard({ trek }: { trek: GalleryTrek }) {
         key={trek.coverImageUrl}
         src={trek.coverImageUrl}
         alt=""
-        sizes="(min-width: 768px) 20vw, 50vw"
+        sizes={homepageTrekCoverSizes}
         className="object-cover motion-safe:transition-transform motion-safe:duration-300 motion-safe:group-hover:scale-105"
         fallback={
           <Mountain

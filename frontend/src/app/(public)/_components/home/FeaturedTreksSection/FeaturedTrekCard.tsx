@@ -1,8 +1,5 @@
-import { canOptimizeImage, imageLoaderFor } from "@/lib/image-optimization";
 import { ArrowRight, Mountain, Star } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
 
 import {
   Card,
@@ -13,6 +10,9 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import type { TrekSearchItem } from "@/lib/api/published-treks";
+import { homepageTrekCoverSizes } from "@/lib/homepage-trips";
+
+import TripPhoto from "../../trip-detail/TripPhoto";
 
 export default function FeaturedTrekCard({
   trek,
@@ -21,12 +21,7 @@ export default function FeaturedTrekCard({
   trek: TrekSearchItem;
   highlighted: boolean;
 }) {
-  const [failed, setFailed] = useState(false);
   const href = `/treks/${encodeURIComponent(trek.slug)}`;
-  const image =
-    trek.coverImageUrl && /^(?:https?:\/\/|\/(?!\/))/i.test(trek.coverImageUrl)
-      ? trek.coverImageUrl
-      : null;
   const elevation =
     trek.maxAltitudeMeters === null ? null : `${trek.maxAltitudeMeters.toLocaleString("en-IN")} m`;
   const level = trek.difficulty.toLowerCase().replaceAll("_", " ");
@@ -40,20 +35,13 @@ export default function FeaturedTrekCard({
         aria-label={`Explore ${trek.name}`}
         className="relative grid aspect-[16/9] place-items-center overflow-hidden bg-slate-800 text-white focus-visible:outline-2 focus-visible:-outline-offset-4 focus-visible:outline-white"
       >
-        {image && !failed ? (
-          <Image
-            src={image}
-            alt=""
-            fill
-            loader={imageLoaderFor(image)}
-            unoptimized={!canOptimizeImage(image)}
-            sizes="(min-width: 768px) 33vw, 100vw"
-            onError={() => setFailed(true)}
-            className="object-cover"
-          />
-        ) : (
-          <Mountain aria-hidden="true" className="size-8 text-slate-400" />
-        )}
+        <TripPhoto
+          key={trek.coverImageUrl}
+          src={trek.coverImageUrl}
+          alt=""
+          sizes={homepageTrekCoverSizes}
+          fallback={<Mountain aria-hidden="true" className="size-8 text-slate-400" />}
+        />
         <span
           aria-hidden="true"
           className="absolute inset-0 bg-linear-to-t from-slate-950/70 to-transparent"
