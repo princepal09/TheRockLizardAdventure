@@ -15,9 +15,9 @@ export default function TripPhoto({
   alt: string;
   hero?: boolean;
 }) {
-  const [failed, setFailed] = useState(false);
+  const [attempt, setAttempt] = useState<"optimized" | "original" | "failed">("optimized");
 
-  if (failed || !src || !/^(?:https?:\/\/|\/(?!\/))/i.test(src)) {
+  if (attempt === "failed" || !src || !/^(?:https?:\/\/|\/(?!\/))/i.test(src)) {
     return (
       <div className="absolute inset-0 grid place-items-center bg-slate-800">
         <Mountain aria-hidden="true" className="size-12 text-slate-500" />
@@ -25,17 +25,20 @@ export default function TripPhoto({
     );
   }
 
+  const optimize = attempt === "optimized" && canOptimizeImage(src);
+
   return (
     <Image
+      key={attempt}
       src={src}
       alt={alt}
       fill
-      loader={imageLoaderFor(src)}
-      unoptimized={!canOptimizeImage(src)}
+      loader={optimize ? imageLoaderFor(src) : undefined}
+      unoptimized={!optimize}
       priority={hero}
       sizes={hero ? "100vw" : "(min-width: 1024px) 25vw, 50vw"}
       className="object-cover"
-      onError={() => setFailed(true)}
+      onError={() => setAttempt(optimize ? "original" : "failed")}
     />
   );
 }

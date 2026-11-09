@@ -9,6 +9,7 @@ import DossierReveal from "./DossierReveal";
 import TripPhoto from "./TripPhoto";
 
 export default function DossierHero({ trip, kind }: { trip: PublishedTripDetail; kind: TripKind }) {
+  const heroImage = trip.coverImageUrl ?? trip.images[0]?.imageUrl;
   const facts = [
     ...(kind === "trips"
       ? [
@@ -31,7 +32,7 @@ export default function DossierHero({ trip, kind }: { trip: PublishedTripDetail;
       className="relative isolate flex min-h-[clamp(25rem,38vw,34rem)] items-center overflow-hidden bg-slate-900 text-white"
     >
       <div className="absolute inset-0 -z-20">
-        <TripPhoto src={trip.coverImageUrl ?? trip.images[0]?.imageUrl} alt="" hero />
+        <TripPhoto key={heroImage} src={heroImage} alt="" hero />
       </div>
       <div
         aria-hidden="true"

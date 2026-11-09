@@ -25,7 +25,7 @@ export default function TripGallery({ images }: { images: PublishedTripDetail["i
         {images.map(({ id, imageUrl, altText, caption }) => (
           <figure key={id} className="min-w-0">
             <div className="relative aspect-square overflow-hidden rounded-xl bg-slate-100">
-              <TripPhoto src={imageUrl} alt={altText ?? ""} />
+              <TripPhoto key={imageUrl} src={imageUrl} alt={altText ?? ""} />
             </div>
             {caption && <figcaption className="mt-1 text-xs text-slate-600">{caption}</figcaption>}
           </figure>
