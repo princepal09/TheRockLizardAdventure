@@ -4,9 +4,15 @@ import type { ImageLoader } from "next/image";
 // Other external URLs retain direct delivery rather than breaking existing images.
 export function canOptimizeImage(src: string) {
   if (src.startsWith("/") && !src.startsWith("//")) return true;
-  const url = URL.parse(src);
+  let url: URL;
+  try {
+    url = new URL(src);
+  } catch {
+    return false;
+  }
+
   return (
-    url?.protocol === "https:" &&
+    url.protocol === "https:" &&
     url.hostname === "res.cloudinary.com" &&
     /^\/[^/]+\/image\/upload\//.test(url.pathname) &&
     !url.pathname.includes("/image/upload/s--")

@@ -1,10 +1,7 @@
 "use client";
 
-import { canOptimizeImage, imageLoaderFor } from "@/lib/image-optimization";
-
 import { Mountain, Pause, Play } from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
-import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
@@ -18,40 +15,32 @@ import {
 } from "@/components/ui/carousel";
 import type { TrekSearchItem } from "@/lib/api/published-treks";
 
+import TripPhoto from "../../trip-detail/TripPhoto";
+
 type GalleryTrek = Pick<TrekSearchItem, "id" | "name" | "slug" | "coverImageUrl">;
 const controlClass =
   "z-20 size-9 border-stone-200 bg-white text-slate-900 shadow-sm hover:bg-stone-100 focus-visible:outline-2 focus-visible:outline-sky-700";
 
 function TrekCard({ trek }: { trek: GalleryTrek }) {
-  const [failed, setFailed] = useState(false);
-  const imageUrl =
-    trek.coverImageUrl && /^(?:https?:\/\/|\/(?!\/))/i.test(trek.coverImageUrl)
-      ? trek.coverImageUrl
-      : null;
-
   return (
     <Link
       href={`/treks/${encodeURIComponent(trek.slug)}`}
       prefetch={false}
       className="group relative isolate flex aspect-[1.15] items-end overflow-hidden rounded-xl bg-slate-800 p-3 text-white focus-visible:outline-2 focus-visible:-outline-offset-4 focus-visible:outline-white"
     >
-      {imageUrl && !failed ? (
-        <Image
-          src={imageUrl}
-          alt=""
-          fill
-          loader={imageLoaderFor(imageUrl)}
-          unoptimized={!canOptimizeImage(imageUrl)}
-          sizes="(min-width: 768px) 20vw, 50vw"
-          onError={() => setFailed(true)}
-          className="object-cover motion-safe:transition-transform motion-safe:duration-300 motion-safe:group-hover:scale-105"
-        />
-      ) : (
-        <Mountain
-          aria-hidden="true"
-          className="absolute top-1/3 left-1/2 size-8 -translate-x-1/2 text-slate-400"
-        />
-      )}
+      <TripPhoto
+        key={trek.coverImageUrl}
+        src={trek.coverImageUrl}
+        alt=""
+        sizes="(min-width: 768px) 20vw, 50vw"
+        className="object-cover motion-safe:transition-transform motion-safe:duration-300 motion-safe:group-hover:scale-105"
+        fallback={
+          <Mountain
+            aria-hidden="true"
+            className="absolute top-1/3 left-1/2 size-8 -translate-x-1/2 text-slate-400"
+          />
+        }
+      />
       <span
         aria-hidden="true"
         className="absolute inset-0 bg-linear-to-t from-slate-950/95 via-slate-950/25 to-transparent"
@@ -115,7 +104,7 @@ export default function RegionCarousel({ treks }: { treks: GalleryTrek[] }) {
         <CarouselContent className="-ml-2.5!">
           {treks.map((trek) => (
             <CarouselItem key={trek.id} className="basis-1/2! pl-2.5! sm:basis-1/3! md:basis-1/5!">
-              <TrekCard key={trek.coverImageUrl} trek={trek} />
+              <TrekCard trek={trek} />
             </CarouselItem>
           ))}
         </CarouselContent>
