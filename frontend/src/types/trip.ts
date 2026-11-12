@@ -1,3 +1,5 @@
+import type { JSONContent } from "@tiptap/react";
+
 export type TripKind = "treks" | "expeditions" | "trips";
 
 export const tripStatuses = ["DRAFT", "PUBLISHED", "ARCHIVED"] as const;
@@ -30,7 +32,8 @@ export type TripInput = {
   status: TripStatus;
   durationDays: number;
   summary: string | null;
-  description: string | null;
+  description?: string | null;
+  descriptionRich?: JSONContent | null;
   distanceKm: number | null;
   maxAltitudeMeters: number | null;
   startingPoint: string | null;
@@ -48,15 +51,15 @@ export type TripInput = {
 type DecimalFields = "distanceKm" | "price" | "discountPrice";
 
 export type Trip = Omit<TripInput, "seasonIds" | DecimalFields> & {
+  description: string | null;
   id: string;
   slug: string;
   coverImageUrl: string | null;
 } & Record<DecimalFields, string | number | null>;
 
-export type ItineraryInput = {
+export type ItineraryInput = Pick<TripInput, "description" | "descriptionRich"> & {
   dayNumber: number;
   title: string;
-  description: string | null;
   distanceKm: number | null;
   altitudeMeters: number | null;
 };
@@ -71,6 +74,7 @@ export type TripDetail = Trip & {
   seasons: { seasonId: string; season: TripOption }[];
   itineraries: (Omit<ItineraryInput, "distanceKm"> & {
     id: string;
+    description: string | null;
     distanceKm: string | number | null;
   })[];
   images: (TripPhotoInput & { id: string; imageUrl: string })[];

@@ -140,6 +140,7 @@ model Trek {
   slug               String          @unique @db.VarChar(220)
   summary            String?         @db.VarChar(500)
   description        String?         @db.Text
+  descriptionRich    Json?           @map("description_rich")
   regionId           String          @map("region_id") @db.Char(36)
   difficulty         DifficultyLevel
   status             ContentStatus   @default(DRAFT)
@@ -215,6 +216,7 @@ model TrekItinerary {
   dayNumber      Int      @map("day_number")
   title          String   @db.VarChar(255)
   description    String?  @db.Text
+  descriptionRich Json?  @map("description_rich")
   distanceKm     Decimal? @map("distance_km") @db.Decimal(8, 2)
   altitudeMeters Int?     @map("altitude_meters")
   createdAt      DateTime @default(now()) @map("created_at") @db.DateTime(0)
@@ -250,6 +252,7 @@ model Expedition {
   slug               String          @unique @db.VarChar(220)
   summary            String?         @db.VarChar(500)
   description        String?         @db.Text
+  descriptionRich    Json?           @map("description_rich")
   regionId           String          @map("region_id") @db.Char(36)
   difficulty         DifficultyLevel
   status             ContentStatus   @default(DRAFT)
@@ -314,6 +317,7 @@ model ExpeditionItinerary {
   dayNumber      Int      @map("day_number")
   title          String   @db.VarChar(255)
   description    String?  @db.Text
+  descriptionRich Json?  @map("description_rich")
   distanceKm     Decimal? @map("distance_km") @db.Decimal(8, 2)
   altitudeMeters Int?     @map("altitude_meters")
   createdAt      DateTime @default(now()) @map("created_at") @db.DateTime(0)
@@ -351,6 +355,7 @@ model Trip {
   slug               String          @unique @db.VarChar(220)
   summary            String?         @db.VarChar(500)
   description        String?         @db.Text
+  descriptionRich    Json?           @map("description_rich")
   regionId           String          @map("region_id") @db.Char(36)
   difficulty         DifficultyLevel
   status             ContentStatus   @default(DRAFT)
@@ -416,6 +421,7 @@ model TripItinerary {
   dayNumber      Int      @map("day_number")
   title          String   @db.VarChar(255)
   description    String?  @db.Text
+  descriptionRich Json?  @map("description_rich")
   distanceKm     Decimal? @map("distance_km") @db.Decimal(8, 2)
   altitudeMeters Int?     @map("altitude_meters")
   createdAt      DateTime @default(now()) @map("created_at") @db.DateTime(0)

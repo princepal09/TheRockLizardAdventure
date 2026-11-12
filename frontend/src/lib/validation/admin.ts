@@ -1,4 +1,5 @@
 import { z } from "zod";
+import type { JSONContent } from "@tiptap/react";
 
 import { tripDifficulties, tripStatuses } from "@/types/trip";
 import { imageFileSchema } from "./image";
@@ -8,6 +9,16 @@ const displayOrder = z.int32().nonnegative();
 const distance = z.number().nonnegative().max(999999.99).multipleOf(0.01).nullable();
 const price = z.number().nonnegative().max(99999999.99).multipleOf(0.01).nullable();
 const optionalText = z.string().nullable();
+const descriptionFields = {
+  description: optionalText.optional(),
+  descriptionRich: z
+    .custom<JSONContent>(
+      (value) =>
+        typeof value === "object" && value !== null && "type" in value && value.type === "doc",
+    )
+    .nullable()
+    .optional(),
+};
 
 export const tripFormSchema = z.object({
   tripType: z.enum(["ROAD", "BIKE"]).optional(),
@@ -40,7 +51,7 @@ export const tripFormSchema = z.object({
   status: z.enum(tripStatuses),
   durationDays: z.int32().positive("Enter a duration of at least one day."),
   summary: z.string().max(500).nullable(),
-  description: optionalText,
+  ...descriptionFields,
   distanceKm: distance,
   maxAltitudeMeters: z.int32().nonnegative().nullable(),
   startingPoint: z.string().max(255).nullable(),
@@ -58,7 +69,7 @@ export const tripFormSchema = z.object({
 export const itineraryFormSchema = z.object({
   dayNumber: z.int32().positive("Enter a day number of at least 1."),
   title: z.string().trim().min(1, "Enter a title.").max(255),
-  description: optionalText,
+  ...descriptionFields,
   distanceKm: distance,
   altitudeMeters: z.int32().nullable(),
 });

@@ -1,4 +1,4 @@
-import { ContentStatus, type Trip } from '../../../generated/prisma/client.js';
+import { ContentStatus, Prisma, type Trip } from '../../../generated/prisma/client.js';
 import { prisma } from '../../lib/prisma.js';
 import { sortPublishedTrips } from '../../utils/common/trip-publication.js';
 import type { CreateGalleryImageDTO, UpdateGalleryImageDTO } from '../gallery/gallery.schema.js';
@@ -41,10 +41,11 @@ export class TripRepository implements ITripRepository {
   }
 
   async createTrip(data: CreateTripRecord, adminId: string) {
-    const { seasonIds, ...fields } = data;
+    const { seasonIds, descriptionRich, ...fields } = data;
     return prisma.trip.create({
       data: {
         ...fields,
+        descriptionRich: descriptionRich === null ? Prisma.DbNull : descriptionRich,
         createdBy: adminId,
         seasons: seasonIds?.length
           ? { create: seasonIds.map((seasonId) => ({ seasonId })) }
@@ -54,8 +55,11 @@ export class TripRepository implements ITripRepository {
     });
   }
 
-  async findTrips(): Promise<Trip[]> {
-    return prisma.trip.findMany({ orderBy: [{ createdAt: 'desc' }, { id: 'asc' }] });
+  async findTrips(): Promise<Omit<Trip, 'descriptionRich'>[]> {
+    return prisma.trip.findMany({
+      omit: { descriptionRich: true },
+      orderBy: [{ createdAt: 'desc' }, { id: 'asc' }],
+    });
   }
 
   async findTripById(id: string) {
@@ -73,6 +77,7 @@ export class TripRepository implements ITripRepository {
     const trips = await prisma.trip.findMany({
       where: { status: ContentStatus.PUBLISHED },
       omit: {
+        descriptionRich: true,
         createdBy: true,
         departureDates: true,
         meetingPoint: true,
@@ -113,11 +118,12 @@ export class TripRepository implements ITripRepository {
     coverImagePublicId?: string | null,
   ) {
     const where = coverImagePublicId === undefined ? { id } : { id, coverImagePublicId };
-    const { seasonIds, ...fields } = data;
+    const { seasonIds, descriptionRich, ...fields } = data;
     return prisma.trip.update({
       where,
       data: {
         ...fields,
+        descriptionRich: descriptionRich === null ? Prisma.DbNull : descriptionRich,
         seasons:
           seasonIds === undefined
             ? undefined
@@ -152,11 +158,25 @@ export class TripRepository implements ITripRepository {
   }
 
   async createItinerary(tripId: string, data: CreateItineraryDTO) {
-    return prisma.tripItinerary.create({ data: { ...data, tripId } });
+    const { descriptionRich, ...fields } = data;
+    return prisma.tripItinerary.create({
+      data: {
+        ...fields,
+        tripId,
+        descriptionRich: descriptionRich === null ? Prisma.DbNull : descriptionRich,
+      },
+    });
   }
 
   async updateItinerary(tripId: string, id: string, data: UpdateItineraryDTO) {
-    return prisma.tripItinerary.update({ where: { id, tripId }, data });
+    const { descriptionRich, ...fields } = data;
+    return prisma.tripItinerary.update({
+      where: { id, tripId },
+      data: {
+        ...fields,
+        descriptionRich: descriptionRich === null ? Prisma.DbNull : descriptionRich,
+      },
+    });
   }
 
   async deleteItinerary(tripId: string, id: string): Promise<void> {

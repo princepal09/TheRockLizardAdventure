@@ -16,10 +16,10 @@ export interface ITripRepository {
   publishSelected(ids: string[]): Promise<{ updatedCount: number }>;
   deleteSelected(ids: string[]): Promise<(Trip & { images: TripImage[] })[]>;
   createTrip(data: CreateTripRecord, adminId: string): Promise<Trip & TripSeasons>;
-  findTrips(): Promise<Trip[]>;
+  findTrips(): Promise<Omit<Trip, 'descriptionRich'>[]>;
   findTripById(id: string): Promise<(Trip & TripDetails) | null>;
   findPublishedTrips(): Promise<
-    (Omit<Trip, 'createdBy' | TripPlanningField> & {
+    (Omit<Trip, 'createdBy' | 'descriptionRich' | TripPlanningField> & {
       region: { name: string };
       seasons: { seasonId: string; season: Pick<Season, 'name'> }[];
     })[]

@@ -13,10 +13,10 @@ export interface ITrekRepository {
   publishSelected(ids: string[]): Promise<{ updatedCount: number }>;
   deleteSelected(ids: string[]): Promise<(Trek & { images: TrekImage[] })[]>;
   createTrek(data: CreateTrekRecord, adminId: string): Promise<Trek & TrekSeasons>;
-  findTreks(): Promise<Trek[]>;
+  findTreks(): Promise<Omit<Trek, 'descriptionRich'>[]>;
   findTrekById(id: string): Promise<(Trek & TrekDetails) | null>;
   findPublishedTreks(): Promise<
-    (Omit<Trek, 'createdBy' | TripPlanningField> & {
+    (Omit<Trek, 'createdBy' | 'descriptionRich' | TripPlanningField> & {
       months: { month: number }[];
       region: { name: string };
       seasons: { seasonId: string; season: Pick<Season, 'name'> }[];

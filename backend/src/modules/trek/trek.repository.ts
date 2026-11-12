@@ -1,4 +1,4 @@
-import { ContentStatus, type Trek } from '../../../generated/prisma/client.js';
+import { ContentStatus, Prisma, type Trek } from '../../../generated/prisma/client.js';
 import { prisma } from '../../lib/prisma.js';
 import { sortPublishedTrips } from '../../utils/common/trip-publication.js';
 import type { CreateGalleryImageDTO, UpdateGalleryImageDTO } from '../gallery/gallery.schema.js';
@@ -39,10 +39,11 @@ export class TrekRepository implements ITrekRepository {
   }
 
   async createTrek(data: CreateTrekRecord, adminId: string) {
-    const { seasonIds, ...fields } = data;
+    const { seasonIds, descriptionRich, ...fields } = data;
     return prisma.trek.create({
       data: {
         ...fields,
+        descriptionRich: descriptionRich === null ? Prisma.DbNull : descriptionRich,
         createdBy: adminId,
         seasons: seasonIds?.length
           ? { create: seasonIds.map((seasonId) => ({ seasonId })) }
@@ -52,8 +53,11 @@ export class TrekRepository implements ITrekRepository {
     });
   }
 
-  async findTreks(): Promise<Trek[]> {
-    return prisma.trek.findMany({ orderBy: [{ createdAt: 'desc' }, { id: 'asc' }] });
+  async findTreks(): Promise<Omit<Trek, 'descriptionRich'>[]> {
+    return prisma.trek.findMany({
+      omit: { descriptionRich: true },
+      orderBy: [{ createdAt: 'desc' }, { id: 'asc' }],
+    });
   }
 
   async findTrekById(id: string) {
@@ -71,6 +75,7 @@ export class TrekRepository implements ITrekRepository {
     const trips = await prisma.trek.findMany({
       where: { status: ContentStatus.PUBLISHED },
       omit: {
+        descriptionRich: true,
         createdBy: true,
         departureDates: true,
         meetingPoint: true,
@@ -113,11 +118,12 @@ export class TrekRepository implements ITrekRepository {
     coverImagePublicId?: string | null,
   ) {
     const where = coverImagePublicId === undefined ? { id } : { id, coverImagePublicId };
-    const { seasonIds, ...fields } = data;
+    const { seasonIds, descriptionRich, ...fields } = data;
     return prisma.trek.update({
       where,
       data: {
         ...fields,
+        descriptionRich: descriptionRich === null ? Prisma.DbNull : descriptionRich,
         seasons:
           seasonIds === undefined
             ? undefined
@@ -152,11 +158,25 @@ export class TrekRepository implements ITrekRepository {
   }
 
   async createItinerary(trekId: string, data: CreateItineraryDTO) {
-    return prisma.trekItinerary.create({ data: { ...data, trekId } });
+    const { descriptionRich, ...fields } = data;
+    return prisma.trekItinerary.create({
+      data: {
+        ...fields,
+        trekId,
+        descriptionRich: descriptionRich === null ? Prisma.DbNull : descriptionRich,
+      },
+    });
   }
 
   async updateItinerary(trekId: string, id: string, data: UpdateItineraryDTO) {
-    return prisma.trekItinerary.update({ where: { id, trekId }, data });
+    const { descriptionRich, ...fields } = data;
+    return prisma.trekItinerary.update({
+      where: { id, trekId },
+      data: {
+        ...fields,
+        descriptionRich: descriptionRich === null ? Prisma.DbNull : descriptionRich,
+      },
+    });
   }
 
   async deleteItinerary(trekId: string, id: string): Promise<void> {

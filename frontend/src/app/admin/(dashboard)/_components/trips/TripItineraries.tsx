@@ -1,6 +1,6 @@
 "use client";
 
-import type { FormEvent } from "react";
+import { useRef, useState, type FormEvent } from "react";
 
 import { Button } from "@/components/ui/button";
 import { useTripMutation } from "@/hooks/trips/useTrips";
@@ -9,14 +9,9 @@ import type { ItineraryInput, TripDetail, TripKind } from "@/types/trip";
 import { itineraryFormSchema } from "@/lib/validation/admin";
 import { getErrorMessage } from "@/utils/error";
 import DeleteConfirmation from "../DeleteConfirmation";
-import {
-  TripField,
-  tripGridClass,
-  tripInputClass,
-  tripNumber,
-  tripPanelClass,
-  tripText,
-} from "./TripFields";
+import type { TripDescriptionEditorHandle } from "./TripDescriptionEditor";
+import TripDescriptionField from "./TripDescriptionField";
+import { TripField, tripGridClass, tripNumber, tripPanelClass, tripText } from "./TripFields";
 
 function ItineraryForm({
   kind,
@@ -27,6 +22,8 @@ function ItineraryForm({
   tripId: string;
   day?: TripDetail["itineraries"][number];
 }) {
+  const [editingDescription, setEditingDescription] = useState(false);
+  const descriptionEditor = useRef<TripDescriptionEditorHandle>(null);
   const save = useTripMutation(
     kind,
     async (input: ItineraryInput) =>
@@ -51,13 +48,14 @@ function ItineraryForm({
       {
         dayNumber: Number(tripText(form, "dayNumber")),
         title: tripText(form, "title"),
-        description: tripText(form, "description") || null,
+        ...descriptionEditor.current?.readEdit(),
         distanceKm: tripNumber(form, "distanceKm"),
         altitudeMeters: tripNumber(form, "altitudeMeters"),
       },
       {
         onSuccess: () => {
           if (!day) element.reset();
+          setEditingDescription(false);
         },
       },
     );
@@ -104,15 +102,25 @@ function ItineraryForm({
             defaultValue={day?.altitudeMeters ?? ""}
           />
         </div>
-        <label className="block space-y-1.5 text-sm font-medium">
-          <span>Description</span>
-          <textarea
-            name="description"
-            className={tripInputClass}
-            rows={3}
-            defaultValue={day?.description ?? ""}
+        {editingDescription ? (
+          <TripDescriptionField
+            description={day?.description}
+            richDescription={day?.descriptionRich}
+            disabled={busy}
+            editorRef={descriptionEditor}
           />
-        </label>
+        ) : (
+          <div className="space-y-1.5">
+            {day?.description && (
+              <p className="line-clamp-3 text-sm whitespace-pre-line text-slate-700">
+                {day.description}
+              </p>
+            )}
+            <Button type="button" variant="outline" onClick={() => setEditingDescription(true)}>
+              {day?.description || day?.descriptionRich ? "Edit description" : "Add description"}
+            </Button>
+          </div>
+        )}
       </fieldset>
       {save.error && (
         <p role="alert" className="text-sm text-red-800">

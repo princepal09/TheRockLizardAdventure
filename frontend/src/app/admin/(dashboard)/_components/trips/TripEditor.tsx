@@ -3,7 +3,7 @@
 import ModuleSkeleton from "@/components/ui/ModuleSkeleton";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import type { FormEvent } from "react";
+import { useRef, type FormEvent } from "react";
 
 import { Button } from "@/components/ui/button";
 import { useTrip, useTripMutation, useTripOptions } from "@/hooks/trips/useTrips";
@@ -29,6 +29,8 @@ import {
 } from "./TripFields";
 import { ImageUploadField, RequiredMark } from "../ImageUploadField";
 import DeleteConfirmation from "../DeleteConfirmation";
+import type { TripDescriptionEditorHandle } from "./TripDescriptionEditor";
+import TripDescriptionField from "./TripDescriptionField";
 import TripItineraries from "./TripItineraries";
 import TripPhotos from "./TripPhotos";
 
@@ -51,6 +53,7 @@ function TripForm({
   seasons: TripOption[];
 }) {
   const router = useRouter();
+  const descriptionEditor = useRef<TripDescriptionEditorHandle>(null);
   const label = kind === "treks" ? "Trek" : kind === "trips" ? "Trip" : "Expedition";
   const save = useTripMutation(
     kind,
@@ -93,7 +96,7 @@ function TripForm({
       status: tripText(form, "status") as TripInput["status"],
       durationDays: Number(tripText(form, "durationDays")),
       summary: tripText(form, "summary") || null,
-      description: tripText(form, "description") || null,
+      ...descriptionEditor.current?.readEdit(),
       distanceKm: tripNumber(form, "distanceKm"),
       maxAltitudeMeters: tripNumber(form, "maxAltitudeMeters"),
       startingPoint: tripText(form, "startingPoint") || null,
@@ -333,15 +336,12 @@ function TripForm({
           maxLength={500}
           defaultValue={trip?.summary ?? ""}
         />
-        <label className="block space-y-1.5 text-sm font-medium">
-          <span>Description</span>
-          <textarea
-            className={tripInputClass}
-            name="description"
-            rows={4}
-            defaultValue={trip?.description ?? ""}
-          />
-        </label>
+        <TripDescriptionField
+          description={trip?.description}
+          richDescription={trip?.descriptionRich}
+          disabled={busy}
+          editorRef={descriptionEditor}
+        />
         <fieldset className="space-y-2 text-sm">
           <legend className="font-medium">Seasons</legend>
           <div className="flex flex-wrap gap-3">

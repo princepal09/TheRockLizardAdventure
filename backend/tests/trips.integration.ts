@@ -16,6 +16,8 @@ assert.ok(
 
 const run = randomUUID();
 const ids: string[] = [];
+const trekIds: string[] = [];
+const expeditionIds: string[] = [];
 let regionId: string | undefined;
 let seasonId: string | undefined;
 let contactId: string | undefined;
@@ -28,13 +30,14 @@ let token = '';
 let checks = 0;
 
 async function request(method: string, route: string, status: number, body?: unknown, auth = true) {
+  const multipart = body instanceof FormData;
   const response = await fetch(`${origin}${route}`, {
     method,
     headers: {
-      'Content-Type': 'application/json',
+      ...(multipart ? {} : { 'Content-Type': 'application/json' }),
       ...(auth ? { Authorization: `Bearer ${token}` } : {}),
     },
-    ...(body === undefined ? {} : { body: JSON.stringify(body) }),
+    ...(body === undefined ? {} : { body: multipart ? body : JSON.stringify(body) }),
     signal: AbortSignal.timeout(15_000),
   });
   const result = await response.json();
@@ -137,12 +140,107 @@ try {
   await request('GET', `/trips/${road.id}`, 404);
   const deleted = await request('DELETE', '/trips/bulk', 200, { ids: [bike.id] });
   assert.equal(deleted.deletedCount, 1);
+
+  const paragraph = (text: string) => ({ type: 'paragraph', content: [{ type: 'text', text }] });
+  const formatted = {
+    type: 'doc',
+    content: [
+      {
+        type: 'paragraph',
+        content: [
+          { type: 'text', text: 'Bring water', marks: [{ type: 'bold' }, { type: 'underline' }] },
+        ],
+      },
+      { type: 'bulletList', content: [{ type: 'listItem', content: [paragraph('Warm jacket')] }] },
+      {
+        type: 'orderedList',
+        attrs: { start: 3, type: null },
+        content: [{ type: 'listItem', content: [paragraph('Meet your guide')] }],
+      },
+    ],
+  };
+  const { vehicleDetails: _vehicleDetails, ...trekAndExpeditionInput } = missingType;
+  for (const [kind, records] of [
+    ['treks', trekIds],
+    ['expeditions', expeditionIds],
+    ['trips', ids],
+  ] as const) {
+    const payload = kind === 'trips' ? input : trekAndExpeditionInput;
+    const legacyText = 'Original admin description\nSecond line';
+    const legacy = await request('POST', `/${kind}`, 201, {
+      ...payload,
+      status: 'PUBLISHED',
+      description: legacyText,
+    });
+    records.push(legacy.id);
+    const adminUrl = `/${kind}/${legacy.id}`;
+    const publicUrl = `/${kind}/slug/${legacy.slug}`;
+    await request('PATCH', adminUrl, 200, { summary: 'Only the summary changed' });
+    const untouched = await request('GET', publicUrl, 200, undefined, false);
+    assert.equal(untouched.description, legacyText);
+    assert.equal(untouched.descriptionRich, null);
+
+    await request('PATCH', adminUrl, 200, { descriptionRich: formatted });
+    await request('PATCH', adminUrl, 400, {
+      descriptionRich: { type: 'doc', content: [{ type: 'image' }] },
+    });
+    const updated = await request('GET', publicUrl, 200, undefined, false);
+    assert.deepEqual(updated.descriptionRich, formatted);
+    assert.deepEqual((await request('GET', adminUrl, 200)).descriptionRich, formatted);
+    for (const listing of [
+      await request('GET', `/${kind}/admin`, 200),
+      await request('GET', `/${kind}`, 200, undefined, false),
+    ]) {
+      const row = listing.find((item: { id: string }) => item.id === legacy.id);
+      assert.ok(row);
+      assert.equal('descriptionRich' in row, false);
+    }
+    await request('PATCH', adminUrl, 200, { descriptionRich: null });
+    assert.equal((await request('GET', publicUrl, 200, undefined, false)).descriptionRich, null);
+
+    const form = new FormData();
+    for (const [key, value] of Object.entries(payload)) {
+      form.set(key, typeof value === 'object' ? JSON.stringify(value) : String(value));
+    }
+    form.set('descriptionRich', JSON.stringify(formatted));
+    const created = await request('POST', `/${kind}`, 201, form);
+    records.push(created.id);
+    assert.deepEqual(created.descriptionRich, formatted);
+
+    const itineraryUrl = `${adminUrl}/itineraries`;
+    const oldDay = await request('POST', itineraryUrl, 201, {
+      dayNumber: 1,
+      title: 'Existing itinerary day',
+      description: legacyText,
+    });
+    const richDay = await request('POST', itineraryUrl, 201, {
+      dayNumber: 2,
+      title: 'Formatted itinerary day',
+      descriptionRich: formatted,
+    });
+    await request('PATCH', `${itineraryUrl}/${oldDay.id}`, 200, { title: 'Updated title only' });
+    await request('PATCH', `${itineraryUrl}/${richDay.id}`, 200, {
+      title: 'Updated formatted day',
+    });
+    const days = (await request('GET', publicUrl, 200, undefined, false)).itineraries;
+    assert.equal(days[0].description, legacyText);
+    assert.equal(days[0].descriptionRich, null);
+    assert.deepEqual(days[1].descriptionRich, formatted);
+    await request('PATCH', `${itineraryUrl}/${oldDay.id}`, 200, { descriptionRich: formatted });
+    await request('PATCH', `${itineraryUrl}/${richDay.id}`, 200, { descriptionRich: null });
+    const editedDays = (await request('GET', adminUrl, 200)).itineraries;
+    assert.deepEqual(editedDays[0].descriptionRich, formatted);
+    assert.equal(editedDays[1].descriptionRich, null);
+  }
   console.log(
     `Trips integration passed: ${checks} HTTP status checks plus publishing, ownership, type, relation and enquiry assertions.`,
   );
 } finally {
   if (contactId) await prisma.contact.deleteMany({ where: { id: contactId } });
   if (ids.length) await prisma.trip.deleteMany({ where: { id: { in: ids } } });
+  if (trekIds.length) await prisma.trek.deleteMany({ where: { id: { in: trekIds } } });
+  if (expeditionIds.length)
+    await prisma.expedition.deleteMany({ where: { id: { in: expeditionIds } } });
   if (seasonId) await prisma.season.deleteMany({ where: { id: seasonId } });
   if (regionId) await prisma.region.deleteMany({ where: { id: regionId } });
   await new Promise<void>((resolve) => server.close(() => resolve()));

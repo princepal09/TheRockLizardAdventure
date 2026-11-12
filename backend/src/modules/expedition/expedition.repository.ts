@@ -1,4 +1,4 @@
-import { ContentStatus, type Expedition } from '../../../generated/prisma/client.js';
+import { ContentStatus, Prisma, type Expedition } from '../../../generated/prisma/client.js';
 import { prisma } from '../../lib/prisma.js';
 import { sortPublishedTrips } from '../../utils/common/trip-publication.js';
 import type { CreateGalleryImageDTO, UpdateGalleryImageDTO } from '../gallery/gallery.schema.js';
@@ -41,10 +41,11 @@ export class ExpeditionRepository implements IExpeditionRepository {
   }
 
   async createExpedition(data: CreateExpeditionRecord, adminId: string) {
-    const { seasonIds, ...fields } = data;
+    const { seasonIds, descriptionRich, ...fields } = data;
     return prisma.expedition.create({
       data: {
         ...fields,
+        descriptionRich: descriptionRich === null ? Prisma.DbNull : descriptionRich,
         createdBy: adminId,
         seasons: seasonIds?.length
           ? { create: seasonIds.map((seasonId) => ({ seasonId })) }
@@ -54,8 +55,11 @@ export class ExpeditionRepository implements IExpeditionRepository {
     });
   }
 
-  async findExpeditions(): Promise<Expedition[]> {
-    return prisma.expedition.findMany({ orderBy: [{ createdAt: 'desc' }, { id: 'asc' }] });
+  async findExpeditions(): Promise<Omit<Expedition, 'descriptionRich'>[]> {
+    return prisma.expedition.findMany({
+      omit: { descriptionRich: true },
+      orderBy: [{ createdAt: 'desc' }, { id: 'asc' }],
+    });
   }
 
   async findExpeditionById(id: string) {
@@ -73,6 +77,7 @@ export class ExpeditionRepository implements IExpeditionRepository {
     const trips = await prisma.expedition.findMany({
       where: { status: ContentStatus.PUBLISHED },
       omit: {
+        descriptionRich: true,
         createdBy: true,
         departureDates: true,
         meetingPoint: true,
@@ -113,11 +118,12 @@ export class ExpeditionRepository implements IExpeditionRepository {
     coverImagePublicId?: string | null,
   ) {
     const where = coverImagePublicId === undefined ? { id } : { id, coverImagePublicId };
-    const { seasonIds, ...fields } = data;
+    const { seasonIds, descriptionRich, ...fields } = data;
     return prisma.expedition.update({
       where,
       data: {
         ...fields,
+        descriptionRich: descriptionRich === null ? Prisma.DbNull : descriptionRich,
         seasons:
           seasonIds === undefined
             ? undefined
@@ -152,11 +158,25 @@ export class ExpeditionRepository implements IExpeditionRepository {
   }
 
   async createItinerary(expeditionId: string, data: CreateItineraryDTO) {
-    return prisma.expeditionItinerary.create({ data: { ...data, expeditionId } });
+    const { descriptionRich, ...fields } = data;
+    return prisma.expeditionItinerary.create({
+      data: {
+        ...fields,
+        expeditionId,
+        descriptionRich: descriptionRich === null ? Prisma.DbNull : descriptionRich,
+      },
+    });
   }
 
   async updateItinerary(expeditionId: string, id: string, data: UpdateItineraryDTO) {
-    return prisma.expeditionItinerary.update({ where: { id, expeditionId }, data });
+    const { descriptionRich, ...fields } = data;
+    return prisma.expeditionItinerary.update({
+      where: { id, expeditionId },
+      data: {
+        ...fields,
+        descriptionRich: descriptionRich === null ? Prisma.DbNull : descriptionRich,
+      },
+    });
   }
 
   async deleteItinerary(expeditionId: string, id: string): Promise<void> {

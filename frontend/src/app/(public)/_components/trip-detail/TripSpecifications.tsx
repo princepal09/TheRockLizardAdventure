@@ -1,5 +1,6 @@
 import { Card } from "@/components/ui/card";
 import type { PublishedTripDetail } from "@/lib/api/published-trip-detail";
+import TripDescription from "./TripDescription";
 
 const monthFormat = new Intl.DateTimeFormat("en-IN", {
   month: "short",
@@ -47,11 +48,7 @@ export default function TripSpecifications({ trip }: { trip: PublishedTripDetail
           {trip.tripType ? "Journey Details" : "Technical Dossier"}
         </h2>
       </div>
-      {trip.description && (
-        <p className="max-w-4xl whitespace-pre-line text-sm leading-relaxed text-slate-700">
-          {trip.description}
-        </p>
-      )}
+      <TripDescription description={trip.description} richDescription={trip.descriptionRich} />
       {trip.vehicleDetails && (
         <section className="rounded-xl bg-slate-100 p-4">
           <h3 className="text-sm font-bold">Vehicle & rider arrangements</h3>

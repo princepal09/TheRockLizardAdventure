@@ -1,4 +1,5 @@
 import z from 'zod';
+import { richDescriptionSchema } from '../trip-planning/rich-description.schema.js';
 
 export const itineraryIdSchema = z.uuid('Invalid itinerary ID');
 
@@ -7,6 +8,7 @@ export const createItinerarySchema = z
     dayNumber: z.int32().positive(),
     title: z.string().trim().min(1).max(255),
     description: z.string().nullable().optional(),
+    descriptionRich: richDescriptionSchema,
     distanceKm: z.number().nonnegative().max(999999.99).multipleOf(0.01).nullable().optional(),
     altitudeMeters: z.int32().nullable().optional(),
   })

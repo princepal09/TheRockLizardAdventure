@@ -51,7 +51,7 @@ export async function saveTrip(
     body.set("coverImage", cover);
     for (const [name, value] of Object.entries(input)) {
       if (value == null) continue;
-      body.set(name, Array.isArray(value) ? JSON.stringify(value) : String(value));
+      body.set(name, typeof value === "object" ? JSON.stringify(value) : String(value));
     }
     const { data } = await api.post<ApiDataResponse<Trip>>(`/${kind}`, body);
     return data.data;

@@ -26,10 +26,10 @@ export interface IExpeditionRepository {
     data: CreateExpeditionRecord,
     adminId: string,
   ): Promise<Expedition & ExpeditionSeasons>;
-  findExpeditions(): Promise<Expedition[]>;
+  findExpeditions(): Promise<Omit<Expedition, 'descriptionRich'>[]>;
   findExpeditionById(id: string): Promise<(Expedition & ExpeditionDetails) | null>;
   findPublishedExpeditions(): Promise<
-    (Omit<Expedition, 'createdBy' | TripPlanningField> & {
+    (Omit<Expedition, 'createdBy' | 'descriptionRich' | TripPlanningField> & {
       region: { name: string };
       seasons: { seasonId: string; season: Pick<Season, 'name'> }[];
     })[]
