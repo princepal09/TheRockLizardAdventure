@@ -6,6 +6,10 @@ import { getCachedPublicTeam } from "@/lib/api/public-team";
 
 import TeamMemberCard from "./TeamMemberCard";
 
+const profilesClass = "flex flex-wrap items-start justify-center gap-5 lg:gap-6";
+const profileWidthClass =
+  "w-full min-w-0 max-w-sm sm:w-[calc((100%_-_1.25rem)/2)] lg:w-[calc((100%_-_3rem)/3)]";
+
 async function TeamProfiles() {
   const members = await getCachedPublicTeam().catch(() => null);
   if (!members)
@@ -25,13 +29,20 @@ async function TeamProfiles() {
     );
 
   return (
-    <ul className="space-y-6 md:space-y-9">
-      {members.map((member, index) => (
-        <li key={member.id} className="min-w-0">
-          <TeamMemberCard member={member} index={index} />
-        </li>
-      ))}
-    </ul>
+    <div className="space-y-5">
+      <p className="text-center text-sm font-semibold text-slate-700">
+        <span className="inline-flex rounded-full border border-sky-200 bg-white px-3 py-1 tabular-nums">
+          {members.length} {members.length === 1 ? "team member" : "team members"}
+        </span>
+      </p>
+      <ul className={profilesClass}>
+        {members.map((member) => (
+          <li key={member.id} className={profileWidthClass}>
+            <TeamMemberCard member={member} />
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 }
 
@@ -62,22 +73,21 @@ export default function AboutTeam() {
           fallback={
             <div role="status">
               <span className="sr-only">Loading team profiles…</span>
-              <div aria-hidden="true" className="space-y-6 md:space-y-9">
-                {[false, true].map((reverse, index) => (
-                  <div
-                    key={index}
-                    className="grid overflow-hidden rounded-2xl border border-slate-200 bg-white md:grid-cols-2"
-                  >
-                    <Skeleton
-                      className={`aspect-[5/4] rounded-none bg-slate-200 md:min-h-[23rem] md:aspect-auto ${reverse ? "md:order-2" : ""}`}
-                    />
-                    <div className="flex flex-col justify-center gap-4 p-6 sm:p-9">
-                      <Skeleton className="h-3 w-28 bg-slate-200" />
-                      <Skeleton className="h-10 w-3/4 bg-slate-200" />
-                      <Skeleton className="h-12 w-full bg-slate-200" />
+              <div aria-hidden="true" className="space-y-5">
+                <Skeleton className="mx-auto h-[30px] w-28 rounded-full bg-slate-200" />
+                <div className={profilesClass}>
+                  {[0, 1, 2].map((index) => (
+                    <div
+                      key={index}
+                      className={`${profileWidthClass} flex flex-col items-center rounded-3xl border border-slate-200 bg-white px-5 py-7 sm:py-8`}
+                    >
+                      <Skeleton className="size-36 rounded-full bg-slate-200 sm:size-44" />
+                      <Skeleton className="mt-6 h-8 w-3/4 bg-slate-200 sm:h-9" />
+                      <Skeleton className="mt-1 h-5 w-1/2 bg-slate-200" />
+                      <Skeleton className="mt-5 h-9 w-28 rounded-full bg-slate-200" />
                     </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
             </div>
           }
