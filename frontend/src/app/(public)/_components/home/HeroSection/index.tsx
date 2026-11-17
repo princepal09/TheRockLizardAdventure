@@ -50,10 +50,6 @@ const HeroSection = async () => {
         <p className="mt-4 max-w-[32rem] text-sm leading-relaxed text-slate-200 lg:text-base">
           Explore guided treks and expeditions in <strong>Uttarakhand (Kumaon, Garhwal)</strong> and{" "}
           <strong>Kashmir</strong> with our Almora-based team.
-          <span className="hidden md:inline">
-            {" "}Find a route that fits your experience, from your first Himalayan trek to a
-            high-altitude expedition.
-          </span>
         </p>
         <div className="mt-3 flex max-w-[36rem] items-center gap-2 sm:w-[65%]">
           <span aria-hidden="true" className="h-px flex-1 bg-white/15" />
