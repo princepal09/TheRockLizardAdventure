@@ -1,6 +1,6 @@
 # Rocklizard Adventure
 
-> Rocklizard Adventure organizes guided treks and expeditions in Uttarakhand (Kumaon and Garhwal), Kashmir, and Maharashtra, as well as road and bike trips across India.
+> Rocklizard Adventure organizes guided treks and expeditions in Uttarakhand (Kumaon and Garhwal) and Kashmir, as well as road and bike trips across India.
 
 ## Plan a trip
 

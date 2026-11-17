@@ -13,7 +13,7 @@ import FaqSection from "./_components/home/FaqSection";
 
 export const metadata = pageMetadata(
   "Treks & Expeditions Across India",
-  "Explore guided treks and expeditions in Uttarakhand (Kumaon + Garhwal), Kashmir and Maharashtra with Rocklizard Adventure. Browse itineraries and plan your next adventure.",
+  "Plan a guided trek or expedition in Kumaon, Garhwal or Kashmir with Rocklizard Adventure. Browse Himalayan routes and itineraries from our Almora-based team.",
   "/",
 );
 

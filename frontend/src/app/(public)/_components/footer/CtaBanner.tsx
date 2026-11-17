@@ -17,8 +17,7 @@ export default function CtaBanner({ phone }: { phone?: string | null }) {
             Ready to explore your next trail in India?
           </h2>
           <p className="mt-1.5 max-w-sm text-xs leading-relaxed text-slate-300">
-            Plan your next adventure in Uttarakhand (Kumaon + Garhwal), Kashmir or Maharashtra with
-            our Almora Basecamp team.
+            Plan your next adventure in Kumaon, Garhwal or Kashmir with our Almora Basecamp team.
           </p>
           <p className="mt-2 max-w-sm text-xs leading-relaxed text-slate-300">
             Have another destination in mind? Ask us to customize your route, dates and itinerary.

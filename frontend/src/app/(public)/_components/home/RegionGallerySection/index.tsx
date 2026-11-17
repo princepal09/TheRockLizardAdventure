@@ -56,8 +56,8 @@ export default function RegionGallerySection() {
           </h2>
         </div>
         <p className="max-w-sm text-xs leading-relaxed text-slate-600">
-          Explore routes in Uttarakhand (Kumaon + Garhwal), Kashmir and Maharashtra, with planning
-          and preparation coordinated from Almora.
+          Explore routes in Kumaon, Garhwal and Kashmir, with planning and preparation coordinated
+          from Almora.
         </p>
       </ScrollReveal>
       <Suspense

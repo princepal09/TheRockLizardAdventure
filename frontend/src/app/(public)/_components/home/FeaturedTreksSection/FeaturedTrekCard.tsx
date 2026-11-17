@@ -1,4 +1,4 @@
-import { ArrowRight, Mountain, Star } from "lucide-react";
+import { ArrowRight, MapPin, Mountain, Star } from "lucide-react";
 import Link from "next/link";
 
 import {
@@ -22,8 +22,6 @@ export default function FeaturedTrekCard({
   highlighted: boolean;
 }) {
   const href = `/treks/${encodeURIComponent(trek.slug)}`;
-  const elevation =
-    trek.maxAltitudeMeters === null ? null : `${trek.maxAltitudeMeters.toLocaleString("en-IN")} m`;
   const level = trek.difficulty.toLowerCase().replaceAll("_", " ");
 
   return (
@@ -51,11 +49,6 @@ export default function FeaturedTrekCard({
         >
           <Star aria-hidden="true" className="size-3" /> Featured trek
         </span>
-        {elevation && (
-          <span className="absolute right-2 bottom-2 rounded bg-slate-950/80 px-2 py-1 font-mono text-[10px]">
-            {elevation} peak
-          </span>
-        )}
       </Link>
       <CardHeader>
         <CardTitle className="font-sans! font-bold">
@@ -65,11 +58,17 @@ export default function FeaturedTrekCard({
           <span
             className={`rounded px-1.5 py-0.5 font-semibold capitalize ${trek.difficulty === "EASY" ? "bg-emerald-50 text-emerald-800" : trek.difficulty === "MODERATE" ? "bg-sky-50 text-sky-800" : "bg-violet-50 text-violet-800"}`}
           >
-            z{level}
+            {level}
           </span>
           <span>
             {trek.durationDays} {trek.durationDays === 1 ? "day" : "days"}
           </span>
+          {trek.region?.name && (
+            <span className="inline-flex items-center gap-1">
+              <MapPin aria-hidden="true" className="size-3 shrink-0 text-orange-700" />
+              {trek.region.name}
+            </span>
+          )}
         </p>
       </CardHeader>
       {trek.summary && (

@@ -1,5 +1,8 @@
+import { ChevronDown } from "lucide-react";
+
 import { Card } from "@/components/ui/card";
 import type { PublishedTripDetail } from "@/lib/api/published-trip-detail";
+
 import TripDescription from "./TripDescription";
 
 export default function TripItinerary({
@@ -22,29 +25,35 @@ export default function TripItinerary({
       </div>
       <ol className="space-y-3">
         {itinerary.map(
-          ({ id, dayNumber, title, description, descriptionRich, altitudeMeters, distanceKm }) => (
-            <li key={id} className="rounded-xl bg-slate-100 px-4 py-3">
-              <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
-                <span className="rounded-md bg-orange-500 px-2 py-1 font-mono text-[10px] font-bold text-[#ffffff] uppercase">
-                  Day {dayNumber}
-                </span>
-                <h3 className="text-sm font-bold">{title}</h3>
-                <p className="ml-auto font-mono text-xs text-slate-600">
-                  {[
-                    altitudeMeters != null ? `${altitudeMeters.toLocaleString("en-IN")} m` : null,
-                    distanceKm != null ? `${distanceKm} km` : null,
-                  ]
-                    .filter(Boolean)
-                    .join(" · ")}
-                </p>
-              </div>
-              {(description || descriptionRich) && (
-                <div className="mt-2">
-                  <TripDescription description={description} richDescription={descriptionRich} />
-                </div>
-              )}
-            </li>
-          ),
+          ({ id, dayNumber, title, description, descriptionRich, altitudeMeters, distanceKm }) => {
+            const metrics = [
+              altitudeMeters != null ? `${altitudeMeters.toLocaleString("en-IN")} m` : null,
+              distanceKm != null ? `${distanceKm} km` : null,
+            ]
+              .filter(Boolean)
+              .join(" · ");
+
+            return (
+              <li key={id}>
+                <details className="group rounded-xl bg-slate-100">
+                  <summary className="flex cursor-pointer list-none items-center justify-between rounded-xl px-4 py-3 font-mono text-xs font-bold text-orange-800 uppercase focus-visible:outline-2 focus-visible:outline-sky-700 [&::-webkit-details-marker]:hidden">
+                    Day {dayNumber}
+                    <ChevronDown
+                      aria-hidden="true"
+                      className="size-4 shrink-0 text-slate-500 motion-safe:transition-transform group-open:rotate-180"
+                    />
+                  </summary>
+                  <div className="space-y-2 border-t border-slate-200 px-4 py-3">
+                    <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
+                      <h3 className="text-sm font-bold">{title}</h3>
+                      {metrics && <p className="font-mono text-xs text-slate-600">{metrics}</p>}
+                    </div>
+                    <TripDescription description={description} richDescription={descriptionRich} />
+                  </div>
+                </details>
+              </li>
+            );
+          },
         )}
       </ol>
     </Card>

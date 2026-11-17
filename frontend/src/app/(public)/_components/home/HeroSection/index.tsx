@@ -1,4 +1,4 @@
-import { ArrowRight, Mountain, UsersRound } from "lucide-react";
+import { ArrowRight, UsersRound } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -35,7 +35,7 @@ const HeroSection = async () => {
 
       <HeroEntrance>
         <p className="inline-flex mt-10 flex-wrap items-center gap-x-2 rounded-full border border-white/10 bg-white/10 px-2.5 py-1 font-mono text-[9px] tracking-wider uppercase sm:text-[10px]">
-          <span className="font-bold text-orange-400">Explore India · Three Destinations</span>
+          <span className="font-bold text-orange-400">Explore the Himalayas</span>
           <span className="text-slate-200">· Autumn / Winter 2026</span>
         </p>
         <h1
@@ -48,16 +48,9 @@ const HeroSection = async () => {
           </span>
         </h1>
         <p className="mt-4 max-w-[32rem] text-sm leading-relaxed text-slate-200 lg:text-base">
-          From Himalayan trails to Sahyadri ridges, explore Uttarakhand (Kumaon + Garhwal), Kashmir
-          and Maharashtra with planning and guidance from our Almora-based team.
+          Explore guided treks and expeditions in Kumaon, Garhwal and Kashmir with our Almora-based
+          team.
         </p>
-        <div className="mt-3 flex max-w-[36rem] items-center gap-2 sm:w-[65%]">
-          <span aria-hidden="true" className="h-px flex-1 bg-white/15" />
-          <span className="hidden shrink-0 items-center gap-1 font-mono text-[9px] tracking-wider text-sky-300 uppercase md:inline-flex">
-            <Mountain aria-hidden="true" className="size-3 text-orange-400" />
-            3,660m Zero Point Summit
-          </span>
-        </div>
         <div className="mt-4 flex flex-wrap gap-2.5">
           <Link
             href="/treks"

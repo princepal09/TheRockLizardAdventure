@@ -29,8 +29,8 @@ export default function CustomExpeditionsBanner() {
             expedition, road trip or bike journey that suits your interests and pace.
           </p>
           <p className="mt-2 text-xs leading-relaxed text-slate-600 sm:text-sm">
-            Plan with {founderName} and the Almora team for journeys across Uttarakhand (Kumaon +
-            Garhwal), Kashmir and Maharashtra. Share your idea and let’s explore the route together.
+            Plan a journey in Kumaon, Garhwal or Kashmir with {founderName} and the Almora team.
+            Share your idea and let’s explore the route together.
           </p>
         </div>
         <Suspense fallback={<ExpeditionContactLinks />}>

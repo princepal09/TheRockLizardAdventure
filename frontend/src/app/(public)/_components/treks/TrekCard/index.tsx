@@ -21,6 +21,7 @@ import { formatTripPrice } from "../../../../../types/format-trip-price";
 export default function TrekCard({ trip, kind }: { trip: PublicListingTrip; kind: TripKind }) {
   const [failed, setFailed] = useState(false);
   const href = `/${kind}/${encodeURIComponent(trip.slug)}`;
+  const location = kind === "treks" ? trip.region?.name : trip.startingPoint || trip.region?.name;
   const image =
     trip.coverImageUrl && /^(?:https?:\/\/|\/(?!\/))/i.test(trip.coverImageUrl)
       ? trip.coverImageUrl
@@ -86,12 +87,12 @@ export default function TrekCard({ trip, kind }: { trip: PublicListingTrip; kind
             </span>
           )}
         </div>
-        {(trip.startingPoint || trip.region?.name || trip.maxAltitudeMeters != null) && (
+        {(location || trip.maxAltitudeMeters != null) && (
           <ul className="space-y-1 border-t border-slate-100 pt-2 text-xs text-slate-600">
-            {(trip.startingPoint || trip.region?.name) && (
+            {location && (
               <li className="flex items-center gap-1.5">
                 <MapPin aria-hidden="true" className="size-3.5 shrink-0 text-orange-700" />
-                {trip.startingPoint || trip.region?.name}
+                {location}
               </li>
             )}
             {trip.maxAltitudeMeters != null && (

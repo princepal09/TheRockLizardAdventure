@@ -66,8 +66,8 @@ export default function SeasonalGuideSection({ kind }: { kind: TripKind }) {
           When to Trek Across India
         </h2>
         <p className="mx-auto mt-2 max-w-xl text-sm leading-relaxed text-slate-600">
-          Conditions vary across Uttarakhand (Kumaon + Garhwal), Kashmir and Maharashtra. Compare
-          route-specific season windows before planning your departure.
+          Conditions vary across Kumaon, Garhwal and Kashmir. Compare route-specific season windows
+          before planning your departure.
         </p>
       </div>
       <Suspense

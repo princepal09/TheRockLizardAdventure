@@ -1,10 +1,10 @@
 import { cacheLife, cacheTag } from "next/cache";
 
 import type { ApiDataResponse } from "@/types/api";
-import type { PublicListingTrip, Trip } from "@/types/trip";
+import type { PublicListingTrip } from "@/types/trip";
 
 export type TrekSearchItem = Pick<
-  Trip,
+  PublicListingTrip,
   | "id"
   | "name"
   | "slug"
@@ -13,7 +13,7 @@ export type TrekSearchItem = Pick<
   | "isFeatured"
   | "difficulty"
   | "durationDays"
-  | "maxAltitudeMeters"
+  | "region"
 >;
 
 export async function getPublishedTreks(): Promise<PublicListingTrip[]> {
