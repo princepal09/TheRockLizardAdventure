@@ -22,6 +22,7 @@ export default function FeaturedTrekCard({
   highlighted: boolean;
 }) {
   const href = `/treks/${encodeURIComponent(trek.slug)}`;
+  const elevation = trek.maxAltitudeMeters?.toLocaleString("en-IN");
   const level = trek.difficulty.toLowerCase().replaceAll("_", " ");
 
   return (
@@ -49,6 +50,11 @@ export default function FeaturedTrekCard({
         >
           <Star aria-hidden="true" className="size-3" /> Featured trek
         </span>
+        {elevation && (
+          <span className="absolute right-2 bottom-2 rounded bg-slate-950/80 px-2 py-1 font-mono text-[10px]">
+            {elevation} m peak
+          </span>
+        )}
       </Link>
       <CardHeader>
         <CardTitle className="font-sans! font-bold">

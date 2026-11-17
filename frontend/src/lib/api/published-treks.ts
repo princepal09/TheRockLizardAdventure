@@ -13,6 +13,7 @@ export type TrekSearchItem = Pick<
   | "isFeatured"
   | "difficulty"
   | "durationDays"
+  | "maxAltitudeMeters"
   | "region"
 >;
 

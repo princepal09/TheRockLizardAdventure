@@ -3,7 +3,7 @@
 <rect width="226" height="31" rx="15.5" fill="#0F172A" fill-opacity="0.85"/>
 <rect x="0.5" y="0.5" width="225" height="30" rx="15" stroke="#334155" stroke-opacity="0.6"/>
 <rect x="13" y="11.5" width="8" height="8" rx="4" fill="#F97316"/>
-<text x="29" y="19" fill="#38BDF8" font-family="monospace" font-size="10" font-weight="600" letter-spacing="0.2">Home To Mountains · 3,660 m</text>
+<text x="29" y="19" fill="#38BDF8" font-family="monospace" font-size="10" font-weight="600" letter-spacing="0.2">Home To Mountains</text>
 </g>
 <defs>
 <clipPath id="bgblur_0_66_23_clip_path" transform="translate(8 8)"><rect width="226" height="31" rx="15.5"/>
