@@ -40,11 +40,11 @@ const HeroSection = async () => {
         </p>
         <h1
           id="hero-heading"
-          className="mt-2.5 text-[clamp(2.25rem,4.8vw,4.75rem)] leading-[1.05] font-extrabold tracking-[-0.055em] text-white"
+          className="mt-2.5 max-w-3xl text-[clamp(1.875rem,3.6vw,3.5rem)] leading-[1.15] font-extrabold tracking-[-0.04em] text-white"
         >
-          The Mountains{" "}
+          From Himalayan Expeditions to Outdoor Learning —{" "}
           <span className="font-heading font-medium tracking-[-0.045em] text-orange-200 italic">
-            Are Calling
+            We Bring People Closer to Nature.
           </span>
         </h1>
         <p className="mt-4 max-w-[32rem] text-sm leading-relaxed text-slate-200 lg:text-base">
